@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/cardview_shadow_start_color"
+    tools:context=".CadastrarActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="15sp"
+        android:layout_marginTop="15sp"
+        android:gravity="right"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Smart Locker"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:src="@drawable/baseline_lock_open_24"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome"
+        android:layout_marginTop="15sp"
+        android:layout_marginHorizontal="15sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etName"
+        android:layout_width="225sp"
+        android:layout_marginHorizontal="15sp"
+        android:layout_height="wrap_content"
+        android:inputType="text"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E-mail"
+        android:layout_marginTop="15sp"
+        android:layout_marginHorizontal="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="20sp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etEmail"
+        android:layout_width="225sp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15sp"
+        android:inputType="textEmailAddress"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Senha"
+        android:layout_marginTop="15sp"
+        android:layout_marginHorizontal="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="20sp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPassword"
+        android:layout_width="225sp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15sp"
+        android:inputType="textWebPassword"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:text="Data de Nascimento"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="15sp"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etBrith"
+        android:layout_marginHorizontal="15sp"
+        android:layout_width="225sp"
+        android:layout_height="wrap_content"
+        android:inputType="date"/>
+
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="15sp"
+        android:layout_marginTop="15sp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CPF"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etCPF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="150sp"
+            android:layout_marginLeft="75sp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="right">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Telefone"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etTel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gerente"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="15sp"
+        android:layout_marginTop="20sp"/>
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cliente"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="15sp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCadastrarUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Cadastrar"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_marginTop="25sp"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
