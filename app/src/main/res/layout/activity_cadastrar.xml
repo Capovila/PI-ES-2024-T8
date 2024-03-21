@@ -103,8 +103,6 @@
         android:layout_height="wrap_content"
         android:inputType="date"/>
 
-
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -158,6 +156,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/cbGerente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Gerente"
@@ -166,6 +165,7 @@
         android:layout_marginTop="20sp"/>
 
     <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/cbClientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cliente"
@@ -177,6 +177,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@drawable/my_button"
+        android:paddingHorizontal="10sp"
         android:text="Cadastrar"
         android:textStyle="bold"
         android:textSize="15sp"

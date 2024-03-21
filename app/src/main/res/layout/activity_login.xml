@@ -33,6 +33,7 @@
         android:layout_marginTop="150sp"
         android:orientation="vertical">
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTextoEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="E-mail"
@@ -41,11 +42,13 @@
             android:textStyle="bold"/>
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etEmailLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSenhaLogin"
             android:paddingTop="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,6 +58,7 @@
             android:textStyle="bold"/>
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textWebPassword"/>
@@ -67,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Entrar"
+        android:background="@drawable/my_button"
         android:textStyle="bold"
         android:textSize="15sp"
         android:layout_marginTop="200sp"/>

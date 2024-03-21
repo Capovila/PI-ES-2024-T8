@@ -38,16 +38,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Logar"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:background="@drawable/my_button"
             android:textColor="@color/black"
+            android:layout_marginRight="15sp"
             android:textStyle="bold"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnCadastrar"
             android:layout_width="wrap_content"
+            android:paddingHorizontal="10sp"
             android:layout_height="wrap_content"
             android:text="Cadastrar"
-            android:textSize="20sp"
+            android:background="@drawable/my_button"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>
 

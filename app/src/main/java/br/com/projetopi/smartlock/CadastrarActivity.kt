@@ -5,16 +5,25 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
 
 class CadastrarActivity : AppCompatActivity() {
 
     private lateinit var btnCadastrar: Button
-    private lateinit var nome: EditText
+    private lateinit var nomeCadastrar: EditText
+    private lateinit var emailCadastrar: EditText
+    private lateinit var senhaCadastrar: EditText
+    private lateinit var birthCadastrar: EditText
+    private lateinit var cpfCadastrar: EditText
+    private lateinit var telCadastrar: EditText
+    private lateinit var cbGerente: CheckBox
+    private lateinit var cbCliente: CheckBox
     //Colocar os outros campos dps
 
     private fun hideKeybard(it: View) {
@@ -32,13 +41,35 @@ class CadastrarActivity : AppCompatActivity() {
         }
 
         btnCadastrar = findViewById(R.id.btnCadastrarUser)
-        nome = findViewById(R.id.etName)
+        nomeCadastrar = findViewById(R.id.etName)
+        emailCadastrar = findViewById(R.id.etEmail)
+        senhaCadastrar = findViewById(R.id.etPassword)
+        birthCadastrar = findViewById(R.id.etBrith)
+        cpfCadastrar = findViewById(R.id.etCPF)
+        telCadastrar = findViewById(R.id.etTel)
+        cbCliente = findViewById(R.id.cbClientes)
+        cbGerente = findViewById(R.id.cbGerente)
 
         btnCadastrar.setOnClickListener{
-            hideKeybard(it)
-            var intent = Intent(this, FirstScreenActivity::class.java)
-            startActivity(intent)
-            finish()
+            if(nomeCadastrar.text.toString().isEmpty()||
+               emailCadastrar.text.toString().isEmpty()||
+               senhaCadastrar.text.toString().isEmpty()||
+               birthCadastrar.text.toString().isEmpty()||
+               cpfCadastrar.text.toString().isEmpty()||
+               telCadastrar.text.toString().isEmpty()||
+               !cbGerente.isChecked && !cbCliente.isChecked ){
+                var camposVazio: String = "Preencha todos os campos"
+                Snackbar.make(btnCadastrar, camposVazio, Snackbar.LENGTH_LONG ).show()
+            }else if (cbGerente.isChecked && cbCliente.isChecked) {
+                var checkBox: String = "Selecione apenas uma opção"
+                Snackbar.make(btnCadastrar, checkBox, Snackbar.LENGTH_LONG ).show()
+            } else{
+
+                hideKeybard(it)
+                var intent = Intent(this, FirstScreenActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 }
