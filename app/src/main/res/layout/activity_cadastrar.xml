@@ -27,8 +27,9 @@
             android:textColor="@color/black"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
+            android:layout_width="75sp"
+            android:paddingHorizontal="5sp"
+            android:layout_height="match_parent"
             android:textSize="20sp"
             android:text="Smart Locker"
             android:textStyle="bold"
@@ -48,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nome"
-        android:layout_marginTop="35sp"
+        android:layout_marginTop="40sp"
         android:layout_marginHorizontal="15sp"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -181,7 +182,7 @@
         android:text="Cadastrar"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:layout_marginTop="125sp"
+        android:layout_marginTop="120sp"
         />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
