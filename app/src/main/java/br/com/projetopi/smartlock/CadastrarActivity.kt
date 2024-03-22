@@ -63,8 +63,6 @@ class CadastrarActivity : AppCompatActivity() {
         tvNomeCadastro = findViewById(R.id.tvNomeCadastro)
         tvCPFCadastro = findViewById(R.id.tvCPFCadastro)
 
-
-
         btnCadastrar.setOnClickListener{
             if(nomeCadastrar.text.toString().isEmpty()||
                emailCadastrar.text.toString().isEmpty()||
