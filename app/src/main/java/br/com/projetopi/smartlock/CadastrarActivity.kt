@@ -62,6 +62,10 @@ class CadastrarActivity : AppCompatActivity() {
                 Snackbar.make(btnCadastrar, camposVazio, Snackbar.LENGTH_LONG ).show()
             }else if (cbGerente.isChecked && cbCliente.isChecked) {
                 var checkBox: String = "Selecione apenas uma opção"
+                cbGerente.setTextColor(getColor(R.color.red))
+                cbGerente.text = "${cbGerente.text.toString()} *"
+                cbCliente.setTextColor(getColor(R.color.red))
+                cbCliente.text = "${cbCliente.text.toString()} *"
                 Snackbar.make(btnCadastrar, checkBox, Snackbar.LENGTH_LONG ).show()
             } else{
 
