@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
                     tvSenhaLogin.text = "$textoSenha *"
                 }
             }else{
-                var mensagem = etSenha.text.toString()
+                var mensagem = "MainActivity"
                 Snackbar.make(btnEntrar, mensagem, Snackbar.LENGTH_LONG ).show()
                 hideKeyboard(it)
             }
