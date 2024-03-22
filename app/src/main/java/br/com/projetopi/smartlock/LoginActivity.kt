@@ -1,5 +1,6 @@
 package br.com.projetopi.smartlock
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -18,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etSenha: EditText
     private lateinit var tvTextoEmail: TextView
     private lateinit var tvSenhaLogin: TextView
+    private lateinit var btnRecuperarSenha: Button
 
     private fun validarCampo(texto:TextView, campo:EditText){
         if(campo.text.toString().isEmpty()){
@@ -46,10 +48,7 @@ class LoginActivity : AppCompatActivity() {
         etEmailLogin = findViewById(R.id.etEmailLogin)
         tvTextoEmail = findViewById(R.id.tvTextoEmail)
         tvSenhaLogin = findViewById(R.id.tvSenhaLogin)
-
-        etEmailLogin.setOnClickListener{
-            etEmailLogin.setTextColor(getColor(R.color.black))
-        }
+        btnRecuperarSenha = findViewById(R.id.btnRecuperarSenha)
 
         btnEntrar.setOnClickListener{
             if(etEmailLogin.text.toString().isEmpty() ||
@@ -64,6 +63,11 @@ class LoginActivity : AppCompatActivity() {
                 Snackbar.make(btnEntrar, mensagem, Snackbar.LENGTH_LONG ).show()
                 hideKeyboard(it)
             }
+        }
+
+        btnRecuperarSenha.setOnClickListener{
+            val intent = Intent(this, RecuperarSenhaActivity::class.java)
+            startActivity(intent)
         }
     }
 }
