@@ -37,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="E-mail"
+            android:maxLength="8"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"/>
@@ -52,6 +53,7 @@
             android:paddingTop="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLength="7"
             android:text="Senha"
             android:textColor="@color/black"
             android:textSize="15sp"

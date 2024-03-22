@@ -19,6 +19,15 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var tvTextoEmail: TextView
     private lateinit var tvSenhaLogin: TextView
 
+    private fun validarCampo(texto:TextView, campo:EditText){
+        if(campo.text.toString().isEmpty()){
+            texto.setTextColor(getColor(R.color.red))
+        }
+        else{
+            texto.setTextColor(getColor(R.color.black))
+        }
+    }
+
     private fun hideKeyboard(it: View){
         var imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(it.windowToken, 0)
@@ -38,22 +47,18 @@ class LoginActivity : AppCompatActivity() {
         tvTextoEmail = findViewById(R.id.tvTextoEmail)
         tvSenhaLogin = findViewById(R.id.tvSenhaLogin)
 
+        etEmailLogin.setOnClickListener{
+            etEmailLogin.setTextColor(getColor(R.color.black))
+        }
+
         btnEntrar.setOnClickListener{
             if(etEmailLogin.text.toString().isEmpty() ||
                 etSenha.text.toString().isEmpty()){
                 var mensagemVazio: String = "Insira seu e-mail e senha corretamente"
                 Snackbar.make(btnEntrar, mensagemVazio, Snackbar.LENGTH_LONG ).show()
                 hideKeyboard(it)
-                if(etEmailLogin.text.toString().isEmpty()){
-                    var textoEmail: String = tvTextoEmail.text.toString()
-                    tvTextoEmail.setTextColor(getColor(R.color.red))
-                    tvTextoEmail.text = "$textoEmail *"
-                }
-                if(etSenha.text.toString().isEmpty()) {
-                    var textoSenha: String = tvSenhaLogin.text.toString()
-                    tvSenhaLogin.setTextColor(getColor(R.color.red))
-                    tvSenhaLogin.text = "$textoSenha *"
-                }
+                validarCampo(tvTextoEmail, etEmailLogin)
+                validarCampo(tvSenhaLogin, etSenha)
             }else{
                 var mensagem = "MainActivity"
                 Snackbar.make(btnEntrar, mensagem, Snackbar.LENGTH_LONG ).show()
