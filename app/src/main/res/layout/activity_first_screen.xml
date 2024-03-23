@@ -65,7 +65,7 @@
         android:background="@drawable/my_button"
         android:layout_marginTop="5sp"
         android:textStyle="bold"
-        android:text="Conferir Armários"
+        android:text="Consultar Armários"
         android:paddingHorizontal="5sp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
