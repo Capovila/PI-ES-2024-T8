@@ -45,8 +45,7 @@ class CadastrarActivity : AppCompatActivity() {
         birthCadastrar = findViewById(R.id.etBrith)
         cpfCadastrar = findViewById(R.id.etCPF)
         telCadastrar = findViewById(R.id.etTel)
-        cbCliente = findViewById(R.id.cbClientes)
-        cbGerente = findViewById(R.id.cbGerente)
+
 
         btnCadastrar.setOnClickListener{
             if(nomeCadastrar.text.toString().isEmpty()||
@@ -58,15 +57,7 @@ class CadastrarActivity : AppCompatActivity() {
                !cbGerente.isChecked && !cbCliente.isChecked ){
                 var camposVazio: String = "Preencha todos os campos"
                 Snackbar.make(btnCadastrar, camposVazio, Snackbar.LENGTH_LONG ).show()
-            }else if (cbGerente.isChecked && cbCliente.isChecked) {
-                var checkBox: String = "Selecione apenas uma opção"
-                cbGerente.setTextColor(getColor(R.color.red))
-                cbGerente.text = "${cbGerente.text.toString()} *"
-                cbCliente.setTextColor(getColor(R.color.red))
-                cbCliente.text = "${cbCliente.text.toString()} *"
-                Snackbar.make(btnCadastrar, checkBox, Snackbar.LENGTH_LONG ).show()
-            } else{
-
+            }else{
                 hideKeybard(it)
                 var intent = Intent(this, FirstScreenActivity::class.java)
                 startActivity(intent)

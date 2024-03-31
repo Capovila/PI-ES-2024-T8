@@ -155,22 +155,6 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/cbGerente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gerente"
-        android:textStyle="bold"
-        android:layout_marginHorizontal="15sp"
-        android:layout_marginTop="20sp"/>
-
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/cbClientes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cliente"
-        android:textStyle="bold"
-        android:layout_marginHorizontal="15sp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCadastrarUser"
@@ -182,7 +166,7 @@
         android:text="Cadastrar"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:layout_marginTop="25sp"
+        android:layout_marginTop="100sp"
         />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
