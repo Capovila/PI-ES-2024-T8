@@ -21,6 +21,7 @@ class CadastrarActivity : AppCompatActivity() {
     private lateinit var birthCadastrar: EditText
     private lateinit var cpfCadastrar: EditText
     private lateinit var telCadastrar: EditText
+
     private lateinit var tvNomeCadastro: TextView
     private lateinit var tvEmailCadastro: TextView
     private lateinit var tvSenhaCadastro: TextView
@@ -57,14 +58,24 @@ class CadastrarActivity : AppCompatActivity() {
         tvNomeCadastro = findViewById(R.id.tvNomeCadastro)
         tvCPFCadastro = findViewById(R.id.tvCPFCadastro)
 
+        emailCadastrar = findViewById(R.id.etEmail)
+        nomeCadastrar = findViewById(R.id.etName)
+        btnCadastrar = findViewById(R.id.btnCadastrarUser)
+        senhaCadastrar = findViewById(R.id.etPassword)
+        birthCadastrar = findViewById(R.id.etBrith)
+        cpfCadastrar = findViewById(R.id.etCPF)
+        telCadastrar = findViewById(R.id.etTel)
+
+
         btnCadastrar.setOnClickListener{
             if(nomeCadastrar.text.toString().isEmpty()||
                emailCadastrar.text.toString().isEmpty()||
                senhaCadastrar.text.toString().isEmpty()||
                birthCadastrar.text.toString().isEmpty()||
                cpfCadastrar.text.toString().isEmpty()||
-               telCadastrar.text.toString().isEmpty()){
-                var camposVazio: String = "Preencha todos os campos"
+               telCadastrar.text.toString().isEmpty())
+            {
+                var camposVazio: String = "Preencha todos os campos corretamente"
                 Snackbar.make(btnCadastrar, camposVazio, Snackbar.LENGTH_LONG ).show()
                 validarCampo(tvEmailCadastro, emailCadastrar)
                 validarCampo(tvNomeCadastro, nomeCadastrar)
@@ -72,8 +83,8 @@ class CadastrarActivity : AppCompatActivity() {
                 validarCampo(tvBirthCadastro, birthCadastrar)
                 validarCampo(tvCPFCadastro, cpfCadastrar)
                 validarCampo(tvtelCadastro, telCadastrar)
-            } else{
-
+            }else
+            {
                 hideKeybard(it)
                 var intent = Intent(this, FirstScreenActivity::class.java)
                 startActivity(intent)
