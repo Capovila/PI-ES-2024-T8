@@ -18,8 +18,18 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="150sp"
+            android:text="Cadastrar"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:textColor="@color/black"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="75sp"
+            android:paddingHorizontal="5sp"
+            android:layout_height="match_parent"
             android:textSize="20sp"
             android:text="Smart Locker"
             android:textStyle="bold"
@@ -35,10 +45,11 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNomeCadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nome"
-        android:layout_marginTop="15sp"
+        android:layout_marginTop="40sp"
         android:layout_marginHorizontal="15sp"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -53,6 +64,7 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEmailCadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="E-mail"
@@ -70,6 +82,7 @@
         android:inputType="textEmailAddress"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSenhaCadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Senha"
@@ -87,6 +100,7 @@
         android:inputType="textWebPassword"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvBirthCadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15sp"
@@ -121,7 +135,8 @@
                 android:text="CPF"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:id="@+id/tvCPFCadastro"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etCPF"
@@ -144,7 +159,8 @@
                 android:text="Telefone"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:id="@+id/tvTelCadastro"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etTel"
@@ -166,7 +182,7 @@
         android:text="Cadastrar"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:layout_marginTop="100sp"
-        />
+        android:layout_marginTop="120sp"
+         />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

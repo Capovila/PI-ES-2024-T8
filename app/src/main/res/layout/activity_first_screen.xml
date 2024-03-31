@@ -11,6 +11,7 @@
     tools:context=".FirstScreenActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:layout_marginTop="25sp"
         android:layout_width="200sp"
         android:layout_height="200sp"
         android:layout_gravity="center"
@@ -54,9 +55,17 @@
             android:textSize="15sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>
-
-
-
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnConferir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/my_button"
+        android:layout_marginTop="5sp"
+        android:textStyle="bold"
+        android:text="Consultar Armários"
+        android:paddingHorizontal="5sp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

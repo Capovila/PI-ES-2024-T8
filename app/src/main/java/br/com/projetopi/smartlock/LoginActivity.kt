@@ -1,5 +1,6 @@
 package br.com.projetopi.smartlock
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -18,6 +19,16 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etSenha: EditText
     private lateinit var tvTextoEmail: TextView
     private lateinit var tvSenhaLogin: TextView
+    private lateinit var btnRecuperarSenha: Button
+
+    private fun validarCampo(texto:TextView, campo:EditText){
+        if(campo.text.toString().isEmpty()){
+            texto.setTextColor(getColor(R.color.red))
+        }
+        else{
+            texto.setTextColor(getColor(R.color.black))
+        }
+    }
 
     private fun hideKeyboard(it: View){
         var imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -37,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
         etEmailLogin = findViewById(R.id.etEmailLogin)
         tvTextoEmail = findViewById(R.id.tvTextoEmail)
         tvSenhaLogin = findViewById(R.id.tvSenhaLogin)
+        btnRecuperarSenha = findViewById(R.id.btnRecuperarSenha)
 
         btnEntrar.setOnClickListener{
             if(etEmailLogin.text.toString().isEmpty() ||
@@ -44,21 +56,18 @@ class LoginActivity : AppCompatActivity() {
                 var mensagemVazio: String = "Insira seu e-mail e senha corretamente"
                 Snackbar.make(btnEntrar, mensagemVazio, Snackbar.LENGTH_LONG ).show()
                 hideKeyboard(it)
-                if(etEmailLogin.text.toString().isEmpty()){
-                    var textoEmail: String = tvTextoEmail.text.toString()
-                    tvTextoEmail.setTextColor(getColor(R.color.red))
-                    tvTextoEmail.text = "$textoEmail *"
-                }
-                if(etSenha.text.toString().isEmpty()) {
-                    var textoSenha: String = tvSenhaLogin.text.toString()
-                    tvSenhaLogin.setTextColor(getColor(R.color.red))
-                    tvSenhaLogin.text = "$textoSenha *"
-                }
+                validarCampo(tvTextoEmail, etEmailLogin)
+                validarCampo(tvSenhaLogin, etSenha)
             }else{
                 var mensagem = "MainActivity"
                 Snackbar.make(btnEntrar, mensagem, Snackbar.LENGTH_LONG ).show()
                 hideKeyboard(it)
             }
+        }
+
+        btnRecuperarSenha.setOnClickListener{
+            val intent = Intent(this, RecuperarSenhaActivity::class.java)
+            startActivity(intent)
         }
     }
 }

@@ -7,11 +7,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
-
 class CadastrarActivity : AppCompatActivity() {
 
     private lateinit var btnCadastrar: Button
@@ -21,9 +21,20 @@ class CadastrarActivity : AppCompatActivity() {
     private lateinit var birthCadastrar: EditText
     private lateinit var cpfCadastrar: EditText
     private lateinit var telCadastrar: EditText
-    private lateinit var cbGerente: CheckBox
-    private lateinit var cbCliente: CheckBox
-    //Colocar os outros campos dps
+    private lateinit var tvNomeCadastro: TextView
+    private lateinit var tvEmailCadastro: TextView
+    private lateinit var tvSenhaCadastro: TextView
+    private lateinit var tvBirthCadastro: TextView
+    private lateinit var tvCPFCadastro: TextView
+    private lateinit var tvtelCadastro: TextView
+    private fun validarCampo(texto: TextView, campo:EditText){
+        if(campo.text.toString().isEmpty()){
+            texto.setTextColor(getColor(R.color.red))
+        }
+        else{
+            texto.setTextColor(getColor(R.color.black))
+        }
+    }
 
     private fun hideKeybard(it: View) {
         var imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -38,14 +49,13 @@ class CadastrarActivity : AppCompatActivity() {
             insets
         }
 
-        btnCadastrar = findViewById(R.id.btnCadastrarUser)
-        nomeCadastrar = findViewById(R.id.etName)
-        emailCadastrar = findViewById(R.id.etEmail)
-        senhaCadastrar = findViewById(R.id.etPassword)
-        birthCadastrar = findViewById(R.id.etBrith)
-        cpfCadastrar = findViewById(R.id.etCPF)
-        telCadastrar = findViewById(R.id.etTel)
 
+        tvEmailCadastro = findViewById(R.id.tvEmailCadastro)
+        tvBirthCadastro = findViewById(R.id.tvBirthCadastro)
+        tvtelCadastro = findViewById(R.id.tvTelCadastro)
+        tvSenhaCadastro = findViewById(R.id.tvSenhaCadastro)
+        tvNomeCadastro = findViewById(R.id.tvNomeCadastro)
+        tvCPFCadastro = findViewById(R.id.tvCPFCadastro)
 
         btnCadastrar.setOnClickListener{
             if(nomeCadastrar.text.toString().isEmpty()||
@@ -53,11 +63,17 @@ class CadastrarActivity : AppCompatActivity() {
                senhaCadastrar.text.toString().isEmpty()||
                birthCadastrar.text.toString().isEmpty()||
                cpfCadastrar.text.toString().isEmpty()||
-               telCadastrar.text.toString().isEmpty()||
-               !cbGerente.isChecked && !cbCliente.isChecked ){
+               telCadastrar.text.toString().isEmpty()){
                 var camposVazio: String = "Preencha todos os campos"
                 Snackbar.make(btnCadastrar, camposVazio, Snackbar.LENGTH_LONG ).show()
-            }else{
+                validarCampo(tvEmailCadastro, emailCadastrar)
+                validarCampo(tvNomeCadastro, nomeCadastrar)
+                validarCampo(tvSenhaCadastro, senhaCadastrar)
+                validarCampo(tvBirthCadastro, birthCadastrar)
+                validarCampo(tvCPFCadastro, cpfCadastrar)
+                validarCampo(tvtelCadastro, telCadastrar)
+            } else{
+
                 hideKeybard(it)
                 var intent = Intent(this, FirstScreenActivity::class.java)
                 startActivity(intent)
