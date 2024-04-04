@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="350sp"
+        android:layout_marginTop="300dp"
         android:layout_gravity="center">
 
         <androidx.appcompat.widget.AppCompatButton
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/my_button"
-        android:layout_marginTop="5sp"
+        android:layout_marginTop="15dp"
         android:textStyle="bold"
         android:text="Consultar Armários"
         android:paddingHorizontal="5sp"/>

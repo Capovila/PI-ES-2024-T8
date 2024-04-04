@@ -38,8 +38,7 @@ class FirstScreenActivity : AppCompatActivity() {
         }
 
         btnConferir.setOnClickListener{
-            val message: String = "Geolocalização para consulta de armários"
-            Snackbar.make(btnConferir,message,Snackbar.LENGTH_LONG).show()
+            Snackbar.make(btnConferir,"Geolocalização para consulta de armários",Snackbar.LENGTH_LONG).show()
         }
     }
 }

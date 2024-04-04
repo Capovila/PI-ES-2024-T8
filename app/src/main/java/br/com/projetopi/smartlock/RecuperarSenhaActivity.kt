@@ -39,12 +39,12 @@ class RecuperarSenhaActivity : AppCompatActivity() {
 
         btnRecuperar.setOnClickListener{
             if(etEmailRecuperar.text.toString().isEmpty()){
-                val messageValidar = "Insira o e-mail de acesso"
-                Snackbar.make(btnRecuperar, messageValidar, Snackbar.LENGTH_LONG).show()
+
+                Snackbar.make(btnRecuperar, "Insira o e-mail de acesso", Snackbar.LENGTH_LONG).show()
                 validarCampo(tvEmailRecuperar,etEmailRecuperar)
+
             }else{
-                val message: String = "Recuperar pelo e-mail"
-                Snackbar.make(btnRecuperar, message, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(btnRecuperar, "Recuperar pelo e-mail", Snackbar.LENGTH_LONG).show()
         }   }
     }
 }
