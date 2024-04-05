@@ -96,7 +96,7 @@ class CadastrarActivity : AppCompatActivity() {
         tvCPFCadastro = findViewById(R.id.tvCPFCadastro)
 
         btnCadastrar = findViewById(R.id.btnCadastrarUser)
-        btnSair = findViewById(R.id.btnSair)
+        btnSair = findViewById(R.id.btnSairCadastro)
 
         emailCadastrar = findViewById(R.id.etEmail)
         nomeCadastrar = findViewById(R.id.etName)
@@ -138,10 +138,12 @@ class CadastrarActivity : AppCompatActivity() {
                     senhaCadastrar.text.toString())
                     .addOnCompleteListener {
                         if(it.isSuccessful){
-                            Snackbar.make(btnCadastrar, "Usuário Cadastrado", Snackbar.LENGTH_LONG).show()
+                            auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{
+                                Snackbar.make(btnCadastrar, "Confirmação de e-mail enviada", Snackbar.LENGTH_LONG).show()
+                            }
                         }
                         else{
-                            Snackbar.make(btnCadastrar, "Erro ao cadastrar usuário", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(btnCadastrar, it.exception!!.message.toString(), Snackbar.LENGTH_LONG).show()
                         }
 
                     }

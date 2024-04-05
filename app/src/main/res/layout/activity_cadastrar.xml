@@ -186,12 +186,12 @@
          />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSair"
+        android:id="@+id/btnSairCadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="15sp"
-        android:text="Sair"
+        android:text="Voltar"
         android:layout_marginTop="15dp"/>
 
 

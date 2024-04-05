@@ -75,5 +75,13 @@
         android:paddingHorizontal="15sp"
         android:layout_marginTop="125sp"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnVoltarRecSenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:text="Voltar"/>
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

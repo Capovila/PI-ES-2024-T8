@@ -69,11 +69,7 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-
-
             btnEntrar.setOnClickListener{
-
-
                     validarCampo(tvTextoEmail, etEmailLogin)
                     validarCampo(tvSenhaLogin, etSenha)
 
@@ -89,7 +85,18 @@ class LoginActivity : AppCompatActivity() {
                         )
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {
-                                    startActivity(Intent(this, MainActivity::class.java))
+                                    val verification = auth.currentUser?.isEmailVerified
+
+                                    if(verification == true){
+                                        val user = auth.currentUser
+                                        startActivity(Intent(this, MainActivity::class.java))
+                                    }else{
+                                        Snackbar.make(
+                                            btnEntrar,
+                                            "Verifique seu e-mail",
+                                            Snackbar.LENGTH_LONG
+                                        ).show()
+                                    }
                                 } else {
                                     Snackbar.make(
                                         btnEntrar,

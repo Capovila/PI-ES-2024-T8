@@ -38,7 +38,7 @@
             android:id="@+id/btnLogar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logar"
+            android:text="Entrar"
             android:textSize="15sp"
             android:background="@drawable/my_button"
             android:textColor="@color/black"
