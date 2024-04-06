@@ -1,5 +1,6 @@
 package br.com.projetopi.smartlock
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -9,12 +10,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class RecuperarSenhaActivity : AppCompatActivity() {
 
     private lateinit var btnRecuperar: Button
+    private lateinit var btnVoltar: Button
     private lateinit var tvEmailRecuperar: TextView
     private lateinit var etEmailRecuperar: EditText
+
+    private lateinit var auth: FirebaseAuth
 
     private fun validarCampo(texto: TextView, campo: EditText){
         if(campo.text.toString().isEmpty()){
@@ -34,17 +41,32 @@ class RecuperarSenhaActivity : AppCompatActivity() {
         }
 
         btnRecuperar = findViewById(R.id.btnRecuperar)
+        btnVoltar = findViewById(R.id.btnVoltarRecSenha)
+
         tvEmailRecuperar = findViewById(R.id.tvTextoEmailRecuperar)
         etEmailRecuperar = findViewById(R.id.etEmailRecuperar)
 
+        auth = Firebase.auth
+
         btnRecuperar.setOnClickListener{
+            validarCampo(tvEmailRecuperar,etEmailRecuperar)
             if(etEmailRecuperar.text.toString().isEmpty()){
-                val messageValidar = "Insira o e-mail de acesso"
-                Snackbar.make(btnRecuperar, messageValidar, Snackbar.LENGTH_LONG).show()
-                validarCampo(tvEmailRecuperar,etEmailRecuperar)
+                Snackbar.make(btnRecuperar, "Insira o e-mail de acesso", Snackbar.LENGTH_LONG).show()
+
+
             }else{
-                val message: String = "Recuperar pelo e-mail"
-                Snackbar.make(btnRecuperar, message, Snackbar.LENGTH_LONG).show()
-        }   }
+                auth.sendPasswordResetEmail(etEmailRecuperar.text.toString()).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        Snackbar.make(btnRecuperar, "E-mail enviado", Snackbar.LENGTH_LONG).show()
+                    }else{
+                        Snackbar.make(btnRecuperar, "E-mail inválido", Snackbar.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
+
+        btnVoltar.setOnClickListener{
+            startActivity(Intent(this, FirstScreenActivity::class.java))
+        }
     }
 }

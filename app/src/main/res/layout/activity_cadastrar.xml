@@ -97,14 +97,14 @@
         android:layout_width="225sp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15sp"
-        android:inputType="textWebPassword"/>
+        android:inputType="textPassword"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvBirthCadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15sp"
-        android:text="Data de Nascimento"
+        android:text="Idade"
         android:textColor="@color/black"
         android:layout_marginHorizontal="15sp"
         android:textSize="20sp"
@@ -115,7 +115,7 @@
         android:layout_marginHorizontal="15sp"
         android:layout_width="225sp"
         android:layout_height="wrap_content"
-        android:inputType="date"/>
+        android:inputType="number"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -166,7 +166,7 @@
                 android:id="@+id/etTel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="phone"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -182,7 +182,17 @@
         android:text="Cadastrar"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:layout_marginTop="120sp"
-        />
+        android:layout_marginTop="75dp"
+         />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSairCadastro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="15sp"
+        android:text="Voltar"
+        android:layout_marginTop="15dp"/>
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

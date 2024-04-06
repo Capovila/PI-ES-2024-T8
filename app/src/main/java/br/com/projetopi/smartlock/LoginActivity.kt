@@ -11,15 +11,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var btnEntrar: Button
+    private lateinit var btnRecuperarSenha: Button
+
     private lateinit var etEmailLogin: EditText
     private lateinit var etSenha: EditText
+
     private lateinit var tvTextoEmail: TextView
     private lateinit var tvSenhaLogin: TextView
-    private lateinit var btnRecuperarSenha: Button
+
+    private lateinit var auth: FirebaseAuth
+
+
 
     private fun validarCampo(texto:TextView, campo:EditText){
         if(campo.text.toString().isEmpty()){
@@ -29,6 +38,12 @@ class LoginActivity : AppCompatActivity() {
             texto.setTextColor(getColor(R.color.black))
         }
     }
+
+    private fun isNotFulfileld(): Boolean{
+        return etEmailLogin.text.toString().isEmpty() ||
+                etSenha.text.toString().isEmpty()
+    }
+
 
     private fun hideKeyboard(it: View){
         var imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -43,27 +58,59 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
+        btnRecuperarSenha = findViewById(R.id.btnRecuperarSenha)
         btnEntrar = findViewById(R.id.btnEntrar)
+
         etSenha = findViewById(R.id.etSenha)
         etEmailLogin = findViewById(R.id.etEmailLogin)
+
         tvTextoEmail = findViewById(R.id.tvTextoEmail)
         tvSenhaLogin = findViewById(R.id.tvSenhaLogin)
-        btnRecuperarSenha = findViewById(R.id.btnRecuperarSenha)
 
-        btnEntrar.setOnClickListener{
-            if(etEmailLogin.text.toString().isEmpty() ||
-                etSenha.text.toString().isEmpty()){
-                var mensagemVazio: String = "Insira seu e-mail e senha corretamente"
-                Snackbar.make(btnEntrar, mensagemVazio, Snackbar.LENGTH_LONG ).show()
-                hideKeyboard(it)
-                validarCampo(tvTextoEmail, etEmailLogin)
-                validarCampo(tvSenhaLogin, etSenha)
-            }else{
-                var mensagem = "MainActivity"
-                Snackbar.make(btnEntrar, mensagem, Snackbar.LENGTH_LONG ).show()
-                hideKeyboard(it)
+        auth = Firebase.auth
+
+            btnEntrar.setOnClickListener{
+                    validarCampo(tvTextoEmail, etEmailLogin)
+                    validarCampo(tvSenhaLogin, etSenha)
+
+                    if(isNotFulfileld()){
+                        Snackbar.make(btnEntrar, "Insira seu e-mail e senha corretamente", Snackbar.LENGTH_LONG ).show()
+                        hideKeyboard(it)
+
+                    }else {
+
+                        auth.signInWithEmailAndPassword(
+                            etEmailLogin.text.toString(),
+                            etSenha.text.toString()
+                        )
+                            .addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    val verification = auth.currentUser?.isEmailVerified
+
+                                    if(verification == true){
+                                        val user = auth.currentUser
+                                        startActivity(Intent(this, MainActivity::class.java))
+                                    }else{
+                                        Snackbar.make(
+                                            btnEntrar,
+                                            "Verifique seu e-mail",
+                                            Snackbar.LENGTH_LONG
+                                        ).show()
+                                    }
+                                } else {
+                                    Snackbar.make(
+                                        btnEntrar,
+                                        "E-mail ou senha incorretos",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+
+                            }
+
+                        hideKeyboard(it)
+                    }
             }
-        }
+
 
         btnRecuperarSenha.setOnClickListener{
             val intent = Intent(this, RecuperarSenhaActivity::class.java)
