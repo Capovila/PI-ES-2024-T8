@@ -42,7 +42,7 @@ class FirstScreenActivity : AppCompatActivity() {
         }
 
         btnConferir.setOnClickListener{
-            Snackbar.make(btnConferir,"Geolocalização para consulta de armários",Snackbar.LENGTH_LONG).show()
+            startActivity(Intent(this, ConsultarMapaActivity::class.java))
         }
     }
 }
