@@ -1,82 +1,75 @@
 package br.com.projetopi.smartlock
 
-import android.content.ContentValues.TAG
-import android.content.Intent
 import android.os.Bundle
-import android.os.PatternMatcher
-import android.util.Log
-import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class CadastrarActivity : AppCompatActivity() {
 
-    private lateinit var btnCadastrar: Button
-    private lateinit var btnSair: Button
-
-    private lateinit var nomeCadastrar: EditText
-    private lateinit var emailCadastrar: EditText
-    private lateinit var senhaCadastrar: EditText
-    private lateinit var birthCadastrar: EditText
-    private lateinit var cpfCadastrar: EditText
-    private lateinit var telCadastrar: EditText
-
-    private lateinit var tvNomeCadastro: TextView
-    private lateinit var tvEmailCadastro: TextView
-    private lateinit var tvSenhaCadastro: TextView
-    private lateinit var tvBirthCadastro: TextView
-    private lateinit var tvCPFCadastro: TextView
-    private lateinit var tvtelCadastro: TextView
-
-    private lateinit var auth: FirebaseAuth
-
-    val db = Firebase.firestore
-
-    private fun validarCampo(texto: TextView, campo:EditText){
-        if(campo.text.toString().isEmpty()){
-            texto.setTextColor(getColor(R.color.red))
-        }
-        else{
-            texto.setTextColor(getColor(R.color.black))
+    //Função que verifica se o usuario saiu de foco de um EditText e caso esteja vazio muda o TextLayout para erro
+    private fun setOnFocusChangeListener(editText: TextInputEditText, textLayout: TextInputLayout) {
+        editText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                if (editText.text.toString().isEmpty()) {
+                    textLayout.error = getString(R.string.preencha_campo)
+                } else {
+                    textLayout.error = null
+                }
+            }
         }
     }
 
-    private fun emailNotValid(): Boolean{
-        if(Patterns.EMAIL_ADDRESS.matcher(emailCadastrar.text.toString()).matches()
-            && emailCadastrar.text.toString().isNotEmpty()){
-            return false
-        }else{
-            tvEmailCadastro.setTextColor(getColor(R.color.red))
-            return true
-        }
+    //Função que retorna "false" caso um dos EditText estiverem vazios
+    private fun isFilled(): Boolean {
+        return !(etName.text.toString().isEmpty() || etEmail.text.toString().isEmpty() ||
+                    etPassword.text.toString().isEmpty() || etBirth.text.toString().isEmpty() ||
+                    etCPF.text.toString().isEmpty() || etPhone.text.toString().isEmpty())
     }
 
-    private fun isNotFulfileld(): Boolean{
-        return  emailNotValid() ||
-                nomeCadastrar.text.toString().isEmpty() ||
-                senhaCadastrar.text.toString().isEmpty() ||
-                birthCadastrar.text.toString().isEmpty() ||
-                cpfCadastrar.text.toString().isEmpty() ||
-                telCadastrar.text.toString().isEmpty()
-
-    }
-
+    //Função que faz com que o teclado do celular se esconda
     private fun hideKeybard(it: View) {
-        var imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(it.windowToken, 0)
     }
+
+    //Função que faz com que caso esteja um editText esteja vazio muda o TextLayout para erro
+    private fun showFieldErrors() {
+        val editTexts = listOf(etName, etEmail, etPassword, etBirth, etCPF, etPhone)
+        val textLayouts = listOf(tlName, tlEmail, tlPassword, tlBirth, tlCPF, tlPhone)
+
+        editTexts.forEachIndexed { index, et ->
+            if (et.text.toString().isEmpty()) {
+                textLayouts[index].error = getString(R.string.preencha_campo)
+            } else {
+                textLayouts[index].error = null
+            }
+        }
+    }
+
+    private lateinit var tlName: TextInputLayout
+    private lateinit var tlEmail: TextInputLayout
+    private lateinit var tlPassword: TextInputLayout
+    private lateinit var tlBirth: TextInputLayout
+    private lateinit var tlCPF: TextInputLayout
+    private lateinit var tlPhone: TextInputLayout
+
+    private lateinit var etName: TextInputEditText
+    private lateinit var etEmail: TextInputEditText
+    private lateinit var etPassword: TextInputEditText
+    private lateinit var etBirth: TextInputEditText
+    private lateinit var etCPF: TextInputEditText
+    private lateinit var etPhone: TextInputEditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastrar)
@@ -86,69 +79,60 @@ class CadastrarActivity : AppCompatActivity() {
             insets
         }
 
-        auth = Firebase.auth
+        val db = Firebase.firestore
+        val auth = Firebase.auth
 
-        tvEmailCadastro = findViewById(R.id.tvEmailCadastro)
-        tvBirthCadastro = findViewById(R.id.tvBirthCadastro)
-        tvtelCadastro = findViewById(R.id.tvTelCadastro)
-        tvSenhaCadastro = findViewById(R.id.tvSenhaCadastro)
-        tvNomeCadastro = findViewById(R.id.tvNomeCadastro)
-        tvCPFCadastro = findViewById(R.id.tvCPFCadastro)
+        val btnCadastrar = findViewById<Button>(R.id.btnCadastrar)
 
-        btnCadastrar = findViewById(R.id.btnCadastrarUser)
-        btnSair = findViewById(R.id.btnSairCadastro)
+        tlName = findViewById(R.id.tlName)
+        tlEmail = findViewById(R.id.tlEmail)
+        tlPassword = findViewById(R.id.tlPassword)
+        tlBirth = findViewById(R.id.tlBirth)
+        tlCPF = findViewById(R.id.tlCPF)
+        tlPhone = findViewById(R.id.tlPhone)
 
-        emailCadastrar = findViewById(R.id.etEmail)
-        nomeCadastrar = findViewById(R.id.etName)
-        senhaCadastrar = findViewById(R.id.etPassword)
-        birthCadastrar = findViewById(R.id.etBrith)
-        cpfCadastrar = findViewById(R.id.etCPF)
-        telCadastrar = findViewById(R.id.etTel)
+        etName = findViewById(R.id.etName)
+        etEmail = findViewById(R.id.etEmail)
+        etPassword = findViewById(R.id.etPassword)
+        etBirth = findViewById(R.id.etBirth)
+        etCPF = findViewById(R.id.etCPF)
+        etPhone = findViewById(R.id.etPhone)
 
+        val editTexts = listOf(etName, etEmail, etPassword, etBirth, etCPF, etPhone)
+        val textLayouts = listOf(tlName, tlEmail, tlPassword, tlBirth, tlCPF, tlPhone)
 
-        btnSair.setOnClickListener{
-            finish()
+        editTexts.forEachIndexed { lt, et ->
+            setOnFocusChangeListener(et, textLayouts[lt])
         }
 
-
-        btnCadastrar.setOnClickListener{
-            validarCampo(tvEmailCadastro, emailCadastrar)
-            validarCampo(tvNomeCadastro, nomeCadastrar)
-            validarCampo(tvSenhaCadastro, senhaCadastrar)
-            validarCampo(tvBirthCadastro, birthCadastrar)
-            validarCampo(tvCPFCadastro, cpfCadastrar)
-            validarCampo(tvtelCadastro, telCadastrar)
-
-           if(isNotFulfileld())
-            {
-                Snackbar.make(btnCadastrar, "Preencha todos os campos corretamente", Snackbar.LENGTH_LONG ).show()
-            }else
-            {
+        btnCadastrar.setOnClickListener{ it ->
+            if(isFilled()) {
                 val user = hashMapOf(
-                    "name" to nomeCadastrar.text.toString(),
-                    "email" to emailCadastrar.text.toString(),
-                    "Idade" to birthCadastrar.text.toString().toInt(),
-                    "CPF" to cpfCadastrar.text.toString().toInt(),
-                    "Telefone" to telCadastrar.text.toString().toInt()
+                    "Name" to etName.text.toString(),
+                    "Email" to etEmail.text.toString(),
+                    "Idade" to etBirth.text.toString().toInt(),
+                    "CPF" to etCPF.text.toString().toInt(),
+                    "Telefone" to etPhone.text.toString().toInt()
                 )
 
                 db.collection("users").add(user)
 
-                auth.createUserWithEmailAndPassword(emailCadastrar.text.toString(),
-                    senhaCadastrar.text.toString())
+                auth.createUserWithEmailAndPassword(etEmail.text.toString(),
+                    etPassword.text.toString())
                     .addOnCompleteListener {
                         if(it.isSuccessful){
                             auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{
                                 Snackbar.make(btnCadastrar, "Confirmação de e-mail enviada", Snackbar.LENGTH_LONG).show()
                             }
-                        }
-                        else{
+                        } else{
                             Snackbar.make(btnCadastrar, it.exception!!.message.toString(), Snackbar.LENGTH_LONG).show()
                         }
 
                     }
                 hideKeybard(it)
-
+            } else {
+                showFieldErrors()
+                Snackbar.make(btnCadastrar, "Preencha todos os campos corretamente", Snackbar.LENGTH_LONG ).show()
             }
         }
     }

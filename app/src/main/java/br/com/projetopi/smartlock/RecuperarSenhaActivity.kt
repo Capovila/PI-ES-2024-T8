@@ -30,6 +30,7 @@ class RecuperarSenhaActivity : AppCompatActivity() {
             texto.setTextColor(getColor(R.color.black))
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

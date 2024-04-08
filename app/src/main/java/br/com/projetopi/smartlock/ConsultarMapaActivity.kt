@@ -1,7 +1,6 @@
 package br.com.projetopi.smartlock
 
 import android.content.Intent
-import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -10,15 +9,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
-import br.com.projetopi.smartlock.R
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 //Data class que define os lugares que exitem armarios no mapa e suas informacoes
@@ -40,7 +36,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
     //Declaracao com lateinit das variavies que vao receber atribuicao dos elementos da view
     private lateinit var lnlaBtnMenu: LinearLayoutCompat
     private lateinit var btnIr: Button
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Esconde a barra com o nome do app que fica no canto superior da tela
@@ -76,41 +71,34 @@ class ConsultarMapaActivity : AppCompatActivity() {
             googleMap.uiSettings.isMapToolbarEnabled = false
 
             //Executa quando um marcador recebe um click
-            googleMap.setOnMarkerClickListener(object : GoogleMap.OnMarkerClickListener {
-                override fun onMarkerClick(marker: Marker?): Boolean {
+            googleMap.setOnMarkerClickListener { marker -> //Se o marcador nao for nulo
 
-                    //Se o marcador nao for nulo
-                    if (marker != null) {
+                //Atribui em variaveis as coordenadas desse marcador
+                val markerPosition = marker.position
+                val markerLatitude = markerPosition.latitude
+                val markerLongitude = markerPosition.longitude
 
-                        //Atribui em variaveis as coordenadas desse marcador
-                        val markerPosition = marker.position
-                        val markerLatitude = markerPosition.latitude
-                        val markerLongitude = markerPosition.longitude
+                //Mostra o linear layout lnlaBtnMenu
+                lnlaBtnMenu.visibility = View.VISIBLE
 
-                        //Mostra o linear layout lnlaBtnMenu
-                        lnlaBtnMenu.visibility = View.VISIBLE
+                //Executa quando o btnIr recebe um click
+                btnIr.setOnClickListener {
 
-                        //Executa quando o btnIr recebe um click
-                        btnIr.setOnClickListener {
-
-                            //Abre o Google Maps para calcular a rota ate o marcador referenciado
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?q=$markerLatitude,$markerLongitude"))
-                            startActivity(intent)
-                        }
-                    }
-                    // Retorna false para permitir que o Google Maps trate o evento e exiba a janela de informações do marcador
-                    return false
+                    //Abre o Google Maps para calcular a rota ate o marcador referenciado
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?q=$markerLatitude,$markerLongitude")
+                    )
+                    startActivity(intent)
                 }
-            })
+                // Retorna false para permitir que o Google Maps trate o evento e exiba a janela de informações do marcador
+                false
+            }
 
             //Executa quando uma janela de informacoes de um marcador
-            googleMap.setOnInfoWindowCloseListener(object : GoogleMap.OnInfoWindowCloseListener {
-                override fun onInfoWindowClose(marker: Marker?) {
-
-                    //Esconde o linear layout lnlaBtnMenu
-                    lnlaBtnMenu.visibility = View.GONE
-                }
-            })
+            googleMap.setOnInfoWindowCloseListener { //Esconde o linear layout lnlaBtnMenu
+                lnlaBtnMenu.visibility = View.GONE
+            }
 
             //Executa quando o mapa é carregado
             googleMap.setOnMapLoadedCallback{
@@ -140,14 +128,10 @@ class ConsultarMapaActivity : AppCompatActivity() {
                     )
                     .alpha(0.8f)
             )
-            marker.tag = place
+            if (marker != null) {
+                marker.tag = place
+            }
         }
     }
 
-    // Função para calcular a distancia entre duas coordenadas (em metros) **ainda nao em uso**
-    private fun calculateDistance(latLng1: LatLng, latLng2: LatLng): Float {
-        val results = FloatArray(1)
-        Location.distanceBetween(latLng1.latitude, latLng1.longitude, latLng2.latitude, latLng2.longitude, results)
-        return results[0]
-    }
 }

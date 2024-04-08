@@ -29,7 +29,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         //Handler lib faz o fade out do splasher
         Handler(Looper.getMainLooper()).postDelayed({
-            var validate = user.currentUser?.isEmailVerified
+            val validate = user.currentUser?.isEmailVerified
 
             if(auth.currentUser == null || validate == false){
                 startActivity(Intent(this, FirstScreenActivity::class.java))

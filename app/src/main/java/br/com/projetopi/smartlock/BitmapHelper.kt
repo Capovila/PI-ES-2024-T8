@@ -9,7 +9,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import java.util.ResourceBundle
 
 object BitmapHelper {
     fun vectorToBitmap (
@@ -18,10 +17,7 @@ object BitmapHelper {
         @ColorInt color: Int
     ): BitmapDescriptor{
         val vectorDrawable = ResourcesCompat.getDrawable(context.resources, id, null)
-
-        if (vectorDrawable == null) {
-            return BitmapDescriptorFactory.defaultMarker()
-        }
+            ?: return BitmapDescriptorFactory.defaultMarker()
 
         val bitmap = Bitmap.createBitmap(
             vectorDrawable.intrinsicWidth,

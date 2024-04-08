@@ -28,8 +28,6 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-
-
     private fun validarCampo(texto:TextView, campo:EditText){
         if(campo.text.toString().isEmpty()){
             texto.setTextColor(getColor(R.color.red))
@@ -46,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun hideKeyboard(it: View){
-        var imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(it.windowToken, 0)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,8 +67,8 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-            btnEntrar.setOnClickListener{
-                    validarCampo(tvTextoEmail, etEmailLogin)
+            btnEntrar.setOnClickListener{ it ->
+                validarCampo(tvTextoEmail, etEmailLogin)
                     validarCampo(tvSenhaLogin, etSenha)
 
                     if(isNotFulfileld()){
@@ -88,7 +86,6 @@ class LoginActivity : AppCompatActivity() {
                                     val verification = auth.currentUser?.isEmailVerified
 
                                     if(verification == true){
-                                        val user = auth.currentUser
                                         startActivity(Intent(this, MainActivity::class.java))
                                     }else{
                                         Snackbar.make(
