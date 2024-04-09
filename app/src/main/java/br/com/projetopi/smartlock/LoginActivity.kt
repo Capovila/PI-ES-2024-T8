@@ -69,6 +69,8 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var btnEntrar: Button
     private lateinit var btnRecuperarSenha: Button
+    private lateinit var btnCadastrar: Button
+    private lateinit var btnConferir: Button
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -88,6 +90,8 @@ class LoginActivity : AppCompatActivity() {
 
         btnRecuperarSenha = findViewById(R.id.btnRecuperarSenha)
         btnEntrar = findViewById(R.id.btnEntrar)
+        btnCadastrar = findViewById(R.id.btnCadastrar)
+        btnConferir = findViewById(R.id.btnConferir)
 
         tlEmail = findViewById(R.id.tlEmail)
         tlPassword = findViewById(R.id.tlPassword)
@@ -128,8 +132,9 @@ class LoginActivity : AppCompatActivity() {
                                         for (document in documents) {
 
                                             user.age = (document.data.get("age") as Long).toInt()
-                                            user.CPF = (document.data.get("CPF") as String)
-                                            user.phone = (document.data.get("phone") as String)
+
+                                            //user.CPF = (document.data.get("CPF") as String).toString()
+                                            //user.phone = (document.data.get("phone") as String).toString()
 
                                             simpleStorage.storageUserAccount(user)
 
@@ -174,8 +179,15 @@ class LoginActivity : AppCompatActivity() {
 
 
         btnRecuperarSenha.setOnClickListener{
-            val intent = Intent(this, RecuperarSenhaActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, RecuperarSenhaActivity::class.java))
+        }
+
+        btnCadastrar.setOnClickListener{
+            startActivity(Intent(this, CadastrarActivity::class.java))
+        }
+
+        btnConferir.setOnClickListener{
+            startActivity(Intent(this, ConsultarMapaActivity::class.java))
         }
     }
 }

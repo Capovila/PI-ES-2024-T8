@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Login"
+        android:text="Entre ou crie sua conta"
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_gravity="center"
@@ -85,15 +85,45 @@
         android:background="@color/blank"
         android:layout_gravity="right"/>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnEntrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Entrar"
+            android:textSize="15sp"
+            android:background="@drawable/my_button"
+            android:textColor="@color/black"
+            android:layout_marginRight="15sp"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCadastrar"
+            android:layout_width="wrap_content"
+            android:paddingHorizontal="10sp"
+            android:layout_height="wrap_content"
+            android:text="Cadastrar"
+            android:background="@drawable/my_button"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnEntrar"
+        android:id="@+id/btnConferir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Entrar"
         android:background="@drawable/my_button"
+        android:layout_marginTop="15dp"
         android:textStyle="bold"
-        android:textSize="15sp"
-        android:layout_marginTop="125dp"/>
+        android:text="Consultar Armários"
+        android:paddingHorizontal="5sp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

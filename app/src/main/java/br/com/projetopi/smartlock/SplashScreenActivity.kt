@@ -25,12 +25,15 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val user = simpleStorage.getUserAccountData()
 
-        if(user.uid != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }else{
-            startActivity(Intent(this, FirstScreenActivity::class.java))
-            finish()
-        }
+        Handler().postDelayed({
+            if(user.uid != null) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }else{
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        }, 2000)
+
     }
 }

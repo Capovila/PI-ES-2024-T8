@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -137,17 +138,13 @@ class CadastrarActivity : AppCompatActivity() {
 
                             db.collection("users").add(user).addOnSuccessListener {
                                 auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
-                                    Snackbar.make(btnCadastrar, "Confirmação de e-mail enviada", Snackbar.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        baseContext,
+                                        "Confirmação de e-mail enviada",
+                                        Toast.LENGTH_LONG,
+                                    ).show()
 
-                                    simpleStorage.storageUserAccount(user)
-
-                                    val iMain = Intent(this, MainActivity::class.java)
-                                    val gson = Gson()
-                                    val userJSON = gson.toJson(user)
-
-                                    iMain.putExtra("userJson", userJSON)
-                                    startActivity(iMain)
-
+                                    startActivity(Intent(this, LoginActivity::class.java))
                                     finish()
                                 }
                             }

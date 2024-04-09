@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         btnLogout.setOnClickListener{
             simpleStorage.clearUserAccount()
             auth.signOut()
-            startActivity(Intent(this,FirstScreenActivity::class.java))
+            startActivity(Intent(this,LoginActivity::class.java))
         }
 
 
