@@ -30,6 +30,7 @@ class RecuperarSenhaActivity : AppCompatActivity() {
             texto.setTextColor(getColor(R.color.black))
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -66,7 +67,7 @@ class RecuperarSenhaActivity : AppCompatActivity() {
         }
 
         btnVoltar.setOnClickListener{
-            startActivity(Intent(this, FirstScreenActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 }
