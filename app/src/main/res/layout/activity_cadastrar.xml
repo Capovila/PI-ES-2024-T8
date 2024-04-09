@@ -98,7 +98,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlBirth"
+        android:id="@+id/tlAge"
         android:layout_width="300dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
@@ -106,7 +106,7 @@
         android:hint="Idade">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etBirth"
+            android:id="@+id/etAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -127,7 +127,7 @@
             android:id="@+id/etCPF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="text"
             android:maxLength="11"
             />
 
@@ -146,7 +146,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:maxLength="9"
+            android:maxLength="15"
             />
 
     </com.google.android.material.textfield.TextInputLayout>

@@ -1,6 +1,8 @@
 package br.com.projetopi.smartlock
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -13,11 +15,15 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
 
 class CadastrarActivity : AppCompatActivity() {
 
     //Função que verifica se o usuario saiu de foco de um EditText e caso esteja vazio muda o TextLayout para erro
-    private fun setOnFocusChangeListener(editText: TextInputEditText, textLayout: TextInputLayout) {
+    private fun setOnFocusChangeListenerInputCheck(editText: TextInputEditText, textLayout: TextInputLayout) {
         editText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 if (editText.text.toString().isEmpty()) {
@@ -32,7 +38,7 @@ class CadastrarActivity : AppCompatActivity() {
     //Função que retorna "false" caso um dos EditText estiverem vazios
     private fun isFilled(): Boolean {
         return !(etName.text.toString().isEmpty() || etEmail.text.toString().isEmpty() ||
-                    etPassword.text.toString().isEmpty() || etBirth.text.toString().isEmpty() ||
+                    etPassword.text.toString().isEmpty() || etAge.text.toString().isEmpty() ||
                     etCPF.text.toString().isEmpty() || etPhone.text.toString().isEmpty())
     }
 
@@ -44,8 +50,8 @@ class CadastrarActivity : AppCompatActivity() {
 
     //Função que faz com que caso esteja um editText esteja vazio muda o TextLayout para erro
     private fun showFieldErrors() {
-        val editTexts = listOf(etName, etEmail, etPassword, etBirth, etCPF, etPhone)
-        val textLayouts = listOf(tlName, tlEmail, tlPassword, tlBirth, tlCPF, tlPhone)
+        val editTexts = listOf(etName, etEmail, etPassword, etAge, etCPF, etPhone)
+        val textLayouts = listOf(tlName, tlEmail, tlPassword, tlAge, tlCPF, tlPhone)
 
         editTexts.forEachIndexed { index, et ->
             if (et.text.toString().isEmpty()) {
@@ -59,74 +65,95 @@ class CadastrarActivity : AppCompatActivity() {
     private lateinit var tlName: TextInputLayout
     private lateinit var tlEmail: TextInputLayout
     private lateinit var tlPassword: TextInputLayout
-    private lateinit var tlBirth: TextInputLayout
+    private lateinit var tlAge: TextInputLayout
     private lateinit var tlCPF: TextInputLayout
     private lateinit var tlPhone: TextInputLayout
 
     private lateinit var etName: TextInputEditText
     private lateinit var etEmail: TextInputEditText
     private lateinit var etPassword: TextInputEditText
-    private lateinit var etBirth: TextInputEditText
+    private lateinit var etAge: TextInputEditText
     private lateinit var etCPF: TextInputEditText
     private lateinit var etPhone: TextInputEditText
+
+    private lateinit var btnCadastrar: Button
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+
+    private lateinit var simpleStorage: SimpleStorage
+
+    private val TAG = "CreateAccountActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastrar)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
-        val db = Firebase.firestore
-        val auth = Firebase.auth
+        simpleStorage = SimpleStorage(this)
 
-        val btnCadastrar = findViewById<Button>(R.id.btnCadastrar)
+        db = Firebase.firestore
+        auth = Firebase.auth
+
+        btnCadastrar = findViewById(R.id.btnCadastrar)
 
         tlName = findViewById(R.id.tlName)
         tlEmail = findViewById(R.id.tlEmail)
         tlPassword = findViewById(R.id.tlPassword)
-        tlBirth = findViewById(R.id.tlBirth)
+        tlAge = findViewById(R.id.tlAge)
         tlCPF = findViewById(R.id.tlCPF)
         tlPhone = findViewById(R.id.tlPhone)
 
         etName = findViewById(R.id.etName)
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
-        etBirth = findViewById(R.id.etBirth)
+        etAge = findViewById(R.id.etAge)
         etCPF = findViewById(R.id.etCPF)
         etPhone = findViewById(R.id.etPhone)
 
-        val editTexts = listOf(etName, etEmail, etPassword, etBirth, etCPF, etPhone)
-        val textLayouts = listOf(tlName, tlEmail, tlPassword, tlBirth, tlCPF, tlPhone)
+        val editTexts = listOf(etName, etEmail, etPassword, etAge, etCPF, etPhone)
+        val textLayouts = listOf(tlName, tlEmail, tlPassword, tlAge, tlCPF, tlPhone)
 
         editTexts.forEachIndexed { lt, et ->
-            setOnFocusChangeListener(et, textLayouts[lt])
+            setOnFocusChangeListenerInputCheck(et, textLayouts[lt])
         }
 
         btnCadastrar.setOnClickListener{ it ->
             if(isFilled()) {
-                val user = hashMapOf(
-                    "Name" to etName.text.toString(),
-                    "Email" to etEmail.text.toString(),
-                    "Idade" to etBirth.text.toString().toInt(),
-                    "CPF" to etCPF.text.toString().toInt(),
-                    "Telefone" to etPhone.text.toString().toInt()
+                val user = User(
+                    null,
+                    etName.text.toString(),
+                    etEmail.text.toString(),
+                    etPassword.text.toString(),
+                    etAge.text.toString().toInt(),
+                    etCPF.text.toString(),
+                    etPhone.text.toString()
                 )
 
-                db.collection("users").add(user)
+                auth.createUserWithEmailAndPassword(user.email!!, user.password!!)
+                    .addOnCompleteListener { authResult ->
+                        if(authResult.isSuccessful){
+                            user.uid = authResult.result.user!!.uid
+                            user.password = ""
 
-                auth.createUserWithEmailAndPassword(etEmail.text.toString(),
-                    etPassword.text.toString())
-                    .addOnCompleteListener {
-                        if(it.isSuccessful){
-                            auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{
-                                Snackbar.make(btnCadastrar, "Confirmação de e-mail enviada", Snackbar.LENGTH_LONG).show()
+                            db.collection("users").add(user).addOnSuccessListener {
+                                auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
+                                    Snackbar.make(btnCadastrar, "Confirmação de e-mail enviada", Snackbar.LENGTH_LONG).show()
+
+                                    simpleStorage.storageUserAccount(user)
+
+                                    val iMain = Intent(this, MainActivity::class.java)
+                                    val gson = Gson()
+                                    val userJSON = gson.toJson(user)
+
+                                    iMain.putExtra("userJson", userJSON)
+                                    startActivity(iMain)
+
+                                    finish()
+                                }
                             }
-                        } else{
-                            Snackbar.make(btnCadastrar, it.exception!!.message.toString(), Snackbar.LENGTH_LONG).show()
-                        }
+                        } else {
+                                Snackbar.make(btnCadastrar, authResult.exception!!.message.toString(), Snackbar.LENGTH_LONG).show()
+                                }
 
                     }
                 hideKeybard(it)

@@ -11,11 +11,11 @@
     tools:context=".LoginActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/baseline_lock_open_24"
         android:layout_gravity="center"
-        android:layout_marginTop="25sp"/>
+        android:layout_marginTop="25dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
@@ -29,65 +29,61 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50sp"
+        android:layout_marginTop="50dp"
         android:text="Login"
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_gravity="center"
         android:textColor="@color/black"/>
 
-
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlEmail"
         android:layout_width="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="15dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="25sp"
-        android:layout_marginTop="50sp"
-        android:orientation="vertical">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTextoEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="E-mail"
-            android:maxLength="8"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
+        android:hint="Email"
+        app:startIconDrawable="@drawable/baseline_email_black_18dp">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etEmailLogin"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSenhaLogin"
-            android:paddingTop="20sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLength="7"
-            android:text="Senha"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etSenha"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlPassword"
+        android:layout_width="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_height="wrap_content"
+        android:hint="Senha"
+        app:endIconMode="password_toggle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textWebPassword"/>
+            android:inputType="textPassword"
+            />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnRecuperarSenha"
-            android:layout_marginTop="5sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Recuperar senha"
-            android:textStyle="italic"
-            android:background="@color/blank"
-            android:layout_gravity="right"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRecuperarSenha"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recuperar senha"
+        android:textStyle="italic"
+        android:background="@color/blank"
+        android:layout_gravity="right"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnEntrar"
@@ -98,7 +94,6 @@
         android:background="@drawable/my_button"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:layout_marginTop="125sp"/>
-
+        android:layout_marginTop="125dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

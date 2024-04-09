@@ -41,6 +41,9 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-analytics")
+
+    implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("com.google.android.gms:play-services-maps:17.0.1")
 

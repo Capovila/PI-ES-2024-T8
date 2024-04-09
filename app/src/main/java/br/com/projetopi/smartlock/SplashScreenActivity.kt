@@ -1,5 +1,6 @@
 package br.com.projetopi.smartlock
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -11,34 +12,25 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var user: FirebaseAuth
+    private lateinit var simpleStorage: SimpleStorage
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
-        auth = FirebaseAuth.getInstance()
-        user = Firebase.auth
+        simpleStorage = SimpleStorage(this)
 
-        //Handler lib faz o fade out do splasher
-        Handler(Looper.getMainLooper()).postDelayed({
-            val validate = user.currentUser?.isEmailVerified
+        val user = simpleStorage.getUserAccountData()
 
-            if(auth.currentUser == null || validate == false){
-                startActivity(Intent(this, FirstScreenActivity::class.java))
-            }
-            else{
-                startActivity(Intent(this, MainActivity::class.java))
-            }
-
+        if(user.uid != null) {
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }, 2000)
+        }else{
+            startActivity(Intent(this, FirstScreenActivity::class.java))
+            finish()
+        }
     }
 }
