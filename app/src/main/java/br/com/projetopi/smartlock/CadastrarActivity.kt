@@ -36,6 +36,7 @@ class CadastrarActivity : AppCompatActivity() {
         }
     }
 
+
     //Função que retorna "false" caso um dos EditText estiverem vazios
     private fun isFilled(): Boolean {
         return !(etName.text.toString().isEmpty() || etEmail.text.toString().isEmpty() ||
@@ -84,7 +85,6 @@ class CadastrarActivity : AppCompatActivity() {
 
     private lateinit var simpleStorage: SimpleStorage
 
-    private val TAG = "CreateAccountActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
