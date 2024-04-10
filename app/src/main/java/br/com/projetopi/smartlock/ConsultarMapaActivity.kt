@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 
 //Data class que define os lugares que exitem armarios no mapa e suas informacoes
 data class Place (
@@ -36,6 +38,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
     //Declaracao com lateinit das variavies que vao receber atribuicao dos elementos da view
     private lateinit var lnlaBtnMenu: LinearLayoutCompat
     private lateinit var btnIr: Button
+    private lateinit var btnAlugar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Esconde a barra com o nome do app que fica no canto superior da tela
@@ -48,6 +51,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
         //Atribui às variaveis os elementos da view
         lnlaBtnMenu = findViewById(R.id.lnlaBtnMenu)
         btnIr = findViewById(R.id.btnIr)
+        btnAlugar = findViewById(R.id.btnAlugar)
 
         //Esconde o linear layout lnlaBtnMenu
         lnlaBtnMenu.visibility = View.GONE
@@ -91,6 +95,13 @@ class ConsultarMapaActivity : AppCompatActivity() {
                     )
                     startActivity(intent)
                 }
+
+                btnAlugar.setOnClickListener {
+                    Toast.makeText(baseContext, "Você precisa estar logado para alugar um armário", Toast.LENGTH_LONG).show()
+
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
+                }
                 // Retorna false para permitir que o Google Maps trate o evento e exiba a janela de informações do marcador
                 false
             }
@@ -124,7 +135,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                     .snippet(place.address)
                     .position(place.latLng)
                     .icon(
-                        BitmapHelper.vectorToBitmap(this, R.drawable.logo, ContextCompat.getColor(this, R.color.red))
+                        BitmapHelper.vectorToBitmap(this, R.drawable.logo, ContextCompat.getColor(this, R.color.white))
                     )
                     .alpha(0.8f)
             )
