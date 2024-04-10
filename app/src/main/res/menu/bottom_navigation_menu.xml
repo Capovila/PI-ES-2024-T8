@@ -2,11 +2,16 @@
     <item
         android:id="@+id/page_1"
         android:enabled="true"
-        android:icon="@drawable/baseline_email_black_18dp"
-        android:title="Text1"/>
+        android:icon="@drawable/baseline_person_24"
+        android:title="Perfil"/>
     <item
         android:id="@+id/page_2"
         android:enabled="true"
+        android:icon="@drawable/baseline_map_24"
+        android:title="Mapa"/>
+    <item
+        android:id="@+id/page_3"
+        android:enabled="true"
         android:icon="@drawable/baseline_lock_open_24"
-        android:title="Text2"/>
+        android:title="Locação"/>
 </menu>
