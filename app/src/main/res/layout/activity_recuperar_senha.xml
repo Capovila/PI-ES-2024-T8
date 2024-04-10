@@ -8,14 +8,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/cardview_shadow_start_color"
-    tools:context=".LoginActivity">
+    tools:context=".RecuperarSenhaActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/baseline_lock_open_24"
         android:layout_gravity="center"
-        android:layout_marginTop="25sp"/>
+        android:layout_marginTop="25dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
@@ -29,39 +29,32 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50sp"
-        android:text="Recuperar Senha"
+        android:layout_marginTop="50dp"
+        android:text="Recuperar senha"
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_gravity="center"
         android:textColor="@color/black"/>
 
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlEmail"
         android:layout_width="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="15dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="25sp"
-        android:layout_marginTop="100sp"
-        android:orientation="vertical">
+        android:hint="Email"
+        app:startIconDrawable="@drawable/baseline_email_black_18dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTextoEmailRecuperar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="E-mail"
-            android:maxLength="8"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etEmailRecuperar"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRecuperar"
@@ -72,16 +65,7 @@
         android:background="@drawable/my_button"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:paddingHorizontal="15sp"
-        android:layout_marginTop="125sp"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnVoltarRecSenha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:text="Voltar"/>
-
+        android:paddingHorizontal="15dp"
+        android:layout_marginTop="125dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

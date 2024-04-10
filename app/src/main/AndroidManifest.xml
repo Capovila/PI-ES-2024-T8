@@ -30,9 +30,6 @@
             android:name=".CadastrarActivity"
             android:exported="false" />
         <activity
-            android:name=".FirstScreenActivity"
-            android:exported="false" />
-        <activity
             android:name=".SplashScreenActivity"
             android:exported="true">
             <intent-filter>
@@ -44,7 +41,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${GOOGLE_MAPS_API_KEY}"/>
+            android:value="AIzaSyBchAhmXE3YrzICtfKKO_3oYb8OT1RFFlY"/>
 
     </application>
 
