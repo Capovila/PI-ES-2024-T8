@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "953629712126",
-    "project_id": "projeto-integrador-f7117",
-    "storage_bucket": "projeto-integrador-f7117.appspot.com"
+    "project_number": "749504388752",
+    "project_id": "pi-es-2024-t8",
+    "storage_bucket": "pi-es-2024-t8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:953629712126:android:dbd0f8abf052cd58a9cfaf",
+        "mobilesdk_app_id": "1:749504388752:android:a1348a37ecf7241a084215",
         "android_client_info": {
           "package_name": "br.com.projetopi.smartlock"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDxxnHA0yTAiTqjzO33RejC1MA5mIoAR8k"
+          "current_key": "AIzaSyCqCdxz022vyWqmNhgGXjBj2KrtFTuNVqU"
         }
       ],
       "services": {
