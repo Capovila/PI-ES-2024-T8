@@ -43,4 +43,6 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="preencha_campo">Preencha o campo</string>
+    <string name="formato_email">O formato do email digitado está incorreto</string>
 </resources>
