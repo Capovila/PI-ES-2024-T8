@@ -43,7 +43,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTextoEmailRecuperar1"
+            android:id="@+id/tvTextoEmail1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Digite seu e-mail para recuperar sua senha:"
@@ -53,7 +53,7 @@
             android:layout_margin="10dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTextoEmailRecuperar2"
+            android:id="@+id/tvTextoEmailRecuperar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="E-mail"
