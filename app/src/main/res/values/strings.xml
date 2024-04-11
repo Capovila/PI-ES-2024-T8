@@ -45,4 +45,6 @@
     </string>
     <string name="preencha_campo">Preencha o campo</string>
     <string name="formato_email">O formato do email digitado está incorreto</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
