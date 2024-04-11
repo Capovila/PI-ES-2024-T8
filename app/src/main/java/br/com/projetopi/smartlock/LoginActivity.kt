@@ -148,7 +148,7 @@ class LoginActivity : AppCompatActivity() {
                                             finish()
                                         }
                                     }
-                                    .addOnFailureListener { exception ->
+                                    .addOnFailureListener {
                                         Snackbar.make(
                                             btnEntrar,
                                             "Falha ao buscar os dados",

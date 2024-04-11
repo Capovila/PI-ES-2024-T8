@@ -5,4 +5,7 @@
     <color name="red">#FF0000</color>
     <color name="blank">#00000000</color>
     <color name="main_blue">#112E74</color>
+    <color name="grey">#808080</color>
+    <color name="cool_blue">#add8e6</color>
+    <color name="navy_blue">#000080</color>
 </resources>
