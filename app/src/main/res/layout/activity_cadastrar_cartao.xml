@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/cardview_shadow_start_color"
+    tools:context=".CadastrarCartaoActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/baseline_lock_open_24"
+        android:layout_gravity="center"
+        android:layout_marginTop="25sp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Smart Locker"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40sp"
+        android:text="Cadastrar cartão"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"/>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25sp"
+        android:layout_marginTop="40sp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNumeroCartao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Numero do cartão"
+            android:maxLength="16"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etNumeroCartao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number|numberSigned"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDataVencimento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data de Vencimento"
+            android:maxLength="18"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etDataVencimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number|numberSigned"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCVV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CVV"
+            android:maxLength="16"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etCVV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number|numberSigned"/>
+
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNomeTitular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome do titular"
+            android:maxLength="16"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etNomeTitular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number|numberSigned"/>
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCadastroCartao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Cadastrar"
+        android:background="@drawable/my_button"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:paddingHorizontal="10sp"
+        android:layout_marginTop="40dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnVoltarCartao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Voltar"/>
+
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
