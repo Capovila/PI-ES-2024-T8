@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         replaceFragment(Mapa())
+        binding.bottomNavigationView.menu.findItem(R.id.page_2).isChecked = true
 
         var badge = binding.bottomNavigationView.getOrCreateBadge(R.id.page_3)
         badge.isVisible = true
