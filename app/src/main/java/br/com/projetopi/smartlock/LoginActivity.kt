@@ -129,11 +129,6 @@ class LoginActivity : AppCompatActivity() {
                                     .addOnSuccessListener { documents ->
                                         for (document in documents) {
 
-                                            user.age = (document.data.get("age") as Long).toInt()
-
-                                            //user.CPF = (document.data.get("CPF") as String).toString()
-                                            //user.phone = (document.data.get("phone") as String).toString()
-
                                             simpleStorage.storageUserAccount(user)
 
                                             val iMain = Intent(this, MainActivity::class.java)

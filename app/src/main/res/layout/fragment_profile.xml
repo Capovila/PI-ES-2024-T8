@@ -1,15 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile">
+    tools:context=".Profile"
+    android:orientation="vertical"
+    android:background="@color/material_dynamic_neutral50"
+    >
 
-    <TextView
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:orientation="horizontal">
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/baseline_person_24"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nome do Usuário"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email do usuário"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:text="Cartão Cadastrado"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:text="Dados do cartão a serem mostrados..."
+        android:textColor="@color/black"
+        android:textSize="15dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Perfil"
-        android:textSize="30sp"
-        android:layout_gravity="center"/>
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="100dp"
+        android:text="Logout"/>
 
-</FrameLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
