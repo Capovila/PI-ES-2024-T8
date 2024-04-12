@@ -77,8 +77,6 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var simpleStorage: SimpleStorage
 
-    private val TAG = "LoginActivity"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

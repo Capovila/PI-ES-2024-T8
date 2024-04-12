@@ -81,11 +81,12 @@ class ConsultarMapaActivity : AppCompatActivity() {
                 btnIr.setOnClickListener {
 
                     //Abre o Google Maps para calcular a rota ate o marcador referenciado
-                    val intent = Intent(
+
+                    startActivity(Intent(
                         Intent.ACTION_VIEW,
                         Uri.parse("http://maps.google.com/maps?q=$markerLatitude,$markerLongitude")
+                        )
                     )
-                    startActivity(intent)
                 }
 
                 btnAlugar.setOnClickListener {

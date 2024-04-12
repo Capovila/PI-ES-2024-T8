@@ -7,20 +7,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:gravity="center"
+    android:gravity="bottom"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="35sp"
-        android:text="Main Activity..."/>
+        android:layout_weight="1">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:text="Logout"/>
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_navigation_menu"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
