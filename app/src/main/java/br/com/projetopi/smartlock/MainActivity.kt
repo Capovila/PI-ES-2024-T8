@@ -36,19 +36,22 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         replaceFragment(Mapa())
-
         var badge = binding.bottomNavigationView.getOrCreateBadge(R.id.page_3)
+
         badge.isVisible = true
+
+        binding.bottomNavigationView.menu.findItem(R.id.page_2).isChecked = true
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.page_1 -> replaceFragment(Profile())
+                R.id.page_1 -> {
+//                    replaceFragment(Profile())
+                    simpleStorage.clearUserAccount()
+                    auth.signOut()
+                    startActivity(Intent(this,LoginActivity::class.java))
+                }
                 R.id.page_2 -> replaceFragment(Mapa())
                 R.id.page_3 -> replaceFragment(Locacoes())
-
-                else ->{
-
-                }
             }
             true
         }

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 
+//Código mínimo para uma fragment usual 
 class Mapa : Fragment() {
     private lateinit var textMapa: TextView
     private lateinit var btnSnackBar: Button
