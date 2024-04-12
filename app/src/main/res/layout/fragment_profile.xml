@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:orientation="horizontal">
+
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -22,24 +23,22 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="bottom">
+
+
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nome do Usuário"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUserEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email do usuário"
                 android:gravity="center"
-                android:textSize="20sp"
+                android:textSize="15sp"
+                android:layout_marginBottom="15dp"
+                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:layout_marginTop="15dp"/>
+               />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

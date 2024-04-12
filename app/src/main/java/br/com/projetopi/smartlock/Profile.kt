@@ -7,12 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
 class Profile : Fragment() {
     private lateinit var btnLogout: Button
+    private lateinit var tvUserEmail: TextView
+
     private lateinit var auth: FirebaseAuth
     private lateinit var simpleStorage: SimpleStorage
 
@@ -24,8 +29,14 @@ class Profile : Fragment() {
 
         btnLogout = root.findViewById(R.id.btnLogout)
         simpleStorage = SimpleStorage(requireContext())
+        tvUserEmail = root.findViewById(R.id.tvUserEmail)
 
         auth = Firebase.auth
+
+        val user: User = simpleStorage.getUserAccountData()
+
+        tvUserEmail.setText(user.email)
+
 
         btnLogout.setOnClickListener{
             simpleStorage.clearUserAccount()
