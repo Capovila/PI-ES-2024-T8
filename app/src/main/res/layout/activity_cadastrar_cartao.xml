@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Smart Locker"
         android:textStyle="bold"
-        android:textSize="25sp"
+        android:textSize="28sp"
         android:layout_gravity="center"
         android:textColor="@color/black"/>
 
