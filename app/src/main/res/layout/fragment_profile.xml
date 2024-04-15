@@ -26,6 +26,16 @@
             android:orientation="vertical"
             android:layout_gravity="bottom">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nome do usuário"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:layout_marginBottom="15dp"
+                android:textStyle="bold"
+                />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -68,6 +78,14 @@
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="100dp"
         android:text="Logout"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnTeste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="100dp"
+        android:text="Teste"/>
 
 
 
