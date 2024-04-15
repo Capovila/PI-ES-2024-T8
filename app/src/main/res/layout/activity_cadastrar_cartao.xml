@@ -15,7 +15,7 @@
         android:layout_height="100sp"
         android:src="@drawable/baseline_lock_open_24"
         android:layout_gravity="center"
-        android:layout_marginTop="25sp"/>
+        android:layout_marginTop="24sp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
