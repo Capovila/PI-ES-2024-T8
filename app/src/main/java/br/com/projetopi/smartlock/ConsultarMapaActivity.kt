@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
+import br.com.projetopi.smartlock.databinding.ActivityConsultarMapaBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -27,26 +28,20 @@ class ConsultarMapaActivity : AppCompatActivity() {
         Place("Ponto2", LatLng(-22.847644, -47.062139), "Parque Dom Pedro, Jardim Santa Genebra", "Na entrada das águas")
     )
 
-    //Declaracao com lateinit das variavies que vao receber atribuicao dos elementos da view
-    private lateinit var lnlaBtnMenu: LinearLayoutCompat
-    private lateinit var btnIr: Button
-    private lateinit var btnAlugar: Button
+    private lateinit var binding: ActivityConsultarMapaBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Esconde a barra com o nome do app que fica no canto superior da tela
         supportActionBar?.hide()
 
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_consultar_mapa)
+        binding = ActivityConsultarMapaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        //Atribui às variaveis os elementos da view
-        lnlaBtnMenu = findViewById(R.id.lnlaBtnMenu)
-        btnIr = findViewById(R.id.btnIr)
-        btnAlugar = findViewById(R.id.btnAlugar)
 
         //Esconde o linear layout lnlaBtnMenu
-        lnlaBtnMenu.visibility = View.GONE
+        binding.lnlaBtnMenu.visibility = View.GONE
 
         //Atribui ao map_fragment o mapa vindo do google cloud
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
@@ -75,10 +70,10 @@ class ConsultarMapaActivity : AppCompatActivity() {
                 val markerLongitude = markerPosition.longitude
 
                 //Mostra o linear layout lnlaBtnMenu
-                lnlaBtnMenu.visibility = View.VISIBLE
+                binding.lnlaBtnMenu.visibility = View.VISIBLE
 
                 //Executa quando o btnIr recebe um click
-                btnIr.setOnClickListener {
+                binding.btnIr.setOnClickListener {
 
                     //Abre o Google Maps para calcular a rota ate o marcador referenciado
 
@@ -89,7 +84,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                     )
                 }
 
-                btnAlugar.setOnClickListener {
+                binding.btnAlugar.setOnClickListener {
                     Toast.makeText(baseContext, "Você precisa estar logado para alugar um armário", Toast.LENGTH_LONG).show()
 
                     startActivity(Intent(this, LoginActivity::class.java))
@@ -101,7 +96,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
             //Executa quando uma janela de informacoes de um marcador
             googleMap.setOnInfoWindowCloseListener { //Esconde o linear layout lnlaBtnMenu
-                lnlaBtnMenu.visibility = View.GONE
+                binding.lnlaBtnMenu.visibility = View.GONE
             }
 
             //Executa quando o mapa é carregado
@@ -114,6 +109,10 @@ class ConsultarMapaActivity : AppCompatActivity() {
                 //Move a camera para mostrar o mapa com os limites definidos com um padding das bordas de 300px
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
             }
+        }
+
+        binding.btnBack.setOnClickListener{
+            finish()
         }
     }
 

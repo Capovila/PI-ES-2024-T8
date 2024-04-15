@@ -31,27 +31,7 @@ class Mapa() : Fragment() {
     private lateinit var lnlaBtnMenuFragment: LinearLayoutCompat
     private lateinit var btnIrFragment: Button
     private lateinit var btnAlugarFragment: Button
-
-    private fun addMarkers(googleMap: GoogleMap) {
-
-        //Para cada lugar da lista places adiciona um marcador com as opcoes definidas
-        places.forEach {place ->
-            val marker = googleMap.addMarker(
-                MarkerOptions()
-                    .title(place.name)
-                    .snippet(place.address)
-                    .position(place.latLng)
-                    .icon(
-                        BitmapHelper.vectorToBitmap(requireContext(), R.drawable.logo, ContextCompat.getColor(requireContext(), R.color.white))
-                    )
-                    .alpha(0.8f)
-            )
-            if (marker != null) {
-                marker.tag = place
-            }
-        }
-    }
-
+    private lateinit var btnBack: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +40,9 @@ class Mapa() : Fragment() {
         val root = inflater.inflate(R.layout.fragment_mapa, container, false)
         lnlaBtnMenuFragment = root.findViewById(R.id.lnlaBtnMenuFragment)
         btnIrFragment = root.findViewById(R.id.btnIrFragment)
-        btnAlugarFragment = root. findViewById(R.id.btnAlugarFragment)
+        btnAlugarFragment = root.findViewById(R.id.btnAlugarFragment)
+        btnBack = root.findViewById(R.id.btnBack)
+
 
         lnlaBtnMenuFragment.visibility = View.GONE
 
@@ -112,8 +94,26 @@ class Mapa() : Fragment() {
 
         }
 
-
-
         return root
+    }
+
+    private fun addMarkers(googleMap: GoogleMap) {
+
+        //Para cada lugar da lista places adiciona um marcador com as opcoes definidas
+        places.forEach {place ->
+            val marker = googleMap.addMarker(
+                MarkerOptions()
+                    .title(place.name)
+                    .snippet(place.address)
+                    .position(place.latLng)
+                    .icon(
+                        BitmapHelper.vectorToBitmap(requireContext(), R.drawable.logo, ContextCompat.getColor(requireContext(), R.color.white))
+                    )
+                    .alpha(0.8f)
+            )
+            if (marker != null) {
+                marker.tag = place
+            }
+        }
     }
 }
