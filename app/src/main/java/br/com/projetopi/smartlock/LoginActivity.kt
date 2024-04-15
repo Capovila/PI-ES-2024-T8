@@ -78,10 +78,10 @@ class LoginActivity : AppCompatActivity() {
                                             simpleStorage.storageUserAccount(user)
 
                                             val iMain = Intent(this, MainActivity::class.java)
-                                            val gson = Gson()
-                                            val userJSON = gson.toJson(user)
-
-                                            iMain.putExtra("userJson", userJSON)
+//                                            val gson = Gson()
+//                                            val userJSON = gson.toJson(user)
+//
+//                                            iMain.putExtra("userJson", userJSON)
                                             startActivity(iMain)
 
                                             finish()

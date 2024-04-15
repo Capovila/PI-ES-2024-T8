@@ -31,7 +31,6 @@ class Mapa() : Fragment() {
     private lateinit var lnlaBtnMenuFragment: LinearLayoutCompat
     private lateinit var btnIrFragment: Button
     private lateinit var btnAlugarFragment: Button
-    private lateinit var btnBack: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +40,6 @@ class Mapa() : Fragment() {
         lnlaBtnMenuFragment = root.findViewById(R.id.lnlaBtnMenuFragment)
         btnIrFragment = root.findViewById(R.id.btnIrFragment)
         btnAlugarFragment = root.findViewById(R.id.btnAlugarFragment)
-        btnBack = root.findViewById(R.id.btnBack)
 
 
         lnlaBtnMenuFragment.visibility = View.GONE
