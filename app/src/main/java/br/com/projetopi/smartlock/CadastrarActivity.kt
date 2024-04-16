@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import br.com.projetopi.smartlock.databinding.ActivityCadastrarBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -23,62 +24,8 @@ import com.google.gson.Gson
 
 class CadastrarActivity : AppCompatActivity() {
 
-    //Função que verifica se o usuario saiu de foco de um EditText e caso esteja vazio muda o TextLayout para erro
-    private fun setOnFocusChangeListenerInputCheck(editText: TextInputEditText, textLayout: TextInputLayout) {
-        editText.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                if (editText.text.toString().isEmpty()) {
-                    textLayout.error = getString(R.string.preencha_campo)
-                } else {
-                    textLayout.error = null
-                }
-            }
-        }
-    }
 
-
-    //Função que retorna "false" caso um dos EditText estiverem vazios
-    private fun isFilled(): Boolean {
-        return !(etName.text.toString().isEmpty() || etEmail.text.toString().isEmpty() ||
-                    etPassword.text.toString().isEmpty() || etAge.text.toString().isEmpty() ||
-                    etCPF.text.toString().isEmpty() || etPhone.text.toString().isEmpty())
-    }
-
-    //Função que faz com que o teclado do celular se esconda
-    private fun hideKeybard(it: View) {
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(it.windowToken, 0)
-    }
-
-    //Função que faz com que caso esteja um editText esteja vazio muda o TextLayout para erro
-    private fun showFieldErrors() {
-        val editTexts = listOf(etName, etEmail, etPassword, etAge, etCPF, etPhone)
-        val textLayouts = listOf(tlName, tlEmail, tlPassword, tlAge, tlCPF, tlPhone)
-
-        editTexts.forEachIndexed { index, et ->
-            if (et.text.toString().isEmpty()) {
-                textLayouts[index].error = getString(R.string.preencha_campo)
-            } else {
-                textLayouts[index].error = null
-            }
-        }
-    }
-
-    private lateinit var tlName: TextInputLayout
-    private lateinit var tlEmail: TextInputLayout
-    private lateinit var tlPassword: TextInputLayout
-    private lateinit var tlAge: TextInputLayout
-    private lateinit var tlCPF: TextInputLayout
-    private lateinit var tlPhone: TextInputLayout
-
-    private lateinit var etName: TextInputEditText
-    private lateinit var etEmail: TextInputEditText
-    private lateinit var etPassword: TextInputEditText
-    private lateinit var etAge: TextInputEditText
-    private lateinit var etCPF: TextInputEditText
-    private lateinit var etPhone: TextInputEditText
-
-    private lateinit var btnCadastrar: Button
+    private lateinit var binding: ActivityCadastrarBinding
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -86,48 +33,36 @@ class CadastrarActivity : AppCompatActivity() {
     private lateinit var simpleStorage: SimpleStorage
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cadastrar)
+        binding = ActivityCadastrarBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         simpleStorage = SimpleStorage(this)
 
         db = Firebase.firestore
         auth = Firebase.auth
 
-        btnCadastrar = findViewById(R.id.btnCadastrar)
 
-        tlName = findViewById(R.id.tlName)
-        tlEmail = findViewById(R.id.tlEmail)
-        tlPassword = findViewById(R.id.tlPassword)
-        tlAge = findViewById(R.id.tlAge)
-        tlCPF = findViewById(R.id.tlCPF)
-        tlPhone = findViewById(R.id.tlPhone)
 
-        etName = findViewById(R.id.etName)
-        etEmail = findViewById(R.id.etEmail)
-        etPassword = findViewById(R.id.etPassword)
-        etAge = findViewById(R.id.etAge)
-        etCPF = findViewById(R.id.etCPF)
-        etPhone = findViewById(R.id.etPhone)
-
-        val editTexts = listOf(etName, etEmail, etPassword, etAge, etCPF, etPhone)
-        val textLayouts = listOf(tlName, tlEmail, tlPassword, tlAge, tlCPF, tlPhone)
+        val editTexts = listOf(binding.etName, binding.etEmail, binding.etPassword, binding.etAge, binding.etCPF, binding.etPhone)
+        val textLayouts = listOf(binding.tlName, binding.tlEmail, binding.tlPassword, binding.tlAge, binding.tlCPF, binding.tlPhone)
 
         editTexts.forEachIndexed { lt, et ->
             setOnFocusChangeListenerInputCheck(et, textLayouts[lt])
         }
 
-        btnCadastrar.setOnClickListener{ it ->
+        binding.btnCadastrar.setOnClickListener{ it ->
             if(isFilled()) {
                 val user = User(
                     null,
-                    etName.text.toString(),
-                    etEmail.text.toString(),
-                    etPassword.text.toString(),
-                    etAge.text.toString().toInt(),
-                    etCPF.text.toString(),
-                    etPhone.text.toString()
+                    binding.etName.text.toString(),
+                    binding.etEmail.text.toString(),
+                    binding.etPassword.text.toString(),
+                    binding.etAge.text.toString().toInt(),
+                    binding.etCPF.text.toString(),
+                    binding.etPhone.text.toString()
                 )
 
                 auth.createUserWithEmailAndPassword(user.email!!, user.password!!)
@@ -149,15 +84,59 @@ class CadastrarActivity : AppCompatActivity() {
                                 }
                             }
                         } else {
-                                Snackbar.make(btnCadastrar, authResult.exception!!.message.toString(), Snackbar.LENGTH_LONG).show()
+                                Snackbar.make(binding.btnCadastrar, authResult.exception!!.message.toString(), Snackbar.LENGTH_LONG).show()
                                 }
 
                     }
                 hideKeybard(it)
             } else {
                 showFieldErrors()
-                Snackbar.make(btnCadastrar, "Preencha todos os campos corretamente", Snackbar.LENGTH_LONG ).show()
+                Snackbar.make(binding.btnCadastrar, "Preencha todos os campos corretamente", Snackbar.LENGTH_LONG ).show()
+            }
+        }
+
+        binding.btnBack.setOnClickListener{
+            finish()
+        }
+    }
+    //Função que verifica se o usuario saiu de foco de um EditText e caso esteja vazio muda o TextLayout para erro
+    private fun setOnFocusChangeListenerInputCheck(editText: TextInputEditText, textLayout: TextInputLayout) {
+        editText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                if (editText.text.toString().isEmpty()) {
+                    textLayout.error = getString(R.string.preencha_campo)
+                } else {
+                    textLayout.error = null
+                }
             }
         }
     }
+
+    //Função que retorna "false" caso um dos EditText estiverem vazios
+    private fun isFilled(): Boolean {
+        return !(binding.etName.text.toString().isEmpty() || binding.etEmail.text.toString().isEmpty() ||
+                binding.etPassword.text.toString().isEmpty() || binding.etAge.text.toString().isEmpty() ||
+                binding.etCPF.text.toString().isEmpty() || binding.etPhone.text.toString().isEmpty())
+    }
+
+    //Função que faz com que o teclado do celular se esconda
+    private fun hideKeybard(it: View) {
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(it.windowToken, 0)
+    }
+
+    //Função que faz com que caso esteja um editText esteja vazio muda o TextLayout para erro
+    private fun showFieldErrors() {
+        val editTexts = listOf(binding.etName, binding.etEmail, binding.etPassword, binding.etAge, binding.etCPF, binding.etPhone)
+        val textLayouts = listOf(binding.tlName, binding.tlEmail, binding.tlPassword, binding.tlAge, binding.tlCPF, binding.tlPhone)
+
+        editTexts.forEachIndexed { index, et ->
+            if (et.text.toString().isEmpty()) {
+                textLayouts[index].error = getString(R.string.preencha_campo)
+            } else {
+                textLayouts[index].error = null
+            }
+        }
+    }
+
 }

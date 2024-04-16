@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var auth: FirebaseAuth
-
     private lateinit var simpleStorage: SimpleStorage
 
     private fun replaceFragment(fragment: Fragment){
@@ -45,27 +44,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.page_1 -> {
-//                    replaceFragment(Profile())
-                    simpleStorage.clearUserAccount()
-                    auth.signOut()
-                    startActivity(Intent(this,LoginActivity::class.java))
-                }
+                R.id.page_1 -> replaceFragment(Profile())
                 R.id.page_2 -> replaceFragment(Mapa())
                 R.id.page_3 -> replaceFragment(Locacoes())
             }
             true
         }
 
-        simpleStorage = SimpleStorage(this)
-
-        auth = Firebase.auth
-
-        //btnLogout.setOnClickListener{
-            //simpleStorage.clearUserAccount()
-            //auth.signOut()
-            //startActivity(Intent(this,LoginActivity::class.java))
-        //}
     }
 }
 

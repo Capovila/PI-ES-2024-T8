@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Mapa">
+    tools:context=".Mapa"
+    android:orientation="vertical"
+    android:gravity="bottom">
 
-    <TextView
-        android:id="@+id/textMapa"
-        android:layout_width="wrap_content"
+    <fragment
+        android:id="@+id/map_fragmentMain"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mapa"
-        android:textSize="30sp"
-        android:layout_gravity="center"/>
+        android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/btnSnackBar"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/lnlaBtnMenuFragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Click"/>
+        android:orientation="horizontal"
+        android:background="@color/blank"
+        android:gravity="center"
+        android:padding="30dp">
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnIrFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:layout_weight="1"
+            android:text="Ir até lá"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAlugarFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alugar Armário"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

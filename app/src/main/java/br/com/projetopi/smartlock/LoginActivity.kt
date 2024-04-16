@@ -11,6 +11,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.viewbinding.ViewBinding
+import br.com.projetopi.smartlock.databinding.ActivityLoginBinding
+import br.com.projetopi.smartlock.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -23,54 +26,7 @@ import com.google.gson.Gson
 
 class LoginActivity : AppCompatActivity() {
 
-    //Função que verifica se o usuario saiu de foco de um EditText e caso esteja vazio muda o TextLayout para erro
-    private fun setOnFocusChangeListenerInputCheck(editText: TextInputEditText, textLayout: TextInputLayout) {
-        editText.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                if (editText.text.toString().isEmpty()) {
-                    textLayout.error = getString(R.string.preencha_campo)
-                } else {
-                    textLayout.error = null
-                }
-            }
-        }
-    }
-
-    //Função que retorna "false" caso um dos EditText estiverem vazios
-    private fun isFilled(): Boolean {
-        return !(etEmail.text.toString().isEmpty() ||
-                etPassword.text.toString().isEmpty())
-    }
-
-    private fun hideKeyboard(it: View){
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(it.windowToken, 0)
-    }
-
-    //Função que faz com que caso esteja um editText esteja vazio muda o TextLayout para erro
-    private fun showFieldErrors() {
-        val editTexts = listOf(etEmail, etPassword)
-        val textLayouts = listOf(tlEmail, tlPassword)
-
-        editTexts.forEachIndexed { index, et ->
-            if (et.text.toString().isEmpty()) {
-                textLayouts[index].error = getString(R.string.preencha_campo)
-            } else {
-                textLayouts[index].error = null
-            }
-        }
-    }
-
-    private lateinit var tlEmail: TextInputLayout
-    private lateinit var tlPassword: TextInputLayout
-
-    private lateinit var etEmail: TextInputEditText
-    private lateinit var etPassword: TextInputEditText
-
-    private lateinit var btnEntrar: Button
-    private lateinit var btnRecuperarSenha: Button
-    private lateinit var btnCadastrar: Button
-    private lateinit var btnConferir: Button
+    private lateinit var binding: ActivityLoginBinding
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -79,35 +35,25 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         simpleStorage = SimpleStorage(this)
 
         db = Firebase.firestore
         auth = Firebase.auth
 
-        btnRecuperarSenha = findViewById(R.id.btnRecuperarSenha)
-        btnEntrar = findViewById(R.id.btnEntrar)
-        btnCadastrar = findViewById(R.id.btnCadastrar)
-        btnConferir = findViewById(R.id.btnConferir)
-
-        tlEmail = findViewById(R.id.tlEmail)
-        tlPassword = findViewById(R.id.tlPassword)
-
-        etEmail = findViewById(R.id.etEmail)
-        etPassword = findViewById(R.id.etPassword)
-
-        val editTexts = listOf(etEmail, etPassword)
-        val textLayouts = listOf(tlEmail, tlPassword)
+        val editTexts = listOf(binding.etEmail, binding.etPassword)
+        val textLayouts = listOf(binding.tlEmail, binding.tlPassword)
 
         editTexts.forEachIndexed { lt, et ->
             setOnFocusChangeListenerInputCheck(et, textLayouts[lt])
         }
 
-        btnEntrar.setOnClickListener { it ->
+        binding.btnEntrar.setOnClickListener { it ->
             if (isFilled()) {
-                val email = etEmail.text.toString()
-                val password = etPassword.text.toString()
+                val email = binding.etEmail.text.toString()
+                val password = binding.etPassword.text.toString()
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
@@ -129,18 +75,13 @@ class LoginActivity : AppCompatActivity() {
                                     .addOnSuccessListener { documents ->
                                         for (document in documents) {
 
-                                            user.age = (document.data.get("age") as Long).toInt()
-
-                                            //user.CPF = (document.data.get("CPF") as String).toString()
-                                            //user.phone = (document.data.get("phone") as String).toString()
-
                                             simpleStorage.storageUserAccount(user)
 
                                             val iMain = Intent(this, MainActivity::class.java)
-                                            val gson = Gson()
-                                            val userJSON = gson.toJson(user)
-
-                                            iMain.putExtra("userJson", userJSON)
+//                                            val gson = Gson()
+//                                            val userJSON = gson.toJson(user)
+//
+//                                            iMain.putExtra("userJson", userJSON)
                                             startActivity(iMain)
 
                                             finish()
@@ -148,21 +89,21 @@ class LoginActivity : AppCompatActivity() {
                                     }
                                     .addOnFailureListener { exception ->
                                         Snackbar.make(
-                                            btnEntrar,
+                                            binding.btnEntrar,
                                             "Falha ao buscar os dados",
                                             Snackbar.LENGTH_LONG
                                         ).show()
                                     }
                             } else {
                                 Snackbar.make(
-                                    btnEntrar,
+                                    binding.btnEntrar,
                                     "Seu email ainda não foi verificado",
                                     Snackbar.LENGTH_LONG
                                 ).show()
                             }
                         } else {
                             Snackbar.make(
-                                btnEntrar,
+                                binding.btnEntrar,
                                 "E-mail ou senha incorretos",
                                 Snackbar.LENGTH_LONG
                             ).show()
@@ -171,21 +112,59 @@ class LoginActivity : AppCompatActivity() {
                 hideKeyboard(it)
             } else {
                 showFieldErrors()
-                Snackbar.make(btnEntrar, "Preencha todos os campos corretamente", Snackbar.LENGTH_LONG ).show()
+                Snackbar.make(binding.btnEntrar, "Preencha todos os campos corretamente", Snackbar.LENGTH_LONG ).show()
             }
         }
 
 
-        btnRecuperarSenha.setOnClickListener{
+        binding.btnRecuperarSenha.setOnClickListener{
             startActivity(Intent(this, RecuperarSenhaActivity::class.java))
         }
 
-        btnCadastrar.setOnClickListener{
+        binding.btnCadastrar.setOnClickListener{
             startActivity(Intent(this, CadastrarActivity::class.java))
         }
 
-        btnConferir.setOnClickListener{
+        binding.btnConferir.setOnClickListener{
             startActivity(Intent(this, ConsultarMapaActivity::class.java))
+        }
+    }
+
+    //Função que verifica se o usuario saiu de foco de um EditText e caso esteja vazio muda o TextLayout para erro
+    private fun setOnFocusChangeListenerInputCheck(editText: TextInputEditText, textLayout: TextInputLayout) {
+        editText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                if (editText.text.toString().isEmpty()) {
+                    textLayout.error = getString(R.string.preencha_campo)
+                } else {
+                    textLayout.error = null
+                }
+            }
+        }
+    }
+
+    //Função que retorna "false" caso um dos EditText estiverem vazios
+    private fun isFilled(): Boolean {
+        return !(binding.etEmail.text.toString().isEmpty() ||
+                binding.etPassword.text.toString().isEmpty())
+    }
+
+    private fun hideKeyboard(it: View){
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(it.windowToken, 0)
+    }
+
+    //Função que faz com que caso esteja um editText esteja vazio muda o TextLayout para erro
+    private fun showFieldErrors() {
+        val editTexts = listOf(binding.etEmail, binding.etPassword)
+        val textLayouts = listOf(binding.tlEmail, binding.tlPassword)
+
+        editTexts.forEachIndexed { index, et ->
+            if (et.text.toString().isEmpty()) {
+                textLayouts[index].error = getString(R.string.preencha_campo)
+            } else {
+                textLayouts[index].error = null
+            }
         }
     }
 }
