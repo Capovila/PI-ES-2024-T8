@@ -74,6 +74,10 @@ class LoginActivity : AppCompatActivity() {
                                 db.collection("users").whereEqualTo("uid",user.uid).get()
                                     .addOnSuccessListener { documents ->
                                         for (document in documents) {
+                                            user.name = document.getString("name")
+                                            user.CPF = document.getString("cpf")
+                                            user.phone = document.getString("phone")
+                                            user.age = (document.get("age") as Long).toInt()
 
                                             simpleStorage.storageUserAccount(user)
 

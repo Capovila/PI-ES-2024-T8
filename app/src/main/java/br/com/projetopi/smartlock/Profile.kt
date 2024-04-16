@@ -40,8 +40,8 @@ class Profile : Fragment() {
 
         val user: User = simpleStorage.getUserAccountData()
 
-        tvUserEmail.setText(user.email)
-        tvUserName.setText(user.name)
+        tvUserEmail.text = user.email
+        tvUserName.text = user.name
 
         btnLogout.setOnClickListener{
             simpleStorage.clearUserAccount()
