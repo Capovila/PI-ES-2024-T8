@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
@@ -17,7 +18,7 @@ import com.google.firebase.firestore.firestore
 
 class Profile : Fragment() {
     private lateinit var btnLogout: Button
-    private lateinit var btnTeste: Button
+    private lateinit var btnAddCard: ImageView
     private lateinit var tvUserEmail: TextView
     private lateinit var tvUserName: TextView
 
@@ -31,10 +32,11 @@ class Profile : Fragment() {
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
 
         btnLogout = root.findViewById(R.id.btnLogout)
-        btnTeste = root.findViewById(R.id.btnTeste)
-        simpleStorage = SimpleStorage(requireContext())
+        btnAddCard = root.findViewById(R.id.btnAddCard)
         tvUserEmail = root.findViewById(R.id.tvUserEmail)
         tvUserName = root.findViewById(R.id.tvUserName)
+
+        simpleStorage = SimpleStorage(requireContext())
 
         auth = Firebase.auth
 
@@ -49,8 +51,10 @@ class Profile : Fragment() {
             startActivity(Intent(requireContext(),LoginActivity::class.java))
         }
 
-        btnTeste.setOnClickListener {
-            Snackbar.make(btnTeste, user.name.toString(), Snackbar.LENGTH_LONG).show()
+        btnAddCard.setOnClickListener {
+            startActivity(Intent(requireContext(),AddCardActivity::class.java))
+
+
         }
 
         return root

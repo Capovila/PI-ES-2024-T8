@@ -35,6 +35,7 @@
                 android:textSize="15sp"
                 android:layout_marginBottom="15dp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 />
 
 
@@ -54,20 +55,36 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        android:text="Cartão Cadastrado"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold"/>
+        android:orientation="horizontal"
+        android:layout_margin="25dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cartão Cadastrado"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnAddCard"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@drawable/baseline_add_24"
+            android:layout_marginStart="15dp"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="25dp"
-        android:text="Dados do cartão a serem mostrados..."
+        android:text="Nenhum cartão cadastrado..."
         android:textColor="@color/black"
         android:textSize="15sp"/>
 
@@ -79,13 +96,6 @@
         android:layout_marginTop="100dp"
         android:text="Logout"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnTeste"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginTop="100dp"
-        android:text="Teste"/>
 
 
 

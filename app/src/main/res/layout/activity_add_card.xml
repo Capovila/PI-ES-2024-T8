@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddCardActivity"
+    android:orientation="vertical"
+    android:background="@color/cardview_shadow_start_color">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnBack"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/baseline_lock_open_24"
+        android:layout_gravity="center"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Smart Locker"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Adicionar Cartão"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlNomeTitular"
+        android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_height="wrap_content"
+        android:hint="Nome do Titular"
+        app:endIconMode="clear_text"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNomeTitular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlNumeroCartao"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:hint="Número do Cartão"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNumeroCartao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="16"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlCVV"
+            android:layout_width="150dp"
+            android:layout_marginEnd="30dp"
+            android:layout_height="wrap_content"
+            android:hint="CVV"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCVV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="3"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlData"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:hint="Validade"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAdicionar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Adicionar"
+        android:background="@drawable/my_button"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:paddingHorizontal="15dp"
+        android:layout_marginTop="100dp"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

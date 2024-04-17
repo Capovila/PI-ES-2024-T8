@@ -8,7 +8,6 @@ class User(
     var age: Int,
     var CPF: String?,
     var phone: String?,
-    var cardNumber: Int? = null,
     var manager: Boolean = false)
 
 
