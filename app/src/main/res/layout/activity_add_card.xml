@@ -89,8 +89,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlCVV"
-            android:layout_width="150dp"
-            android:layout_marginEnd="30dp"
+            android:layout_width="125dp"
+            android:layout_marginEnd="15dp"
             android:layout_height="wrap_content"
             android:hint="CVV"
             >
@@ -106,9 +106,9 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlData"
-            android:layout_width="150dp"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
-            android:hint="Validade"
+            android:hint="Ano de Validade"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -116,6 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:maxLength="4"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 

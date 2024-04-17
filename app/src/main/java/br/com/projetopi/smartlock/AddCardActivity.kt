@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.com.projetopi.smartlock.databinding.ActivityAddCardBinding
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
@@ -47,15 +49,12 @@ class AddCardActivity : AppCompatActivity() {
                 )
 
                 db.collection("cards").add(card)
-
-
-//                db.collection("cards").add(card)
-//                    .addOnSuccessListener {
-//                        Snackbar.make(binding.btnAdicionar, "Cartão cadastrado", Snackbar.LENGTH_LONG).show()
-//                    }
-//                    .addOnFailureListener{
-//                        Snackbar.make(binding.btnAdicionar, "Erro ao cadastrar cartão", Snackbar.LENGTH_LONG).show()
-//                    }
+                    .addOnSuccessListener {
+                        Snackbar.make(binding.btnAdicionar, "Cartão cadastrado", Snackbar.LENGTH_LONG).show()
+                    }
+                    .addOnFailureListener{
+                        Snackbar.make(binding.btnAdicionar, "Erro ao cadastrar cartão", Snackbar.LENGTH_LONG).show()
+                    }
             }
 
             else{
@@ -69,11 +68,10 @@ class AddCardActivity : AppCompatActivity() {
 
     }
 
-
-
     private fun isValid():Boolean{
         return if(binding.etCVV.length() != 3 ||
-            binding.etNumeroCartao.length() != 16){
+            binding.etNumeroCartao.length() != 16 ||
+            binding.etData.length() != 4){
             false
         }else{
             true
