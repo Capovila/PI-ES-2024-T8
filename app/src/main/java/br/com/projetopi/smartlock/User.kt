@@ -8,6 +8,7 @@ class User(
     var age: Int,
     var CPF: String?,
     var phone: String?,
-    var manager: Boolean = false)
+    var manager: Boolean = false
+)
 
 

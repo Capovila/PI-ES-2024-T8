@@ -1,28 +1,20 @@
 package br.com.projetopi.smartlock
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
 import br.com.projetopi.smartlock.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FragmentHandler {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var simpleStorage: SimpleStorage
+    private lateinit var db: FirebaseFirestore
 
     private fun replaceFragment(fragment: Fragment){
         val fragmentManager = supportFragmentManager
@@ -35,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         replaceFragment(Mapa())
+
+        db = Firebase.firestore
 
         var badge = binding.bottomNavigationView.getOrCreateBadge(R.id.page_3)
 
@@ -51,6 +45,10 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+    }
+
+    override fun changeFragment(fragment: Fragment) {
+        replaceFragment(fragment)
     }
 }
 

@@ -9,12 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 
 class Profile : Fragment() {
     private lateinit var btnLogout: Button
@@ -52,8 +49,7 @@ class Profile : Fragment() {
         }
 
         btnAddCard.setOnClickListener {
-            startActivity(Intent(requireContext(),AddCardActivity::class.java))
-
+            (activity as MainActivity).changeFragment(AddCard())
 
         }
 
