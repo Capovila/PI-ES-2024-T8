@@ -1,9 +1,9 @@
 package br.com.projetopi.smartlock
 
 class CreditCard(
-    val userId: String?,
-    val cardNumber: String?,
-    val CVV: String?,
-    val expireDate: String?,
-    val cardName: String?
+    var userId: String?,
+    var cardNumber: String?,
+    var CVV: String?,
+    var expireDate: String?,
+    var cardName: String?
 )

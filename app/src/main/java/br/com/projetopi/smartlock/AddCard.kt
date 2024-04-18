@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.firestore
 
 class AddCard : Fragment() {
     private lateinit var btnAdicionar: Button
+    private lateinit var btnBack: ImageView
 
     private lateinit var etNumeroCartao: TextInputEditText
     private lateinit var etCVV: TextInputEditText
@@ -42,6 +44,7 @@ class AddCard : Fragment() {
         val user: User = simpleStorage.getUserAccountData()
 
         btnAdicionar = root.findViewById(R.id.btnAdicionar)
+        btnBack = root.findViewById(R.id.btnBack)
 
         etNumeroCartao = root.findViewById(R.id.etNumeroCartao)
         etCVV = root.findViewById(R.id.etCVV)
@@ -60,6 +63,10 @@ class AddCard : Fragment() {
 
         editTexts.forEachIndexed { lt, et ->
             setOnFocusChangeListenerInputCheck(et, textLayouts[lt])
+        }
+
+        btnBack.setOnClickListener{
+            (activity as MainActivity).changeFragment(Profile())
         }
 
         btnAdicionar.setOnClickListener{
