@@ -2,6 +2,7 @@ package br.com.projetopi.smartlock
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import org.w3c.dom.Text
 class Profile : Fragment() {
     private lateinit var btnLogout: Button
     private lateinit var btnAddCard: CardView
+    private lateinit var btnDelete: ImageView
 
     private lateinit var cvCard: CardView
 
@@ -45,6 +47,7 @@ class Profile : Fragment() {
 
         btnLogout = root.findViewById(R.id.btnLogout)
         btnAddCard = root.findViewById(R.id.btnAddCard)
+        btnDelete = root.findViewById(R.id.btnDelete)
 
         tvUserEmail = root.findViewById(R.id.tvUserEmail)
         tvUserName = root.findViewById(R.id.tvUserName)
@@ -64,6 +67,10 @@ class Profile : Fragment() {
         db = Firebase.firestore
 
         cvCard.visibility = View.GONE
+
+        tvUserEmail.text = user.email
+        tvUserName.text = user.name
+
 
         val card: CreditCard = CreditCard(null, null, null, null, null)
 
@@ -87,9 +94,17 @@ class Profile : Fragment() {
             }
         }
 
+        btnDelete.setOnClickListener{
+            db.collection("cards").document(user.uid.toString()).delete().addOnSuccessListener {
+                btnAddCard.visibility = View.VISIBLE
+                tvGetCard.visibility = View.VISIBLE
+                cvCard.visibility = View.GONE
 
-        tvUserEmail.text = user.email
-        tvUserName.text = user.name
+                tvCardName.setText("")
+                tvCardNumber.setText("")
+                tvCardDate.setText("")
+            }
+        }
 
         btnLogout.setOnClickListener{
             simpleStorage.clearUserAccount()
