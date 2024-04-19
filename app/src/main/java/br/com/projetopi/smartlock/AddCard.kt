@@ -69,6 +69,7 @@ class AddCard : Fragment() {
             (activity as MainActivity).changeFragment(Profile())
         }
 
+
         btnAdicionar.setOnClickListener{
             if(isFilled()) {
                 val card = CreditCard(
@@ -78,8 +79,8 @@ class AddCard : Fragment() {
                     etData.text.toString(),
                     etNomeTitular.text.toString()
                 )
-                db.collection("cards").add(card).addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Cartão adicionado!", Toast.LENGTH_LONG).show()
+                db.collection("cards").document(user.uid.toString()).set(card).addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Cartão cadastrado com sucesso", Toast.LENGTH_LONG).show()
                     (activity as MainActivity).changeFragment(Profile())
                 }
             } else {
