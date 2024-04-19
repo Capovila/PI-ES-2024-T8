@@ -22,6 +22,10 @@ class Profile : Fragment() {
     private lateinit var btnLogout: Button
     private lateinit var btnAddCard: CardView
 
+    private lateinit var cvCard: CardView
+
+    private lateinit var tvGetCard: TextView
+
     private lateinit var tvUserEmail: TextView
     private lateinit var tvUserName: TextView
     private lateinit var tvCardName: TextView
@@ -48,7 +52,9 @@ class Profile : Fragment() {
         tvCardNumber = root.findViewById(R.id.tvCardNumber)
         tvCardName = root.findViewById(R.id.tvCardName)
         tvCardDate = root.findViewById(R.id.tvCardDate)
+        tvGetCard = root.findViewById(R.id.tvGetCard)
 
+        cvCard = root.findViewById(R.id.cvCard)
         simpleStorage = SimpleStorage(requireContext())
 
         auth = Firebase.auth
@@ -56,6 +62,8 @@ class Profile : Fragment() {
         val user: User = simpleStorage.getUserAccountData()
 
         db = Firebase.firestore
+
+        cvCard.visibility = View.GONE
 
         val card: CreditCard = CreditCard(null, null, null, null, null)
 
@@ -68,12 +76,12 @@ class Profile : Fragment() {
 
             if(card.cardNumber != null && card.cardName != null){
                 btnAddCard.visibility = View.GONE
-
-                var str: String = card.cardNumber!!.substring(11, 15)
+                tvGetCard.visibility = View.GONE
+                cvCard.visibility = View.VISIBLE
 
 
                 tvCardName.setText("Titular: ${card.cardName}")
-                tvCardNumber.setText("Final: $str")
+                tvCardNumber.setText("Final: ${card.cardNumber!!.substring(11, 15)}")
                 tvCardDate.setText("Vencimento: ${card.expireDate}")
 
             }

@@ -62,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cartão Cadastrado: "
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="15sp"
             />
@@ -86,50 +87,90 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvCardName"
+        android:id="@+id/tvGetCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="45dp"
-        android:textStyle="bold"
-        android:text="Buscando cartão..."
+        android:text="Nenhum cartão cadastrado..."
         android:textColor="@color/black"
         android:textSize="15sp"/>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvCard"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="45dp"
-        >
+        app:cardCornerRadius="10dp"
+        app:cardElevation="25dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvCardNumber"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="15sp"/>
+            android:orientation="horizontal">
 
-<!--        <androidx.appcompat.widget.AppCompatImageView-->
-<!--            android:id="@+id/btnDelete"-->
-<!--            android:layout_width="25sp"-->
-<!--            android:layout_height="25sp"-->
-<!--            android:src="@drawable/baseline_delete_forever_24"-->
-<!--            android:layout_marginStart="150dp"/>-->
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvCardDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="45dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="10dp"
-        android:textSize="15sp"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCardName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCardNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"/>
+
+
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCardDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginVertical="5dp"
+                android:textSize="15sp"/>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnDelete"
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    android:src="@drawable/baseline_delete_forever_24"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogout"
