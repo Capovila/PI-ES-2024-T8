@@ -72,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="15dp"
+            app:cardBackgroundColor="@color/black"
             android:layout_marginStart="15dp">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -159,11 +160,20 @@
                 android:orientation="vertical"
                 android:layout_gravity="center">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnDelete"
-                    android:layout_width="25sp"
-                    android:layout_height="25sp"
-                    android:src="@drawable/baseline_delete_forever_24"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="5sp"
+                    app:cardBackgroundColor="@color/black">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnDelete"
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:src="@drawable/baseline_delete_forever_24"/>
+
+                </androidx.cardview.widget.CardView>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
