@@ -2,7 +2,6 @@ package br.com.projetopi.smartlock
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.cardview.widget.CardView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -21,8 +20,7 @@ import org.w3c.dom.Text
 
 class Profile : Fragment() {
     private lateinit var btnLogout: Button
-    private lateinit var btnAddCard: ImageView
-    private lateinit var btnDelete: ImageView
+    private lateinit var btnAddCard: CardView
 
     private lateinit var tvUserEmail: TextView
     private lateinit var tvUserName: TextView
@@ -43,7 +41,6 @@ class Profile : Fragment() {
 
         btnLogout = root.findViewById(R.id.btnLogout)
         btnAddCard = root.findViewById(R.id.btnAddCard)
-        btnDelete = root.findViewById(R.id.btnDelete)
 
         tvUserEmail = root.findViewById(R.id.tvUserEmail)
         tvUserName = root.findViewById(R.id.tvUserName)
@@ -58,8 +55,6 @@ class Profile : Fragment() {
 
         val user: User = simpleStorage.getUserAccountData()
 
-        btnDelete.visibility = View.GONE
-
         db = Firebase.firestore
 
         val card: CreditCard = CreditCard(null, null, null, null, null)
@@ -71,9 +66,8 @@ class Profile : Fragment() {
                 card.expireDate = documents.getString("expireDate")
             }
 
+            if(card.cardNumber != null && card.cardName != null){
                 btnAddCard.visibility = View.GONE
-                btnDelete.visibility = View.VISIBLE
-
 
                 var str: String = card.cardNumber!!.substring(11, 15)
 
@@ -82,17 +76,6 @@ class Profile : Fragment() {
                 tvCardNumber.setText("Final: $str")
                 tvCardDate.setText("Vencimento: ${card.expireDate}")
 
-        }
-
-        btnDelete.setOnClickListener{
-            db.collection("cards").document(user.uid.toString()).delete().addOnSuccessListener {
-                Toast.makeText(requireContext(), "Cartão removido com sucesso", Toast.LENGTH_SHORT).show()
-                btnDelete.visibility = View.GONE
-                btnAddCard.visibility = View.VISIBLE
-
-                tvCardName.setText("Buscando cartão...")
-                tvCardNumber.setText("")
-                tvCardDate.setText("")
             }
         }
 
