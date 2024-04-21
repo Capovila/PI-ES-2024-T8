@@ -16,9 +16,6 @@
         android:theme="@style/Theme.SmartLock"
         tools:targetApi="31">
         <activity
-            android:name=".AddCardActivity"
-            android:exported="false" />
-        <activity
             android:name=".ConsultarMapaActivity"
             android:exported="false" />
         <activity

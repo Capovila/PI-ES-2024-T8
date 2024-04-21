@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -17,15 +18,14 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.snackbar.Snackbar
 
 
 //Código mínimo para uma fragment usual
 class Mapa() : Fragment() {
 
     private val places = arrayListOf(
-        Place("Ponto1", LatLng(-22.834554,-47.055358), "Av. Profa. Ana Maria Silvestre Adade, 825 - Parque das Universidades",  "Em frente a PUC Campinas") ,
-        Place("Ponto2", LatLng(-22.847644, -47.062139), "Parque Dom Pedro, Jardim Santa Genebra", "Na entrada das águas")
+        Place("26153", "Ponto1", LatLng(-22.834554,-47.055358), "Av. Profa. Ana Maria Silvestre Adade, 825 - Parque das Universidades",  "Em frente a PUC Campinas") ,
+        Place("26152", "Ponto2", LatLng(-22.847644, -47.062139), "Parque Dom Pedro, Jardim Santa Genebra", "Na entrada das águas")
     )
 
     private lateinit var lnlaBtnMenuFragment: LinearLayoutCompat
@@ -41,6 +41,7 @@ class Mapa() : Fragment() {
         btnIrFragment = root.findViewById(R.id.btnIrFragment)
         btnAlugarFragment = root.findViewById(R.id.btnAlugarFragment)
 
+        //val sharedViewModelPlace: SharedViewModelPlace by activityViewModels()
 
         lnlaBtnMenuFragment.visibility = View.GONE
 
@@ -56,7 +57,6 @@ class Mapa() : Fragment() {
             googleMap.uiSettings.isMapToolbarEnabled = false
 
             googleMap.setOnMarkerClickListener {marker ->
-
                 val markerPosition = marker.position
                 val markerLatitude = markerPosition.latitude
                 val markerLongitude = markerPosition.longitude
@@ -72,7 +72,9 @@ class Mapa() : Fragment() {
                 }
 
                 btnAlugarFragment.setOnClickListener{
-                    Snackbar.make(btnAlugarFragment, "Alugar armário", Snackbar.LENGTH_LONG).show()
+                    val markerPlace: Place = marker.tag as Place
+                    //sharedViewModelPlace.selectPlace(markerPlace)
+                    (activity as MainActivity).changeFragment(OpcaoTempo())
                 }
                 false
             }
@@ -105,7 +107,7 @@ class Mapa() : Fragment() {
                     .snippet(place.address)
                     .position(place.latLng)
                     .icon(
-                        BitmapHelper.vectorToBitmap(requireContext(), R.drawable.logo, ContextCompat.getColor(requireContext(), R.color.white))
+                        BitmapHelper.vectorToBitmap(requireContext(), R.drawable.baseline_lock_open_24, ContextCompat.getColor(requireContext(), R.color.red))
                     )
                     .alpha(0.8f)
             )

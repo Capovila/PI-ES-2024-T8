@@ -24,8 +24,8 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
     //Lista de lugares que exitem armarios no mapa
     private val places = arrayListOf(
-        Place("Ponto1", LatLng(-22.834554,-47.055358), "Av. Profa. Ana Maria Silvestre Adade, 825 - Parque das Universidades",  "Em frente a PUC Campinas") ,
-        Place("Ponto2", LatLng(-22.847644, -47.062139), "Parque Dom Pedro, Jardim Santa Genebra", "Na entrada das águas")
+        Place("26153", "Ponto1", LatLng(-22.834554,-47.055358), "Av. Profa. Ana Maria Silvestre Adade, 825 - Parque das Universidades",  "Em frente a PUC Campinas") ,
+        Place("26151", "Ponto2", LatLng(-22.847644, -47.062139), "Parque Dom Pedro, Jardim Santa Genebra", "Na entrada das águas")
     )
 
     private lateinit var binding: ActivityConsultarMapaBinding
