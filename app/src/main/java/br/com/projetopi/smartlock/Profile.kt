@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -31,7 +32,6 @@ class Profile : Fragment() {
     private lateinit var simpleStorage: SimpleStorage
     private lateinit var db: FirebaseFirestore
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,50 +50,42 @@ class Profile : Fragment() {
 
         simpleStorage = SimpleStorage(requireContext())
 
-        auth = Firebase.auth
-
         val user: User = simpleStorage.getUserAccountData()
 
         db = Firebase.firestore
 
-        val card: CreditCard = CreditCard(null, null, null, null, null)
+        tvCardNumber.text = "Nenhum cartão cadastrado"
 
-        db.collection("cards").whereEqualTo("userId", user.uid.toString()).get().addOnSuccessListener {
+        db.collection("cards").whereEqualTo("userId", user.uid).get().addOnSuccessListener {
             for(documents in it){
-                card.cardNumber = documents.getString("cardNumber")
-                card.cardName = documents.getString("cardName")
-                card.expireDate = documents.getString("expireDate")
-            }
+                val cardName = documents.getString("cardName")
+                tvCardName.text = "Titular: $cardName"
+                val cardNumber = documents.getString("cardNumber")
+                if (cardNumber != null && cardNumber.length >= 15) {
+                    val str: String = cardNumber.substring(11, 15)
+                    tvCardNumber.text = "Final: $str"
+                } else {
+                    tvCardNumber.text = "Final: Invalid Card Number"
+                }
+                val cardDate = documents.getString("expireDate")
+                tvCardDate.text = "Vencimento: $cardDate"
 
-            if(card.cardNumber != null && card.cardName != null){
                 btnAddCard.visibility = View.GONE
+            }
 
-                var str: String = card.cardNumber!!.substring(11, 15)
+            tvUserEmail.text = user.email
+            tvUserName.text = user.name
 
+            btnLogout.setOnClickListener{
+                simpleStorage.clearUserAccount()
+                auth.signOut()
+                startActivity(Intent(requireContext(),LoginActivity::class.java))
+            }
 
-                tvCardName.setText("Titular: ${card.cardName}")
-                tvCardNumber.setText("Final: $str")
-                tvCardDate.setText("Vencimento: ${card.expireDate}")
-
+            btnAddCard.setOnClickListener {
+                (activity as MainActivity).changeFragment(AddCard())
             }
         }
-
-
-        tvUserEmail.text = user.email
-        tvUserName.text = user.name
-
-        btnLogout.setOnClickListener{
-            simpleStorage.clearUserAccount()
-            auth.signOut()
-            startActivity(Intent(requireContext(),LoginActivity::class.java))
-        }
-
-        btnAddCard.setOnClickListener {
-            (activity as MainActivity).changeFragment(AddCard())
-
-        }
-
-
         return root
     }
 }

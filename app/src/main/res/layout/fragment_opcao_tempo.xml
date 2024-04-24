@@ -50,28 +50,23 @@
         <RadioButton
             android:id="@+id/op1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="30min = R$ 30,00"/>
+            android:layout_height="match_parent"/>
         <RadioButton
             android:id="@+id/op2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="1h = R$ 50,00"/>
+            android:layout_height="match_parent"/>
         <RadioButton
             android:id="@+id/op3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="2h = R$ 100,00"/>
+            android:layout_height="match_parent"/>
         <RadioButton
             android:id="@+id/op4"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="4h = R$ 150,00"/>
+            android:layout_height="match_parent"/>
         <RadioButton
             android:id="@+id/op5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Do momento até as 18h = R$ 300,00"/>
+            android:layout_height="match_parent"/>
     </RadioGroup>
 
     <androidx.appcompat.widget.AppCompatButton
