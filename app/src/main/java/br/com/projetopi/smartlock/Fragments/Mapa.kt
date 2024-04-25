@@ -1,4 +1,4 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.Fragments
 
 import SharedViewModelEstablishment
 import android.Manifest
@@ -6,20 +6,22 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
-import android.media.audiofx.Equalizer.Settings
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import br.com.projetopi.smartlock.Classes.Establishment
+import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.MainActivity
+import br.com.projetopi.smartlock.MarkerInfoAdapter
+import br.com.projetopi.smartlock.R
+import br.com.projetopi.smartlock.SimpleStorage
+import br.com.projetopi.smartlock.databinding.FragmentMapaBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -37,11 +39,10 @@ import com.google.firebase.firestore.firestore
 //Código mínimo para uma fragment usual
 class Mapa() : Fragment() {
 
-    private val establishments: ArrayList<Establishment>? = arrayListOf()
+    private val establishments: ArrayList<Establishment> = arrayListOf()
 
-    private lateinit var lnlaBtnMenuFragment: LinearLayoutCompat
-    private lateinit var btnIrFragment: Button
-    private lateinit var btnAlugarFragment: Button
+    private var _binding: FragmentMapaBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -53,17 +54,15 @@ class Mapa() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_mapa, container, false)
+
+        _binding = FragmentMapaBinding.inflate(inflater,container,false)
+
 
         simpleStorage = SimpleStorage(requireContext())
 
         val user: User = simpleStorage.getUserAccountData()
 
-        lnlaBtnMenuFragment = root.findViewById(R.id.lnlaBtnMenuFragment)
-        btnIrFragment = root.findViewById(R.id.btnIrFragment)
-        btnAlugarFragment = root.findViewById(R.id.btnAlugarFragment)
-
-        lnlaBtnMenuFragment.visibility = View.GONE
+        binding.lnlaBtnMenuFragment.visibility = View.GONE
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
@@ -100,7 +99,9 @@ class Mapa() : Fragment() {
 
                 googleMap.setInfoWindowAdapter(MarkerInfoAdapter(requireContext()))
 
-                googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
+                googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(),
+                    R.raw.map_style
+                ))
 
                 googleMap.uiSettings.isMapToolbarEnabled = false
 
@@ -110,9 +111,9 @@ class Mapa() : Fragment() {
                     val markerLongitude = markerPosition.longitude
                     val markerLatLng = LatLng(markerLatitude, markerLongitude)
 
-                    lnlaBtnMenuFragment.visibility = View.VISIBLE
+                    binding.lnlaBtnMenuFragment.visibility = View.VISIBLE
 
-                    btnIrFragment.setOnClickListener{
+                    binding.btnIrFragment.setOnClickListener{
                         startActivity(Intent(
                             Intent.ACTION_VIEW,
                             Uri.parse("http://maps.google.com/maps?q=$markerLatitude,$markerLongitude")
@@ -120,7 +121,7 @@ class Mapa() : Fragment() {
                         )
                     }
 
-                    btnAlugarFragment.setOnClickListener{
+                    binding.btnAlugarFragment.setOnClickListener{
                         if (ActivityCompat.checkSelfPermission(
                                 requireContext(),
                                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -166,7 +167,7 @@ class Mapa() : Fragment() {
                 }
 
                 googleMap.setOnInfoWindowCloseListener {
-                    lnlaBtnMenuFragment.visibility = View.GONE
+                    binding.lnlaBtnMenuFragment.visibility = View.GONE
                 }
 
                 googleMap.setOnMapLoadedCallback {
@@ -180,7 +181,7 @@ class Mapa() : Fragment() {
 
             }
         }
-        return root
+        return binding.root
     }
 
     private fun addMarkers(googleMap: GoogleMap) {

@@ -1,4 +1,4 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.Classes
 
 class User(
     var uid: String?,

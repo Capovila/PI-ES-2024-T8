@@ -1,6 +1,7 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.Fragments
 
 import SharedViewModelRental
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,8 +10,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import br.com.projetopi.smartlock.MainActivity
+import br.com.projetopi.smartlock.R
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
@@ -28,6 +30,7 @@ class QRCode : Fragment() {
 
     private lateinit var db: FirebaseFirestore
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,7 +49,7 @@ class QRCode : Fragment() {
             establishmentmanagerName = rental.establishmentManagerName.toString()
             tvApresenteGerente.text = "Apresente esse QR Code ao gerente $establishmentmanagerName"
             val multiFormatWriter = MultiFormatWriter()
-            val bitMatrix = multiFormatWriter.encode("$rentalID", BarcodeFormat.QR_CODE, 300, 300)
+            val bitMatrix = multiFormatWriter.encode(rentalID, BarcodeFormat.QR_CODE, 300, 300)
             val barcodeEncoder = BarcodeEncoder()
             val bitmap = barcodeEncoder.createBitmap(bitMatrix)
 

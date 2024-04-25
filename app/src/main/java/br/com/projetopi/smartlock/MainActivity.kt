@@ -3,10 +3,11 @@ package br.com.projetopi.smartlock
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import br.com.projetopi.smartlock.Fragments.Locacoes
+import br.com.projetopi.smartlock.Fragments.Mapa
+import br.com.projetopi.smartlock.Fragments.Profile
 import br.com.projetopi.smartlock.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 

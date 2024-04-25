@@ -1,6 +1,7 @@
 package br.com.projetopi.smartlock
 
 import android.content.Context
+import br.com.projetopi.smartlock.Classes.User
 
 class SimpleStorage (context: Context) {
 

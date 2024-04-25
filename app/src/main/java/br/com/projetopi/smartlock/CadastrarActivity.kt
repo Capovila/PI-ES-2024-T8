@@ -2,14 +2,11 @@ package br.com.projetopi.smartlock
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import br.com.projetopi.smartlock.Classes.User
 import br.com.projetopi.smartlock.databinding.ActivityCadastrarBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
@@ -17,10 +14,8 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.gson.Gson
 
 class CadastrarActivity : AppCompatActivity() {
 

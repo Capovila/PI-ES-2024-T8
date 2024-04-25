@@ -1,13 +1,16 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.Fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
+import br.com.projetopi.smartlock.Classes.CreditCard
+import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.MainActivity
+import br.com.projetopi.smartlock.R
+import br.com.projetopi.smartlock.SimpleStorage
 import br.com.projetopi.smartlock.databinding.FragmentAddCardBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -59,8 +62,6 @@ class AddCard : Fragment() {
             (activity as MainActivity).changeFragment(Profile())
         }
 
-
-        binding.btnAdicionar.setOnClickListener {
             //Faz com que quando clicado o btnAdicionar, verifica se todos os campos foram preenchidos, caso nao
             // tenha sido executa a função showFieldErrors e mostra um snackbar instruindo o usuario, caso todos os
             // campos tenham sido preenchidos define a variavel card do tipo CreditCard, atribui os dados inseridos,
@@ -94,7 +95,6 @@ class AddCard : Fragment() {
                 }
             }
 
-        }
         return binding.root
     }
 

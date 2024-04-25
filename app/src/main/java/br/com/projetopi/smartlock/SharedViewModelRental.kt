@@ -1,7 +1,7 @@
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.projetopi.smartlock.Rental
+import br.com.projetopi.smartlock.Classes.Rental
 
 class SharedViewModelRental: ViewModel() {
     private val _selectedRental = MutableLiveData<Rental>()

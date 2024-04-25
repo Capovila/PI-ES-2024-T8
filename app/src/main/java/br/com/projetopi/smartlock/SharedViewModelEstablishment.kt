@@ -1,7 +1,7 @@
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.projetopi.smartlock.Establishment
+import br.com.projetopi.smartlock.Classes.Establishment
 
 class SharedViewModelEstablishment : ViewModel() {
     private val _selectedEstablishment = MutableLiveData<Establishment>()

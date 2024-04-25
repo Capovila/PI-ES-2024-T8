@@ -1,4 +1,4 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.Classes
 
 data class Rental (
     var uid: String?,

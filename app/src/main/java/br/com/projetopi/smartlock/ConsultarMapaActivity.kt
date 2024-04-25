@@ -4,12 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
+import br.com.projetopi.smartlock.Classes.Establishment
 import br.com.projetopi.smartlock.databinding.ActivityConsultarMapaBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -18,10 +16,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
-import com.google.firebase.ktx.Firebase
 
 class ConsultarMapaActivity : AppCompatActivity() {
 
