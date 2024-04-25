@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OpcaoTempo"
+    android:orientation="vertical"
+    android:background="@color/material_dynamic_neutral50">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnBack"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/baseline_lock_open_24"
+        android:layout_gravity="center"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Smart Locker"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Escolha o tempo que irá usar o armário"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"/>
+
+    <RadioGroup
+        android:layout_marginTop="75dp"
+        android:id="@+id/radioGroup"
+        android:checkedButton="@+id/radio_button_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/op1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <RadioButton
+            android:id="@+id/op2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <RadioButton
+            android:id="@+id/op3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <RadioButton
+            android:id="@+id/op4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <RadioButton
+            android:id="@+id/op5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RadioGroup>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnConfirmarLocacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Confirmar Locação"
+        android:background="@drawable/my_button"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:paddingHorizontal="15dp"
+        android:layout_marginTop="75dp"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

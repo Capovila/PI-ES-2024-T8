@@ -94,6 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="45dp"
         android:text="Nenhum cartão cadastrado..."
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="15sp"/>
 

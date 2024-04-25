@@ -1,6 +1,13 @@
 package br.com.projetopi.smartlock
 
+import SharedViewModelEstablishment
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
+import android.media.audiofx.Equalizer.Settings
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,8 +15,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -17,101 +29,188 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
 
 //Código mínimo para uma fragment usual
 class Mapa() : Fragment() {
 
-    private val places = arrayListOf(
-        Place("Ponto1", LatLng(-22.834554,-47.055358), "Av. Profa. Ana Maria Silvestre Adade, 825 - Parque das Universidades",  "Em frente a PUC Campinas") ,
-        Place("Ponto2", LatLng(-22.847644, -47.062139), "Parque Dom Pedro, Jardim Santa Genebra", "Na entrada das águas")
-    )
+    private val establishments: ArrayList<Establishment>? = arrayListOf()
 
     private lateinit var lnlaBtnMenuFragment: LinearLayoutCompat
     private lateinit var btnIrFragment: Button
     private lateinit var btnAlugarFragment: Button
+
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    private lateinit var db: FirebaseFirestore
+
+    private lateinit var simpleStorage: SimpleStorage
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_mapa, container, false)
+
+        simpleStorage = SimpleStorage(requireContext())
+
+        val user: User = simpleStorage.getUserAccountData()
+
         lnlaBtnMenuFragment = root.findViewById(R.id.lnlaBtnMenuFragment)
         btnIrFragment = root.findViewById(R.id.btnIrFragment)
         btnAlugarFragment = root.findViewById(R.id.btnAlugarFragment)
 
-
         lnlaBtnMenuFragment.visibility = View.GONE
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragmentMain) as SupportMapFragment
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
-        mapFragment.getMapAsync{ googleMap ->
-            addMarkers(googleMap)
+        val sharedViewModelEstablishment: SharedViewModelEstablishment by activityViewModels()
 
-            googleMap.setInfoWindowAdapter(MarkerInfoAdapter(requireContext()))
+        db = Firebase.firestore
 
-            googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
-
-            googleMap.uiSettings.isMapToolbarEnabled = false
-
-            googleMap.setOnMarkerClickListener {marker ->
-
-                val markerPosition = marker.position
-                val markerLatitude = markerPosition.latitude
-                val markerLongitude = markerPosition.longitude
-
-                lnlaBtnMenuFragment.visibility = View.VISIBLE
-
-                btnIrFragment.setOnClickListener{
-                    startActivity(Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?q=$markerLatitude,$markerLongitude")
-                    )
-                    )
+        db.collection("rentals").whereEqualTo("rentalImplemented", false)
+            .whereEqualTo("idUser", user.uid).get().addOnSuccessListener {
+                for(documents in it){
+                    Toast.makeText(requireContext(), "Existe uma locação para ser efetivada", Toast.LENGTH_LONG).show()
                 }
-
-                btnAlugarFragment.setOnClickListener{
-                    Snackbar.make(btnAlugarFragment, "Alugar armário", Snackbar.LENGTH_LONG).show()
-                }
-                false
             }
 
-            googleMap.setOnInfoWindowCloseListener {
-                lnlaBtnMenuFragment.visibility = View.GONE
+        db.collection("establishments").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                val id = document.id
+                val name = document.getString("name") ?: ""
+                val latitude = document.getDouble("latitude") ?: 0.0
+                val longitude = document.getDouble("longitude") ?: 0.0
+                val address = document.getString("address") ?: ""
+                val reference = document.getString("description") ?: ""
+                val managerName = document.getString("managerName") ?: ""
+
+                val establishment = Establishment(id, name, LatLng(latitude, longitude), address, reference, managerName)
+
+                establishments?.add(establishment)
             }
 
-            googleMap.setOnMapLoadedCallback {
-                val bounds = LatLngBounds.builder()
-                places.forEach{
-                    bounds.include(it.latLng)
+            val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragmentMain) as SupportMapFragment
+
+            mapFragment.getMapAsync{ googleMap ->
+                addMarkers(googleMap)
+
+                googleMap.setInfoWindowAdapter(MarkerInfoAdapter(requireContext()))
+
+                googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
+
+                googleMap.uiSettings.isMapToolbarEnabled = false
+
+                googleMap.setOnMarkerClickListener {marker ->
+                    val markerPosition = marker.position
+                    val markerLatitude = markerPosition.latitude
+                    val markerLongitude = markerPosition.longitude
+                    val markerLatLng = LatLng(markerLatitude, markerLongitude)
+
+                    lnlaBtnMenuFragment.visibility = View.VISIBLE
+
+                    btnIrFragment.setOnClickListener{
+                        startActivity(Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://maps.google.com/maps?q=$markerLatitude,$markerLongitude")
+                        )
+                        )
+                    }
+
+                    btnAlugarFragment.setOnClickListener{
+                        if (ActivityCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                            ) != PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            ) != PackageManager.PERMISSION_GRANTED) {
+                            requestPermission()
+                        } else {
+                            fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val location: Location? = task.result
+                                    if (location != null) {
+                                        val userLatLng = LatLng(location.latitude, location.longitude)
+                                        val distanciaDoUsuario =
+                                            calcularDistanciaEmMetros(userLatLng, markerLatLng)
+                                        if (distanciaDoUsuario < 5.0) {
+                                            val markerEstablishment: Establishment = marker.tag as Establishment
+                                            sharedViewModelEstablishment.selectEstablishment(markerEstablishment)
+                                            (activity as MainActivity).changeFragment(OpcaoTempo())
+                                        } else {
+                                            Toast.makeText(requireContext(), "Você está distante do armário", Toast.LENGTH_LONG).show()
+                                        }
+                                    } else {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Localização não disponível",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Erro ao obter a localização",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+                        }
+                    }
+                    false
                 }
 
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
-            }
+                googleMap.setOnInfoWindowCloseListener {
+                    lnlaBtnMenuFragment.visibility = View.GONE
+                }
 
+                googleMap.setOnMapLoadedCallback {
+                    val bounds = LatLngBounds.builder()
+                    establishments?.forEach{
+                        bounds.include(it.latLng)
+                    }
+
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+                }
+
+            }
         }
-
         return root
     }
 
     private fun addMarkers(googleMap: GoogleMap) {
-
-        //Para cada lugar da lista places adiciona um marcador com as opcoes definidas
-        places.forEach {place ->
+        establishments?.forEach {establishment ->
             val marker = googleMap.addMarker(
                 MarkerOptions()
-                    .title(place.name)
-                    .snippet(place.address)
-                    .position(place.latLng)
-                    .icon(
-                        BitmapHelper.vectorToBitmap(requireContext(), R.drawable.logo, ContextCompat.getColor(requireContext(), R.color.white))
-                    )
+                    .title(establishment.name)
+                    .snippet(establishment.address)
+                    .position(establishment.latLng)
                     .alpha(0.8f)
             )
             if (marker != null) {
-                marker.tag = place
+                marker.tag = establishment
             }
         }
+    }
+
+    private fun calcularDistanciaEmMetros(userLocation: LatLng, destinationLocation: LatLng): Float {
+        val result = FloatArray(1)
+        Location.distanceBetween(
+            userLocation.latitude, userLocation.longitude,
+            destinationLocation.latitude, destinationLocation.longitude,
+            result
+        )
+        return result[0]
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            requireContext() as Activity, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.ACCESS_FINE_LOCATION), 100)
     }
 }
