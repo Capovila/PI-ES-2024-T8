@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import br.com.projetopi.smartlock.Classes.User
 import br.com.projetopi.smartlock.databinding.ActivityCadastrarBinding
 import com.google.android.material.snackbar.Snackbar
@@ -19,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class CadastrarActivity : AppCompatActivity() {
 
-
     private lateinit var binding: ActivityCadastrarBinding
 
     private lateinit var auth: FirebaseAuth
@@ -27,18 +29,22 @@ class CadastrarActivity : AppCompatActivity() {
 
     private lateinit var simpleStorage: SimpleStorage
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCadastrarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
         simpleStorage = SimpleStorage(this)
 
         db = Firebase.firestore
         auth = Firebase.auth
-
 
 
         val editTexts = listOf(binding.etName, binding.etEmail, binding.etPassword, binding.etAge, binding.etCPF, binding.etPhone)
@@ -94,6 +100,7 @@ class CadastrarActivity : AppCompatActivity() {
             finish()
         }
     }
+
     //Função que verifica se o usuario saiu de foco de um EditText e caso esteja vazio muda o TextLayout para erro
     private fun setOnFocusChangeListenerInputCheck(editText: TextInputEditText, textLayout: TextInputLayout) {
         editText.setOnFocusChangeListener { _, hasFocus ->
@@ -133,5 +140,4 @@ class CadastrarActivity : AppCompatActivity() {
             }
         }
     }
-
 }

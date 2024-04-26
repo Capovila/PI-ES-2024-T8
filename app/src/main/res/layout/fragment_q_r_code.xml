@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.QRCode"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/material_dynamic_neutral50">
 
     <TextView
         android:id="@+id/tvApresenteGerente"
@@ -27,6 +28,7 @@
         android:id="@+id/btnConcluir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Concluir" />
+        android:text="Concluir"
+        />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

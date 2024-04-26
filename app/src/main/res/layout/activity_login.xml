@@ -15,12 +15,12 @@
         android:layout_height="100dp"
         android:src="@drawable/baseline_lock_open_24"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="50dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Smart Locker"
+        android:text="Smart Lock"
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_gravity="center"

@@ -6,5 +6,6 @@ data class Rental (
     val idPlace: String?,
     val tempoSelected: String?,
     var rentalImplemented: Boolean = false,
+    var rentalOpen: Boolean = true,
     val establishmentManagerName: String?
 )

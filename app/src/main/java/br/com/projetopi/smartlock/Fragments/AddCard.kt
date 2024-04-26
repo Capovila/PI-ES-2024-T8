@@ -76,15 +76,18 @@ class AddCard : Fragment() {
                         binding.etData.text.toString(),
                         binding.etNomeTitular.text.toString()
                     )
-                    db.collection("cards").document(user.uid.toString()).set(card)
-                        .addOnSuccessListener {
-                            Toast.makeText(
-                                requireContext(),
-                                "Cartão cadastrado com sucesso",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            (activity as MainActivity).changeFragment(Profile())
+                    db.collection("cards").add(card).addOnSuccessListener {
+                        val newRentalState = hashMapOf(
+                            "cardRegistred" to true
+                        )
+                        db.collection("users").whereEqualTo("uid", user.uid).get().addOnSuccessListener {
+                            for (document in it.documents) {
+                                document.reference.update(newRentalState as Map<String, Any>)
+                            }
                         }
+                        Toast.makeText(requireContext(), "Cartão adicionado!", Toast.LENGTH_LONG).show()
+                        (activity as MainActivity).changeFragment(Profile())
+                    }
                 } else {
                     showFieldErrors()
                     Snackbar.make(

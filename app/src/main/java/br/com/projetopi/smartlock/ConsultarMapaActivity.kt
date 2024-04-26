@@ -5,8 +5,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import br.com.projetopi.smartlock.Classes.Establishment
 import br.com.projetopi.smartlock.databinding.ActivityConsultarMapaBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -32,6 +35,13 @@ class ConsultarMapaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityConsultarMapaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         db = com.google.firebase.Firebase.firestore
 
@@ -96,8 +106,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
                     binding.btnAlugar.setOnClickListener {
                         Toast.makeText(baseContext, "Você precisa estar logado para alugar um armário", Toast.LENGTH_LONG).show()
-
-                        startActivity(Intent(this, LoginActivity::class.java))
                         finish()
                     }
                     // Retorna false para permitir que o Google Maps trate o evento e exiba a janela de informações do marcador

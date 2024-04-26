@@ -15,6 +15,7 @@ import br.com.projetopi.smartlock.SimpleStorage
 import br.com.projetopi.smartlock.databinding.FragmentProfileBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
@@ -39,6 +40,7 @@ class Profile : Fragment() {
 
         val user: User = simpleStorage.getUserAccountData()
 
+        auth = Firebase.auth
         db = Firebase.firestore
 
         binding.cvCard.visibility = View.GONE
@@ -77,7 +79,10 @@ class Profile : Fragment() {
 
 
         binding.btnDelete.setOnClickListener{
-            db.collection("cards").document(user.uid.toString()).delete().addOnSuccessListener {
+            db.collection("cards").whereEqualTo("userId" , user.uid.toString()).get().addOnSuccessListener {
+                for (document in it.documents) {
+                    document.reference.delete()
+                }
                 binding.btnAddCard.visibility = View.VISIBLE
                 binding.tvGetCard.visibility = View.VISIBLE
                 binding.cvCard.visibility = View.GONE
@@ -85,6 +90,15 @@ class Profile : Fragment() {
                 binding.tvCardName.text = ""
                 binding.tvCardNumber.text = " "
                 binding.tvCardDate.text = " "
+
+                val newRentalState = hashMapOf(
+                    "cardRegistred" to false
+                )
+                db.collection("users").whereEqualTo("uid", user.uid).get().addOnSuccessListener {
+                    for (document in it.documents) {
+                        document.reference.update(newRentalState as Map<String, Any>)
+                    }
+                }
             }
         }
 

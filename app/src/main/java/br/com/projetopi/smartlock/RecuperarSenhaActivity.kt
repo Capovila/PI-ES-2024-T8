@@ -31,6 +31,13 @@ class RecuperarSenhaActivity : AppCompatActivity() {
         binding = ActivityRecuperarSenhaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
         auth = Firebase.auth
 
         setOnFocusChangeListenerInputCheck(binding.etEmail, binding.tlEmail)
@@ -51,6 +58,10 @@ class RecuperarSenhaActivity : AppCompatActivity() {
                 showFieldErrors()
                 Snackbar.make(binding.btnRecuperar, "Preencha o campo corretamente", Snackbar.LENGTH_LONG).show()
             }
+        }
+
+        binding.btnBack.setOnClickListener {
+            finish()
         }
     }
     //Função que verifica se o usuario saiu de foco de um EditText e caso esteja vazio muda o TextLayout para erro

@@ -10,9 +10,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import br.com.projetopi.smartlock.Classes.Rental
 import androidx.fragment.app.activityViewModels
 import br.com.projetopi.smartlock.MainActivity
 import br.com.projetopi.smartlock.R
+import br.com.projetopi.smartlock.databinding.FragmentOpcaoTempoBinding
+import br.com.projetopi.smartlock.databinding.FragmentQRCodeBinding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
@@ -21,12 +24,11 @@ import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
 
 class QRCode : Fragment() {
-    private lateinit var qrCode: ImageView
-    private lateinit var btnConcluir: Button
-    private lateinit var tvApresenteGerente: TextView
+    private var _binding: FragmentQRCodeBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var rentalID: String
-    private lateinit var establishmentmanagerName: String
+    private lateinit var establishmentManagerName: String
 
     private lateinit var db: FirebaseFirestore
 
@@ -35,34 +37,26 @@ class QRCode : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_q_r_code, container, false)
-
-        qrCode = root.findViewById(R.id.qrcode)
-        btnConcluir = root.findViewById(R.id.btnConcluir)
-        tvApresenteGerente = root.findViewById(R.id.tvApresenteGerente)
+        _binding = FragmentQRCodeBinding.inflate(inflater,container,false)
 
         db = Firebase.firestore
 
         val sharedViewModelRental: SharedViewModelRental by activityViewModels()
         sharedViewModelRental.selectedRental.observe(viewLifecycleOwner) { rental ->
             rentalID = rental.uid.toString()
-            establishmentmanagerName = rental.establishmentManagerName.toString()
-            tvApresenteGerente.text = "Apresente esse QR Code ao gerente $establishmentmanagerName"
+            establishmentManagerName = rental.establishmentManagerName.toString()
+            binding.tvApresenteGerente.text = "Apresente esse QR Code ao gerente $establishmentManagerName"
             val multiFormatWriter = MultiFormatWriter()
-            val bitMatrix = multiFormatWriter.encode(rentalID, BarcodeFormat.QR_CODE, 300, 300)
+            val bitMatrix = multiFormatWriter.encode("$rentalID", BarcodeFormat.QR_CODE, 300, 300)
             val barcodeEncoder = BarcodeEncoder()
             val bitmap = barcodeEncoder.createBitmap(bitMatrix)
 
-            qrCode.setImageBitmap(bitmap)
+            binding.qrcode.setImageBitmap(bitmap)
 
-            btnConcluir.setOnClickListener {
-                val newRentalState = hashMapOf(
-                    "rentalImplemented" to true
-                )
-                db.collection("rentals").document(rentalID).update(newRentalState as Map<String, Any>)
+            binding.btnConcluir.setOnClickListener {
                 (activity as MainActivity).changeFragment(Mapa())
             }
         }
-        return root
+        return binding.root
     }
 }
