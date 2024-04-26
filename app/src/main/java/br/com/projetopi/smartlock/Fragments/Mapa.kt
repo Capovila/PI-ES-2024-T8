@@ -160,7 +160,7 @@ class Mapa() : Fragment() {
                                                                             val userLatLng = LatLng(location.latitude, location.longitude)
                                                                             val distanciaDoUsuario =
                                                                                 calcularDistanciaEmMetros(userLatLng, markerLatLng)
-                                                                            if (distanciaDoUsuario < 5.0) {
+                                                                            if (distanciaDoUsuario < 150.0) {
                                                                                 val markerEstablishment: Establishment = marker.tag as Establishment
                                                                                 sharedViewModelEstablishment.selectEstablishment(markerEstablishment)
                                                                                 (activity as MainActivity).changeFragment(OpcaoTempo())
@@ -170,7 +170,7 @@ class Mapa() : Fragment() {
                                                                         } else {
                                                                             Toast.makeText(
                                                                                 requireContext(),
-                                                                                "Localização não disponível",
+                                                                                "Habilite sua localização",
                                                                                 Toast.LENGTH_LONG
                                                                             ).show()
                                                                         }

@@ -50,7 +50,7 @@ class Locacoes : Fragment() {
                     rentalID = documents.id
                     establishmentID = documents.getString("idPlace").toString()
                     val multiFormatWriter = MultiFormatWriter()
-                    val bitMatrix = multiFormatWriter.encode("$rentalID", BarcodeFormat.QR_CODE, 300, 300)
+                    val bitMatrix = multiFormatWriter.encode(rentalID, BarcodeFormat.QR_CODE, 300, 300)
                     val barcodeEncoder = BarcodeEncoder()
                     val bitmap = barcodeEncoder.createBitmap(bitMatrix)
                     binding.qrcode.visibility = View.VISIBLE

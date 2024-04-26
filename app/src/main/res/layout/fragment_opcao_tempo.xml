@@ -78,6 +78,6 @@
         android:textStyle="bold"
         android:textSize="15sp"
         android:paddingHorizontal="15dp"
-        android:layout_marginTop="75dp"/>
+        android:layout_marginTop="60dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

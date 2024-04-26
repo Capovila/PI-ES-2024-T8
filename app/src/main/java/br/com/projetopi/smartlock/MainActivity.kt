@@ -77,11 +77,7 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
                     .whereEqualTo("rentalOpen", true)
                     .get()
                     .addOnSuccessListener {
-                        if(it.isEmpty){
-                            badge.isVisible = false
-                        } else {
-                            badge.isVisible = true
-                        }
+                        badge.isVisible = !it.isEmpty
                     }
             }
         }
