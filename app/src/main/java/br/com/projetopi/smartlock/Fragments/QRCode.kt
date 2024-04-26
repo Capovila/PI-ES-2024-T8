@@ -28,7 +28,6 @@ class QRCode : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var rentalID: String
-    private lateinit var establishmentManagerName: String
 
     private lateinit var db: FirebaseFirestore
 
@@ -36,7 +35,7 @@ class QRCode : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View{
         _binding = FragmentQRCodeBinding.inflate(inflater,container,false)
 
         db = Firebase.firestore
@@ -44,10 +43,9 @@ class QRCode : Fragment() {
         val sharedViewModelRental: SharedViewModelRental by activityViewModels()
         sharedViewModelRental.selectedRental.observe(viewLifecycleOwner) { rental ->
             rentalID = rental.uid.toString()
-            establishmentManagerName = rental.establishmentManagerName.toString()
-            binding.tvApresenteGerente.text = "Apresente esse QR Code ao gerente $establishmentManagerName"
+            binding.tvApresenteGerente.text = "Apresente esse QR Code ao gerente "
             val multiFormatWriter = MultiFormatWriter()
-            val bitMatrix = multiFormatWriter.encode("$rentalID", BarcodeFormat.QR_CODE, 300, 300)
+            val bitMatrix = multiFormatWriter.encode(rentalID, BarcodeFormat.QR_CODE, 300, 300)
             val barcodeEncoder = BarcodeEncoder()
             val bitmap = barcodeEncoder.createBitmap(bitMatrix)
 

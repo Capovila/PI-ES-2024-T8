@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
@@ -43,7 +44,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
             insets
         }
 
-        db = com.google.firebase.Firebase.firestore
+        db = Firebase.firestore
 
         //Esconde o linear layout lnlaBtnMenu
         binding.lnlaBtnMenu.visibility = View.GONE
