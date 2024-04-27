@@ -37,7 +37,7 @@ import com.google.firebase.firestore.firestore
 
 //Código mínimo para uma fragment usual
 class Mapa() : Fragment() {
-
+    // Lista de estabelecimentos
     private val establishments: ArrayList<Establishment> = arrayListOf()
 
     private var _binding: FragmentMapaBinding? = null
@@ -57,8 +57,10 @@ class Mapa() : Fragment() {
 
         simpleStorage = SimpleStorage(requireContext())
 
+        // Atribui os dados do usuario que estao no simpleStorage para a variavel user
         val user: User = simpleStorage.getUserAccountData()
 
+        // Esconde o btnMenuFragment
         binding.lnlaBtnMenuFragment.visibility = View.GONE
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
@@ -67,6 +69,7 @@ class Mapa() : Fragment() {
 
         db = Firebase.firestore
 
+        // Verifica se existe uma locaçao com o id do usuario que nao foi implementada (efetivada)
         db.collection("rentals").whereEqualTo("rentalImplemented", false)
             .whereEqualTo("idUser", user.uid).get().addOnSuccessListener {
                 for(documents in it){
@@ -74,6 +77,7 @@ class Mapa() : Fragment() {
                 }
             }
 
+        // Faz um get de todos os estabelecimentos, com os dados recebidos monta uma lista com todos os estabelecimentos
         db.collection("establishments").get().addOnSuccessListener { documents ->
             for (document in documents) {
                 val id = document.id
@@ -89,17 +93,22 @@ class Mapa() : Fragment() {
                 establishments?.add(establishment)
             }
 
+            // Atribui o fragment com o Mapa do Google Cloud
             val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragmentMain) as SupportMapFragment
 
             mapFragment.getMapAsync{ googleMap ->
+                // Adiciona os marcadores
                 addMarkers(googleMap)
 
+                // Define os conteudos dos windowAdapters
                 googleMap.setInfoWindowAdapter(MarkerInfoAdapter(requireContext()))
 
+                //Define o estilo do mapa
                 googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(),
                     R.raw.map_style
                 ))
 
+                // Remove o MapToolBar
                 googleMap.uiSettings.isMapToolbarEnabled = false
 
                 googleMap.setOnMarkerClickListener {marker ->
@@ -108,8 +117,10 @@ class Mapa() : Fragment() {
                     val markerLongitude = markerPosition.longitude
                     val markerLatLng = LatLng(markerLatitude, markerLongitude)
 
+                    // Mostra o btnMenuFragment
                     binding.lnlaBtnMenuFragment.visibility = View.VISIBLE
 
+                    //Quando clicado no btnIrFragment, redireciona ao google maps com as coordenadas do marker
                     binding.btnIrFragment.setOnClickListener{
                         startActivity(Intent(
                             Intent.ACTION_VIEW,
@@ -118,6 +129,12 @@ class Mapa() : Fragment() {
                         )
                     }
 
+                    //Quando clicado no btnAlugarFragment verifica se o usuario possui locações nao efetivadas
+                    // verifica se o usuario possui locações abertas
+                    // verifica se o usuario possui um cartao cadastrado
+                    // verifica se o aplicativo possui acesso a localização do dispositivo
+                    // pega a localização do usuario e verifica se ele esta mais proximo que 150 metros do marker,
+                    // caso true, redireciona para o fragment opcoesTempo
                     binding.btnAlugarFragment.setOnClickListener{
                         db.collection("rentals")
                             .whereEqualTo("idUser", user.uid)
@@ -162,6 +179,7 @@ class Mapa() : Fragment() {
                                                                                 calcularDistanciaEmMetros(userLatLng, markerLatLng)
                                                                             if (distanciaDoUsuario < 150.0) {
                                                                                 val markerEstablishment: Establishment = marker.tag as Establishment
+                                                                                // Passa as informações da tag por sharedViewModel
                                                                                 sharedViewModelEstablishment.selectEstablishment(markerEstablishment)
                                                                                 (activity as MainActivity).changeFragment(OpcaoTempo())
                                                                             } else {
@@ -193,10 +211,12 @@ class Mapa() : Fragment() {
                     false
                 }
 
+                // Ao fechar a janela de informações do marker, esconde o btnMenuFragment
                 googleMap.setOnInfoWindowCloseListener {
                     binding.lnlaBtnMenuFragment.visibility = View.GONE
                 }
 
+                // Quando o mapa é carregado é movida a camera para centralizar na tela os markers
                 googleMap.setOnMapLoadedCallback {
                     val bounds = LatLngBounds.builder()
                     establishments?.forEach{
@@ -211,6 +231,7 @@ class Mapa() : Fragment() {
         return binding.root
     }
 
+    // Faz com que para cada estabelecimento crie um marker com as informações atribuidas
     private fun addMarkers(googleMap: GoogleMap) {
         establishments?.forEach {establishment ->
             val marker = googleMap.addMarker(
@@ -226,6 +247,7 @@ class Mapa() : Fragment() {
         }
     }
 
+    // Faz com que seja calculada a distancia do usuario para o marker
     private fun calcularDistanciaEmMetros(userLocation: LatLng, destinationLocation: LatLng): Float {
         val result = FloatArray(1)
         Location.distanceBetween(
@@ -236,6 +258,7 @@ class Mapa() : Fragment() {
         return result[0]
     }
 
+    // Requisita as permições de localização do usuario
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
             requireContext() as Activity, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,

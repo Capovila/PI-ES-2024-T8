@@ -16,20 +16,11 @@
         tools:context=".LoginActivity">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="100dp"
+            android:layout_width="300dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:src="@drawable/baseline_lock_open_24" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/smartlock"
-            android:textColor="@color/main_light_blue"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:src="@drawable/logo_smart_lock" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

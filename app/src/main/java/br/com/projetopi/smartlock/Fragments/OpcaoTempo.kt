@@ -33,6 +33,7 @@ class OpcaoTempo : Fragment() {
 
     private lateinit var db: FirebaseFirestore
 
+    // Variaveis que serao usada posteriormente para busca e show data
     private lateinit var establishmentID: String
     private lateinit var establishmentManagerName: String
 
@@ -46,19 +47,24 @@ class OpcaoTempo : Fragment() {
 
         simpleStorage = SimpleStorage(requireContext())
 
+        // Atrubui na variavel user os dados do usuario guardados no simpleStorage
         val user: User = simpleStorage.getUserAccountData()
 
         db = Firebase.firestore
 
         val sharedViewModelRental: SharedViewModelRental by activityViewModels()
 
+        // Declarada e atribuida uma lista de descrições para cada plano de locação do armario
         val descList = listOf("30min", "1h", "2h", "4h", "Do momento até as 18h")
 
+        // Pega as informações setadas no sharedViewModel e faz a busca do estabelecimento com o id do estabelecimento
+        // setado no marcador
         val sharedViewModelEstablishment: SharedViewModelEstablishment by activityViewModels()
         sharedViewModelEstablishment.selectedEstablishment.observe(viewLifecycleOwner) { establishment ->
             establishmentID = establishment.uid.toString()
             establishmentManagerName = establishment.managerName.toString()
             db.collection("establishments").document(establishmentID).get().addOnSuccessListener { document ->
+                // Atribui aos .text das opções (buttonRadio) as informações de cada plano, com o preço e descrição
                 val preco1 = document.getDouble("planPrice1") ?: 0.0
                 binding.op1.text = "${descList[0]} = R$ $preco1"
 
@@ -71,6 +77,7 @@ class OpcaoTempo : Fragment() {
                 val preco4 = document.getDouble("planPrice4") ?: 0.0
                 binding.op4.text = "${descList[3]} = R$ $preco4"
 
+                // Verifica o horario e dependendo do horario, mostra ou esconde essa opção
                 val currentTime = getCurrentTime()
                 if (currentTime < "07:00:00" || currentTime > "08:00:00") {
                     binding.op5.visibility = View.GONE
@@ -79,6 +86,8 @@ class OpcaoTempo : Fragment() {
                     binding.op5.text = "${descList[4]} = R$ $preco5"
                 }
 
+                // Quando clicado, verifica se alguma opção dos buttonsRadio foi selecionada,
+                // define as informações da locação que esta sendo realizado e adicona no firebase
                 binding.btnConfirmarLocacao.setOnClickListener {
                     if(isSelected()){
                         val opSelected: RadioButton = binding.root.findViewById(binding.radioGroup.checkedRadioButtonId)
