@@ -16,7 +16,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="25sp">
+            app:cardElevation="25dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="SmartLock"
+                    android:text="@string/smartlock"
                     android:textColor="@color/main_light_blue"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -49,9 +49,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
-            android:text="Adicionar Cartão"
+            android:text="@string/adicionar_cartao"
             android:textColor="@color/main_blue"
             android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Todas as vezes que for realizada uma locação, será cobrada a caução de uma diária e estornada proporcionalmente
+de acordo com o período utilizado."
+            android:textColor="@color/main_blue"
+            android:textSize="10sp"
+            android:textAlignment="center"
+            android:paddingHorizontal="10dp"
             android:textStyle="bold" />
 
 
@@ -61,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="50dp"
-            android:hint="Nome do Titular"
+            android:hint="@string/nome_do_titular"
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_perm_identity_24">
 
@@ -70,7 +83,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:maxLength="25"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="15dp"
-            android:hint="Número do Cartão"
+            android:hint="@string/numero_do_cartao"
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_numbers_24">
 
@@ -102,10 +116,10 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tlCVV"
-                android:layout_width="125dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
-                android:hint="CVV"
+                android:hint="@string/cvv"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/baseline_vpn_key_24">
 
@@ -124,7 +138,7 @@
                 android:layout_width="175dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Ano de Validade"
+                android:hint="@string/ano_de_validade"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/baseline_calendar_month_24">
 
@@ -148,7 +162,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="75dp"
             android:paddingHorizontal="15dp"
-            android:text="Adicionar"
+            android:text="@string/adicionar"
             android:textColor="@color/main_dark_blue"
             android:textSize="15sp"
             android:textStyle="bold" />

@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="Nenhuma locação aberta..."
+        android:text="@string/nenhuma_locacao_aberta"
         android:textAlignment="center"
         android:textColor="@color/main_blue"
         android:textSize="20sp"

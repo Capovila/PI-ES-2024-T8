@@ -19,7 +19,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="25sp">
+            app:cardElevation="25dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="SmartLock"
+                    android:text="@string/smartlock"
                     android:textColor="@color/main_light_blue"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
-            android:text="Cadastrar usuario"
+            android:text="@string/cadastrar_usuario"
             android:textColor="@color/main_blue"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -64,7 +64,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="15dp"
-            android:hint="Nome"
+            android:hint="@string/nome"
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_person_black_18dp">
 
@@ -84,7 +84,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:hint="Email"
+            android:hint="@string/email"
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_email_black_18dp">
 
@@ -104,7 +104,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:hint="Senha"
+            android:hint="@string/senha"
             app:endIconMode="password_toggle"
             app:startIconDrawable="@drawable/baseline_vpn_key_24">
 
@@ -124,7 +124,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:hint="Idade"
+            android:hint="@string/idade"
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_calendar_month_24">
 
@@ -145,7 +145,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:hint="CPF"
+            android:hint="@string/cpf"
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_perm_identity_24">
 
@@ -166,7 +166,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:hint="Telefone"
+            android:hint="@string/telefone"
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_local_phone_24">
 
@@ -188,7 +188,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:text="Cadastrar"
+            android:text="@string/cadastrar"
             android:textColor="@color/main_dark_blue"
             android:textSize="15sp"
             android:textStyle="bold" />

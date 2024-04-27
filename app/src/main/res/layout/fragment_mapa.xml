@@ -18,7 +18,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="25sp">
+        app:cardElevation="25dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lnlaBtnMenuFragment"
@@ -34,10 +34,10 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:layout_marginRight="30dp"
+                android:layout_marginEnd="30dp"
                 style="?attr/materialButtonOutlinedStyle"
                 android:textColor="@color/main_dark_blue"
-                android:text="Ir até lá"/>
+                android:text="@string/ir_ate_la"/>
 
             <Button
                 android:id="@+id/btnAlugarFragment"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 style="?attr/materialButtonOutlinedStyle"
                 android:textColor="@color/main_dark_blue"
-                android:text="Alugar Armário"/>
+                android:text="@string/alugar_armario"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

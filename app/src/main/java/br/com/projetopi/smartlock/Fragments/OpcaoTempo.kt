@@ -95,6 +95,7 @@ class OpcaoTempo : Fragment() {
                             val locacaoAtualID = document.id
                             locacaoAtual.uid = locacaoAtualID
                             sharedViewModelRental.selectRental(locacaoAtual)
+                            Toast.makeText(requireContext(), "Locação confirmada com sucesso", Toast.LENGTH_LONG).show()
                             (activity as MainActivity).changeFragment(QRCode())
                         }
                     } else {
