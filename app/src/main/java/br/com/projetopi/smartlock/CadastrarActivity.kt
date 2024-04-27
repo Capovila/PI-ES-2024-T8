@@ -34,7 +34,10 @@ class CadastrarActivity : AppCompatActivity() {
         binding = ActivityCadastrarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Habilita o modo de "edge-to-edge"
         enableEdgeToEdge()
+
+        // Deixa transparente o statusBar e o notificationBar
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -46,16 +49,20 @@ class CadastrarActivity : AppCompatActivity() {
         db = Firebase.firestore
         auth = Firebase.auth
 
-
+        // Lista de EditTexts e TextLayouts
         val editTexts = listOf(binding.etName, binding.etEmail, binding.etPassword, binding.etAge, binding.etCPF, binding.etPhone)
         val textLayouts = listOf(binding.tlName, binding.tlEmail, binding.tlPassword, binding.tlAge, binding.tlCPF, binding.tlPhone)
 
+        // Verifica se os EditTexts perderam o foco e atualiza os TextLayouts correspondentes
         editTexts.forEachIndexed { lt, et ->
             setOnFocusChangeListenerInputCheck(et, textLayouts[lt])
         }
 
+        // Botão de cadastro do usuário
         binding.btnCadastrar.setOnClickListener{ it ->
+            //Verifica se todos os campos foram preenchidos
             if(isFilled()) {
+                // Cria um objeto User com os dados dos EditTexts
                 val user = User(
                     null,
                     binding.etName.text.toString(),
@@ -66,13 +73,16 @@ class CadastrarActivity : AppCompatActivity() {
                     binding.etPhone.text.toString()
                 )
 
+                // Cria o usuário no Firebase Authentication
                 auth.createUserWithEmailAndPassword(user.email!!, user.password!!)
                     .addOnCompleteListener { authResult ->
                         if(authResult.isSuccessful){
                             user.uid = authResult.result.user!!.uid
                             user.password = ""
 
+                            // Adiciona o usuário ao Firestore
                             db.collection("users").add(user).addOnSuccessListener {
+                                // Envia um e-mail de verificação
                                 auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
                                     Toast.makeText(
                                         baseContext,
@@ -80,22 +90,26 @@ class CadastrarActivity : AppCompatActivity() {
                                         Toast.LENGTH_LONG,
                                     ).show()
 
+                                    // Redireciona para a tela de login
                                     startActivity(Intent(this, LoginActivity::class.java))
                                     finish()
                                 }
                             }
                         } else {
-                                Snackbar.make(binding.btnCadastrar, authResult.exception!!.message.toString(), Snackbar.LENGTH_LONG).show()
-                                }
+                            // Exibe uma mensagem de erro em caso de falha no cadastro
+                            Snackbar.make(binding.btnCadastrar, authResult.exception!!.message.toString(), Snackbar.LENGTH_LONG).show()
+                        }
 
                     }
                 hideKeybard(it)
             } else {
+                // Exibe uma mensagem de erro se algum campo não estiver preenchido corretamente
                 showFieldErrors()
                 Snackbar.make(binding.btnCadastrar, "Preencha todos os campos corretamente", Snackbar.LENGTH_LONG ).show()
             }
         }
 
+        // Botão de voltar
         binding.btnBack.setOnClickListener{
             finish()
         }
