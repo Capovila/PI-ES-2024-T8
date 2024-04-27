@@ -15,9 +15,9 @@
         android:id="@+id/tvApresenteGerente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Apresente esse QR Code ao gerente (nomeGerente)"
+        android:text="@string/apresente_esse_qr_code_ao_gerente_nomegerente"
         android:layout_marginBottom="20dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@color/main_blue"
         android:textStyle="bold"
         android:textAlignment="center"/>
@@ -26,7 +26,8 @@
         android:id="@+id/qrcode"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/todo" />
 
     <Button
         android:id="@+id/btnConcluir"
@@ -35,7 +36,7 @@
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Concluir"
+        android:text="@string/concluir"
         />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

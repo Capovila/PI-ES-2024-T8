@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Smart Lock"
+            android:text="@string/smartlock"
             android:textColor="@color/main_light_blue"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:text="Entre ou crie sua conta"
+            android:text="@string/entre_ou_crie_sua_conta"
             android:textColor="@color/main_blue"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -48,7 +48,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="15dp"
-            android:hint="Email"
+            android:hint="@string/email"
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_email_black_18dp">
 
@@ -68,7 +68,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:hint="Senha"
+            android:hint="@string/senha"
             app:endIconMode="password_toggle"
             app:startIconDrawable="@drawable/baseline_vpn_key_24">
 
@@ -89,7 +89,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
             android:background="@color/blank"
-            android:text="Recuperar senha"
+            android:text="@string/recuperar_senha"
             android:textColor="@color/main_purple"
             android:textStyle="italic" />
 
@@ -105,8 +105,8 @@
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15sp"
-                android:text="Entrar"
+                android:layout_marginRight="15dp"
+                android:text="@string/entrar"
                 android:textColor="@color/main_dark_blue"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -116,8 +116,8 @@
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="10sp"
-                android:text="Cadastrar"
+                android:paddingHorizontal="10dp"
+                android:text="@string/cadastrar"
                 android:textColor="@color/main_dark_blue"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -130,8 +130,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:paddingHorizontal="5sp"
-            android:text="Consultar Armários"
+            android:paddingHorizontal="10dp"
+            android:text="@string/consultar_armarios"
             android:textColor="@color/main_dark_blue"
             android:textStyle="bold" />
 

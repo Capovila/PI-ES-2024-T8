@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:text="Nome do usuário"
+                    android:text="@string/nome_do_usuario"
                     android:textColor="@color/main_blue"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:text="Email do usuário"
+                    android:text="@string/email_do_usuario"
                     android:textColor="@color/main_blue"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -65,7 +65,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cartão Cadastrado: "
+                android:text="@string/cartao_cadastrado"
                 android:textColor="@color/main_dark_blue"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -94,21 +94,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="45dp"
-            android:text="Nenhum cartão cadastrado..."
+            android:text="@string/nenhum_cartao_cadastrado"
             android:textColor="@color/main_dark_blue"
             android:textSize="15sp"
             android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvCard"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="45dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="25dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/main_light_blue"
                 android:orientation="horizontal">
@@ -117,6 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
 
@@ -165,13 +166,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:cardBackgroundColor="@color/main_dark_blue"
-                        app:cardCornerRadius="5sp"
+                        app:cardCornerRadius="5dp"
                         app:cardElevation="8dp">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/btnDelete"
-                            android:layout_width="25sp"
-                            android:layout_height="30sp"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
                             android:src="@drawable/baseline_delete_forever_24" />
 
                     </androidx.cardview.widget.CardView>

@@ -15,7 +15,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="25sp">
+        app:cardElevation="25dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="SmartLock"
+                android:text="@string/smartlock"
                 android:textColor="@color/main_light_blue"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -66,7 +66,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
-            android:text="Ir até lá"
+            android:text="@string/ir_ate_la"
             android:textColor="@color/main_dark_blue"
             android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Alugar Armário"
+            android:text="@string/alugar_armario"
             android:textColor="@color/main_dark_blue"
             android:textStyle="bold" />
 

@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="SmartLock"
+                android:text="@string/smartlock"
                 android:textColor="@color/main_light_blue"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
-            android:text="Escolha o tempo que irá usar o armário"
+            android:text="@string/escolha_o_tempo_que_ira_usar_o_armario"
             android:textColor="@color/main_blue"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -88,7 +88,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="60dp"
             android:paddingHorizontal="15dp"
-            android:text="Confirmar Locação"
+            android:text="@string/confirmar_locacao"
             android:textColor="@color/main_dark_blue"
             android:textSize="15sp"
             android:textStyle="bold" />
