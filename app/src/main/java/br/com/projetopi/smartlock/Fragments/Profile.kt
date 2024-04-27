@@ -12,6 +12,7 @@ import br.com.projetopi.smartlock.Classes.User
 import br.com.projetopi.smartlock.LoginActivity
 import br.com.projetopi.smartlock.MainActivity
 import br.com.projetopi.smartlock.SimpleStorage
+import br.com.projetopi.smartlock.SplashScreenActivity
 import br.com.projetopi.smartlock.databinding.FragmentProfileBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -105,7 +106,7 @@ class Profile : Fragment() {
         binding.btnLogout.setOnClickListener{
             simpleStorage.clearUserAccount()
             auth.signOut()
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
         }
 
         binding.btnAddCard.setOnClickListener {

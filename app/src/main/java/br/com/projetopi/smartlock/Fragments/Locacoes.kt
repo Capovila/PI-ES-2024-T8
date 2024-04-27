@@ -1,5 +1,6 @@
 package br.com.projetopi.smartlock.Fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,6 +27,7 @@ class Locacoes : Fragment() {
     private lateinit var rentalID: String
     private lateinit var establishmentID: String
     private lateinit var establishmentManagerName: String
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
