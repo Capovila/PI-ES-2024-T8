@@ -28,7 +28,9 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        replaceFragment(Mapa())
+        binding.bottomNavigationView.menu.findItem(R.id.page_2).isChecked = true
+                binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -38,10 +40,6 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
         }
 
         startPeriodicUpdate(this, binding)
-
-        replaceFragment(Mapa())
-
-        binding.bottomNavigationView.menu.findItem(R.id.page_2).isChecked = true
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
@@ -80,8 +78,7 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
                     }
             }
         }
-        val intervalo = 1000L
-        timer.schedule(timerTask, 0, intervalo)
+        timer.schedule(timerTask, 0, 1000L)
     }
 
     override fun changeFragment(fragment: Fragment) {
