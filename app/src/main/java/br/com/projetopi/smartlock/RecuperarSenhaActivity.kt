@@ -23,10 +23,10 @@ import com.google.firebase.auth.auth
 class RecuperarSenhaActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityRecuperarSenhaBinding
-
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityRecuperarSenhaBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -64,7 +64,7 @@ class RecuperarSenhaActivity : AppCompatActivity() {
             finish()
         }
     }
-    //Função que verifica se o usuario saiu de foco de um EditText e caso esteja vazio muda o TextLayout para erro
+
     private fun setOnFocusChangeListenerInputCheck(editText: TextInputEditText, textLayout: TextInputLayout) {
         editText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
@@ -77,7 +77,6 @@ class RecuperarSenhaActivity : AppCompatActivity() {
         }
     }
 
-    //Função que retorna "false" caso um dos EditText estiverem vazios
     private fun isFilled(): Boolean {
         return binding.etEmail.text.toString().isNotEmpty()
     }
@@ -87,7 +86,6 @@ class RecuperarSenhaActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(it.windowToken, 0)
     }
 
-    //Função que faz com que caso esteja um editText esteja vazio muda o TextLayout para erro
     private fun showFieldErrors() {
         if (binding.etEmail.text.toString().isEmpty()) {
             binding.tlEmail.error = getString(R.string.preencha_campo)

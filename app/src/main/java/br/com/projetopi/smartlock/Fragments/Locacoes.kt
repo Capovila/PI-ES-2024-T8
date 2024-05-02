@@ -19,13 +19,12 @@ class Locacoes : Fragment() {
 
     private var _binding:FragmentLocacoesBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var simpleStorage: SimpleStorage
     private lateinit var db: FirebaseFirestore
-
     private lateinit var rentalID: String
     private lateinit var establishmentID: String
     private lateinit var establishmentManagerName: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,8 +38,15 @@ class Locacoes : Fragment() {
 
         db = Firebase.firestore
 
+        // Esconde o ImageView do QR Code
         binding.qrcode.visibility = View.GONE
 
+        /***
+         * Busca locações que estejam relacinadas ao id do Usuario e se a locação está aberta,
+         * caso ache alguma, pega o id da locação o id do estabelecimento, faz um bitmap com o
+         * id do estabelecimento e após buscar o nome do gerente do estabelecimento dessa locação,
+         * define o textView com o nome do gerente buscado
+         */
         db.collection("rentals")
             .whereEqualTo("idUser", user.uid)
             .whereEqualTo("rentalOpen", true)

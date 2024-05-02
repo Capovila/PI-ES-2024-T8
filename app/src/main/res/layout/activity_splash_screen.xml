@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/main_dark_blue"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:layout_height="match_parent"
+    android:background="@color/main_white"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".SplashScreenActivity">
 
-  
+
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/baseline_lock_open_24"
-        android:id="@+id/lockerSplash"/>
+        android:id="@+id/lockerSplash"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/logo_puc" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/main_light_blue"
-        android:text="Smart Lock"
-        android:textStyle="bold"
-        android:textSize="50sp"/>
-
-  </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

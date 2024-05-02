@@ -8,7 +8,5 @@ class SharedViewModelEstablishment : ViewModel() {
     val selectedEstablishment: LiveData<Establishment> get() = _selectedEstablishment
     fun selectEstablishment(establishment: Establishment) {
         _selectedEstablishment.value = establishment
-
     }
-
 }

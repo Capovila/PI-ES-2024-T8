@@ -22,13 +22,12 @@ import com.google.firebase.firestore.firestore
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-
     private lateinit var simpleStorage: SimpleStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,8 +44,15 @@ class LoginActivity : AppCompatActivity() {
         db = Firebase.firestore
         auth = Firebase.auth
 
-        val editTexts = listOf(binding.etEmail, binding.etPassword)
-        val textLayouts = listOf(binding.tlEmail, binding.tlPassword)
+        val editTexts = listOf(
+            binding.etEmail,
+            binding.etPassword
+        )
+
+        val textLayouts = listOf(
+            binding.tlEmail,
+            binding.tlPassword
+        )
 
         editTexts.forEachIndexed { lt, et ->
             setOnFocusChangeListenerInputCheck(et, textLayouts[lt])
@@ -73,7 +79,9 @@ class LoginActivity : AppCompatActivity() {
                                     null
                                 )
 
-                                db.collection("users").whereEqualTo("uid",user.uid).get()
+                                db.collection("users")
+                                    .whereEqualTo("uid",user.uid)
+                                    .get()
                                     .addOnSuccessListener { documents ->
                                         for (document in documents) {
                                             user.name = document.getString("name")
@@ -112,10 +120,13 @@ class LoginActivity : AppCompatActivity() {
                 hideKeyboard(it)
             } else {
                 showFieldErrors()
-                Snackbar.make(binding.btnEntrar, "Preencha todos os campos corretamente", Snackbar.LENGTH_LONG ).show()
+                Snackbar.make(
+                    binding.btnEntrar,
+                    "Preencha todos os campos corretamente",
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         }
-
 
         binding.btnRecuperarSenha.setOnClickListener{
             startActivity(Intent(this, RecuperarSenhaActivity::class.java))
@@ -130,7 +141,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    //Função que verifica se o usuario saiu de foco de um EditText e caso esteja vazio muda o TextLayout para erro
     private fun setOnFocusChangeListenerInputCheck(editText: TextInputEditText, textLayout: TextInputLayout) {
         editText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
@@ -143,10 +153,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    //Função que retorna "false" caso um dos EditText estiverem vazios
     private fun isFilled(): Boolean {
-        return !(binding.etEmail.text.toString().isEmpty() ||
-                binding.etPassword.text.toString().isEmpty())
+        return !(
+                binding.etEmail.text.toString().isEmpty()
+                || binding.etPassword.text.toString().isEmpty()
+                )
     }
 
     private fun hideKeyboard(it: View){
@@ -154,10 +165,16 @@ class LoginActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(it.windowToken, 0)
     }
 
-    //Função que faz com que caso esteja um editText esteja vazio muda o TextLayout para erro
     private fun showFieldErrors() {
-        val editTexts = listOf(binding.etEmail, binding.etPassword)
-        val textLayouts = listOf(binding.tlEmail, binding.tlPassword)
+        val editTexts = listOf(
+            binding.etEmail,
+            binding.etPassword
+        )
+
+        val textLayouts = listOf(
+            binding.tlEmail,
+            binding.tlPassword
+        )
 
         editTexts.forEachIndexed { index, et ->
             if (et.text.toString().isEmpty()) {

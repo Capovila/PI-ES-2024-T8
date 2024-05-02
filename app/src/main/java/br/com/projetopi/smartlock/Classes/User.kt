@@ -1,5 +1,8 @@
 package br.com.projetopi.smartlock.Classes
 
+/***
+ * Essa classe representa o usuário
+ */
 class User(
     var uid: String?,
     var name: String?,

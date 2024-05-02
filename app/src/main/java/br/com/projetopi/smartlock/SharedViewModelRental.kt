@@ -8,7 +8,5 @@ class SharedViewModelRental: ViewModel() {
     val selectedRental: LiveData<Rental> get() = _selectedRental
     fun selectRental(rental: Rental) {
         _selectedRental.value = rental
-
     }
-
 }

@@ -20,13 +20,12 @@ import java.util.TimerTask
 class MainActivity : AppCompatActivity(), FragmentHandler {
 
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var simpleStorage: SimpleStorage
     private lateinit var db: FirebaseFirestore
-
     private val timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
