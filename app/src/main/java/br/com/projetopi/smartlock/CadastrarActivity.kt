@@ -33,7 +33,10 @@ class CadastrarActivity : AppCompatActivity() {
         binding = ActivityCadastrarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Habilita o modo de "edge-to-edge"
         enableEdgeToEdge()
+
+        // Deixa transparente o statusBar e o navigationBar
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -64,12 +67,17 @@ class CadastrarActivity : AppCompatActivity() {
             binding.tlPhone
         )
 
+
+        // Verifica se os EditTexts perderam o foco e atualiza os TextLayouts correspondentes
         editTexts.forEachIndexed { lt, et ->
             setOnFocusChangeListenerInputCheck(et, textLayouts[lt])
         }
 
+        // Botão de cadastro do usuário
         binding.btnCadastrar.setOnClickListener{ it ->
+            //Verifica se todos os campos foram preenchidos
             if(isFilled()) {
+                // Cria um objeto User com os dados dos EditTexts
                 val user = User(
                     null,
                     binding.etName.text.toString(),
@@ -80,37 +88,43 @@ class CadastrarActivity : AppCompatActivity() {
                     binding.etPhone.text.toString()
                 )
 
+                // Cria o usuário no Firebase Authentication
                 auth.createUserWithEmailAndPassword(user.email!!, user.password!!)
                     .addOnCompleteListener { authResult ->
-                        if(authResult.isSuccessful){
+                        if(authResult.isSuccessful) {
                             user.uid = authResult.result.user!!.uid
                             user.password = ""
 
                             db.collection("users")
                                 .add(user)
                                 .addOnSuccessListener {
-                                    auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
-                                        Toast.makeText(
-                                            baseContext,
-                                            "Confirmação de e-mail enviada",
-                                            Toast.LENGTH_LONG,
-                                        ).show()
+                                    auth.currentUser?.sendEmailVerification()
+                                        ?.addOnCompleteListener {
+                                            Toast.makeText(
+                                                baseContext,
+                                                "Confirmação de e-mail enviada",
+                                                Toast.LENGTH_LONG,
+                                            ).show()
 
-                                        startActivity(Intent(this, LoginActivity::class.java))
-                                        finish()
-                                    }
+                                            startActivity(Intent(this, LoginActivity::class.java))
+                                            finish()
+                                        }
                                 }
-                        } else {
+                        }
+                            else {
                             Snackbar.make(
                                 binding.btnCadastrar,
                                 authResult.exception!!.message.toString(),
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            // Exibe uma mensagem de erro em caso de falha no cadastro
+                            Snackbar.make(binding.btnCadastrar, authResult.exception!!.message.toString(), Snackbar.LENGTH_LONG).show()
                         }
 
                     }
                 hideKeybard(it)
             } else {
+                // Exibe uma mensagem de erro se algum campo não estiver preenchido corretamente
                 showFieldErrors()
                 Snackbar.make(
                     binding.btnCadastrar,
@@ -120,6 +134,7 @@ class CadastrarActivity : AppCompatActivity() {
             }
         }
 
+        // Botão de voltar
         binding.btnBack.setOnClickListener{
             finish()
         }

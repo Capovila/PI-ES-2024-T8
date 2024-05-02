@@ -27,6 +27,11 @@ class OpcaoTempo : Fragment() {
     private var _binding: FragmentOpcaoTempoBinding? = null
     private val binding get() = _binding!!
     private lateinit var db: FirebaseFirestore
+<<<<<<< HEAD
+=======
+
+    // Variaveis que serao usada posteriormente para busca e show data
+>>>>>>> master
     private lateinit var establishmentID: String
     private lateinit var establishmentManagerName: String
     private lateinit var simpleStorage: SimpleStorage
@@ -41,12 +46,14 @@ class OpcaoTempo : Fragment() {
 
         simpleStorage = SimpleStorage(requireContext())
 
+        // Atrubui na variavel user os dados do usuario guardados no simpleStorage
         val user: User = simpleStorage.getUserAccountData()
 
         db = Firebase.firestore
 
         val sharedViewModelRental: SharedViewModelRental by activityViewModels()
 
+<<<<<<< HEAD
         // Lista de descrições fixas para os planos de locação do armário
         val descList = listOf("30min", "1h", "2h", "4h", "Do momento até as 18h")
 
@@ -55,16 +62,30 @@ class OpcaoTempo : Fragment() {
          * o estabelecimento com o id do estabelecimento vindo do sharedViewModelEstablishment
          * e define os text's dos RadioButton com o valor e preço de cada plano de locação
          */
+=======
+        // Declarada e atribuida uma lista de descrições para cada plano de locação do armario
+        val descList = listOf("30min", "1h", "2h", "4h", "Do momento até as 18h")
+
+        // Pega as informações setadas no sharedViewModel e faz a busca do estabelecimento com o id do estabelecimento
+        // setado no marcador
+>>>>>>> master
         val sharedViewModelEstablishment: SharedViewModelEstablishment by activityViewModels()
         sharedViewModelEstablishment.selectedEstablishment.observe(viewLifecycleOwner) { establishment ->
             establishmentID = establishment.uid.toString()
             establishmentManagerName = establishment.managerName.toString()
+<<<<<<< HEAD
             db.collection("establishments")
                 .document(establishmentID)
                 .get()
                 .addOnSuccessListener { document ->
                     val preco1 = document.getDouble("planPrice1") ?: 0.0
                     binding.op1.text = "${descList[0]} = R$ $preco1"
+=======
+            db.collection("establishments").document(establishmentID).get().addOnSuccessListener { document ->
+                // Atribui aos .text das opções (buttonRadio) as informações de cada plano, com o preço e descrição
+                val preco1 = document.getDouble("planPrice1") ?: 0.0
+                binding.op1.text = "${descList[0]} = R$ $preco1"
+>>>>>>> master
 
                     val preco2 = document.getDouble("planPrice2") ?: 0.0
                     binding.op2.text = "${descList[1]} = R$ $preco2"
@@ -75,10 +96,43 @@ class OpcaoTempo : Fragment() {
                     val preco4 = document.getDouble("planPrice4") ?: 0.0
                     binding.op4.text = "${descList[3]} = R$ $preco4"
 
+<<<<<<< HEAD
                     val currentTime = getCurrentTime()
 
                     if (currentTime < "07:00:00" || currentTime > "08:00:00") {
                         binding.op5.visibility = View.GONE
+=======
+                // Verifica o horario e dependendo do horario, mostra ou esconde essa opção
+                val currentTime = getCurrentTime()
+                if (currentTime < "07:00:00" || currentTime > "08:00:00") {
+                    binding.op5.visibility = View.GONE
+                } else {
+                    val preco5 = document.getDouble("planPrice5") ?: 0.0
+                    binding.op5.text = "${descList[4]} = R$ $preco5"
+                }
+
+                // Quando clicado, verifica se alguma opção dos buttonsRadio foi selecionada,
+                // define as informações da locação que esta sendo realizado e adicona no firebase
+                binding.btnConfirmarLocacao.setOnClickListener {
+                    if(isSelected()){
+                        val opSelected: RadioButton = binding.root.findViewById(binding.radioGroup.checkedRadioButtonId)
+                        var locacaoAtual = Rental(
+                            null,
+                            user.uid,
+                            establishmentID,
+                            opSelected.text as String,
+                            false,
+                            true,
+                            establishmentManagerName
+                        )
+                        db.collection("rentals").add(locacaoAtual).addOnSuccessListener {document ->
+                            val locacaoAtualID = document.id
+                            locacaoAtual.uid = locacaoAtualID
+                            sharedViewModelRental.selectRental(locacaoAtual)
+                            Toast.makeText(requireContext(), "Locação confirmada com sucesso", Toast.LENGTH_LONG).show()
+                            (activity as MainActivity).changeFragment(QRCode())
+                        }
+>>>>>>> master
                     } else {
                         val preco5 = document.getDouble("planPrice5") ?: 0.0
                         binding.op5.text = "${descList[4]} = R$ $preco5"

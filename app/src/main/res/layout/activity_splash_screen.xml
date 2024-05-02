@@ -16,6 +16,6 @@
         android:id="@+id/lockerSplash"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="@drawable/logo_puc" />
+        android:src="@drawable/icon_smart_lock" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
