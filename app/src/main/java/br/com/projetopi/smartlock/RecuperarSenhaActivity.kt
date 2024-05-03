@@ -28,6 +28,7 @@ class RecuperarSenhaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
         binding = ActivityRecuperarSenhaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -40,8 +41,20 @@ class RecuperarSenhaActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+        /***
+         * Faz com que para cada editText junto com seu textLayout
+         * execute a função setOnFocusChangeListenerInputCheck
+         */
         setOnFocusChangeListenerInputCheck(binding.etEmail, binding.tlEmail)
 
+        /***
+         * Faz com que quando o btnRecuperar é clicado, verifica se
+         * todos os campos foram preenchidos, caso True, envia o email
+         * de recuperação de senha para o email digitado, caso seja
+         * enviado com sucesso, mostra um Toast com a mensagem de
+         * sucesso e inicia a activity LoginActivity, fecha a activity
+         * atual e esconde o teclado
+         */
         binding.btnRecuperar.setOnClickListener{
             if(isFilled()) {
                 auth.sendPasswordResetEmail(binding.etEmail.text.toString()).addOnCompleteListener{
@@ -72,11 +85,24 @@ class RecuperarSenhaActivity : AppCompatActivity() {
             }
         }
 
+        /***
+         * Faz com que quando clicado o btnBack, fecha a activity
+         * RecuperarSenhaActivity, activity atual
+         */
         binding.btnBack.setOnClickListener {
             finish()
         }
     }
 
+    /***
+     * Faz com que quando executada, recebe pela lista de
+     * parametros o editText e o textLayout, define um listener
+     * no editText e quando o foco sai do editText,
+     * se nao estiver preenchido, define o textLayout.error
+     * (funcionalidade do m2.material) como "Preencha o campo",
+     * caso o editText tenha sido preenchido, define o
+     * textLayout.error como null
+     */
     private fun setOnFocusChangeListenerInputCheck(editText: TextInputEditText, textLayout: TextInputLayout) {
         editText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
@@ -89,15 +115,30 @@ class RecuperarSenhaActivity : AppCompatActivity() {
         }
     }
 
+    /***
+     * Faz com que quando executada, retorna um boolean
+     * True caso todos os editText tenham sido preenchidos, e False
+     * caso um dos editText nao estiver preenchido
+     */
     private fun isFilled(): Boolean {
         return binding.etEmail.text.toString().isNotEmpty()
     }
 
+    /***
+     * Faz com que quando chamada, esconde o teclado do dispositivo
+     */
     private fun hideKeyboard(it: View){
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(it.windowToken, 0)
     }
 
+    /***
+     * Faz com que quando executada, percorre a lista
+     * de editText e para cada editText verifica se foi preenchido,
+     * caso esteja preenchido o textLayout.error correspondente
+     * é atribuido com null, caso contrario atribui o
+     * textLayout.error correspondente com "Preencha o campo"
+     */
     private fun showFieldErrors() {
         if (binding.etEmail.text.toString().isEmpty()) {
             binding.tlEmail.error = getString(R.string.preencha_campo)

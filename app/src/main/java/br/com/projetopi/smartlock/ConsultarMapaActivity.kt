@@ -32,6 +32,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
         binding = ActivityConsultarMapaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -43,8 +44,14 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
         db = Firebase.firestore
 
+        // Esconde o lnlaBtnMenu
         binding.lnlaBtnMenu.visibility = View.GONE
 
+        /***
+         * Busca estabelecimentos e para cada estabelecimento buscado, pega
+         * os dados do estabelecimento, atribui-os em uma variavel do tipo
+         * Establishment e adiciona à uma lista de estabelecimentos
+         */
         db.collection("establishments").get()
             .addOnSuccessListener { documents ->
             for (document in documents) {
@@ -67,8 +74,14 @@ class ConsultarMapaActivity : AppCompatActivity() {
                 establishments?.add(establishment)
             }
 
+            // Atribui à variavel mapFragment o supportFragment map_fragment
             val mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
 
+            /***
+            * Quando é obtido o mapa assincrono, adiciona os marcadores,
+            * define as janela de informações dos marcadores, define o estilo do mapa exibido e
+            * define o uiSettings.isMapToolbarEnabled como false
+            */
             mapFragment.getMapAsync { googleMap ->
 
                 addMarkers(googleMap)
@@ -79,14 +92,24 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
                 googleMap.uiSettings.isMapToolbarEnabled = false
 
+                /***
+                 * Quando um marcador é clicado atribui em variaveis algumas informações e
+                 * mostra o lnlaBtnMenuFragment
+                 */
                 googleMap.setOnMarkerClickListener { marker ->
 
                     val markerPosition = marker.position
                     val markerLatitude = markerPosition.latitude
                     val markerLongitude = markerPosition.longitude
 
+                    // Mostra o lnlaBtnMenu
                     binding.lnlaBtnMenu.visibility = View.VISIBLE
 
+                    /***
+                     * Quando o btnIrFragment é clicado, direciona o usuario ao google maps
+                     * com a latitude e longitude do marcador selecionado para que seja
+                     * traçada a rota
+                     */
                     binding.btnIr.setOnClickListener {
 
                         startActivity(Intent(
@@ -96,6 +119,11 @@ class ConsultarMapaActivity : AppCompatActivity() {
                         )
                     }
 
+                    /***
+                     * Quando o btnAlugar é clicado, mostra um Toast com a mensagem
+                     * de que é necessaio entrar com a conta do usuario para alugar um armario,
+                     * fechando a activity atual
+                     */
                     binding.btnAlugar.setOnClickListener {
                         Toast.makeText(baseContext, "Você precisa entrar com sua conta para alugar um armário", Toast.LENGTH_LONG).show()
                         finish()
@@ -103,10 +131,16 @@ class ConsultarMapaActivity : AppCompatActivity() {
                     false
                 }
 
+                // Quando a janela de informações do marcador é fechada, esconde o lnlaBtnMenuFragment
                 googleMap.setOnInfoWindowCloseListener {
                     binding.lnlaBtnMenu.visibility = View.GONE
                 }
 
+                /***
+                 * Quando o mapa é carregado, pega a latitude e longitude de cada estabelecimento e
+                 * constroi os limites da area de todos os marcadores, em seguida, move a camera do
+                 * mapa para se adequar ao limites definidos anteriormente com um padding das bordas de 300px
+                 */
                 googleMap.setOnMapLoadedCallback{
                     val bounds = LatLngBounds.builder()
                     establishments?.forEach{

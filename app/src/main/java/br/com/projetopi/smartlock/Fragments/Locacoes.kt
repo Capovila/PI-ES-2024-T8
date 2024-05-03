@@ -58,15 +58,23 @@ class Locacoes : Fragment() {
                     rentalID = documents.id
                     establishmentID = documents.getString("idPlace").toString()
                     val multiFormatWriter = MultiFormatWriter()
-                    val bitMatrix = multiFormatWriter.encode(rentalID, BarcodeFormat.QR_CODE, 300, 300)
+                    val bitMatrix = multiFormatWriter.encode(
+                        rentalID,
+                        BarcodeFormat.QR_CODE,
+                        300,
+                        300
+                    )
                     val barcodeEncoder = BarcodeEncoder()
                     val bitmap = barcodeEncoder.createBitmap(bitMatrix)
                     binding.qrcode.visibility = View.VISIBLE
                     binding.qrcode.setImageBitmap(bitmap)
-                    db.collection("establishments").document(establishmentID).get().addOnSuccessListener { document ->
-                        establishmentManagerName = document.getString("managerName").toString()
-                        binding.tvInfo.text = "Apresente esse QR Code ao gerente $establishmentManagerName"
-                    }
+                    db.collection("establishments")
+                        .document(establishmentID)
+                        .get()
+                        .addOnSuccessListener { document ->
+                            establishmentManagerName = document.getString("managerName").toString()
+                            binding.tvInfo.text = "Apresente esse QR Code ao gerente $establishmentManagerName"
+                        }
                 }
             }
         return binding.root
