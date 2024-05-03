@@ -46,17 +46,29 @@ class RecuperarSenhaActivity : AppCompatActivity() {
             if(isFilled()) {
                 auth.sendPasswordResetEmail(binding.etEmail.text.toString()).addOnCompleteListener{
                     if(it.isSuccessful){
-                        Toast.makeText(baseContext, "E-mail enviado", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            baseContext,
+                            "E-mail enviado",
+                            Toast.LENGTH_LONG
+                        ).show()
                         startActivity(Intent(this, LoginActivity::class.java))
                         finish()
                     }else{
-                        Snackbar.make(binding.btnRecuperar, "E-mail inválido", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(
+                            binding.btnRecuperar,
+                            "E-mail inválido",
+                            Snackbar.LENGTH_LONG
+                        ).show()
                     }
                 }
                 hideKeyboard(it)
             } else {
                 showFieldErrors()
-                Snackbar.make(binding.btnRecuperar, "Preencha o campo corretamente", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(
+                    binding.btnRecuperar,
+                    "Preencha o campo corretamente",
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         }
 

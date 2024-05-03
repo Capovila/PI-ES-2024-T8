@@ -73,10 +73,7 @@ class Profile : Fragment() {
                     binding.tvGetCard.visibility = View.GONE
                     binding.cvCard.visibility = View.VISIBLE
                 }
-
-                binding.tvUserEmail.text = user.email
-                binding.tvUserName.text = user.name
-        }
+            }
 
         /***
          * Quando o btnDelete é clicado, busca cartoes que estejam relacionados

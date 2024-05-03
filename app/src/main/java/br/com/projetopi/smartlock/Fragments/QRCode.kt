@@ -22,23 +22,15 @@ class QRCode : Fragment() {
     private var _binding: FragmentQRCodeBinding? = null
     private val binding get() = _binding!!
     private lateinit var rentalID: String
-<<<<<<< HEAD
     private lateinit var establishmentManagerName: String
-=======
-
->>>>>>> master
     private lateinit var db: FirebaseFirestore
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-<<<<<<< HEAD
     ): View {
 
-=======
-    ): View{
->>>>>>> master
         _binding = FragmentQRCodeBinding.inflate(inflater,container,false)
 
         db = Firebase.firestore

@@ -43,7 +43,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
         db = Firebase.firestore
 
-        //Esconde o linear layout lnlaBtnMenu
         binding.lnlaBtnMenu.visibility = View.GONE
 
         db.collection("establishments").get()
@@ -98,7 +97,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                     }
 
                     binding.btnAlugar.setOnClickListener {
-                        Toast.makeText(baseContext, "Você precisa estar logado para alugar um armário", Toast.LENGTH_LONG).show()
+                        Toast.makeText(baseContext, "Você precisa entrar com sua conta para alugar um armário", Toast.LENGTH_LONG).show()
                         finish()
                     }
                     false
@@ -123,6 +122,11 @@ class ConsultarMapaActivity : AppCompatActivity() {
         }
     }
 
+    /***
+     * Faz com que quando executada, para cada estabelecimento da lista de estabelecimentos,
+     * adiciona um marcador no mapa e define o title, snippet, position e tag ultilizando
+     * value-parameter googleMap do getMapAsync vindo da lista de paramentros
+     */
     private fun addMarkers(googleMap: GoogleMap) {
         establishments?.forEach {establishment ->
             val marker = googleMap.addMarker(
@@ -140,5 +144,4 @@ class ConsultarMapaActivity : AppCompatActivity() {
             }
         }
     }
-
 }
