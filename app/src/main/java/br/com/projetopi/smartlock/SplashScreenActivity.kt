@@ -2,10 +2,13 @@ package br.com.projetopi.smartlock
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.postDelayed
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -19,6 +22,11 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_splash_screen)
+
+        // Executa a animação do icone
+        val animatedIcon = findViewById<ImageView>(R.id.lockerSplash)
+        val avd = animatedIcon.drawable as AnimatedVectorDrawable
+        avd.start()
 
         enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
