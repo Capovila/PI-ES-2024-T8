@@ -71,9 +71,11 @@ class LoginActivity : AppCompatActivity() {
          * atribui em uma variavel chamada user os dados do usuario
          * vindos do auth.currentUser, e busca esse usuario na
          * coleção de users para pegar o restante dos dados e
-         * armazena-los no simpleStorage, iniciando a activity
-         * MainActivity e fechando a activity atual escondendo o
-         * teclado
+         * armazena-los no simpleStorage, caso o usuario seja um
+         * cliente, inicia a activity MainActivity e fecha a activity
+         * atual escondendo o teclado caso o usuario seja um gerente,
+         * realiza o mesmo processo mas inicia a activity
+         * ManagerMainActivity
          */
         binding.btnEntrar.setOnClickListener { it ->
             if (isFilled()) {
@@ -105,11 +107,17 @@ class LoginActivity : AppCompatActivity() {
                                             user.CPF = document.getString("cpf")
                                             user.phone = document.getString("phone")
                                             user.age = (document.get("age") as Long).toInt()
+                                            val isManager = document.getBoolean("manager")
 
                                             simpleStorage.storageUserAccount(user)
 
-                                            startActivity(Intent(this, MainActivity::class.java))
-                                            finish()
+                                            if(isManager == true){
+                                                startActivity(Intent(this, ManagerMainActivity::class.java))
+                                                finish()
+                                            } else {
+                                                startActivity(Intent(this, MainActivity::class.java))
+                                                finish()
+                                            }
                                         }
                                     }
                                     .addOnFailureListener { exception ->
