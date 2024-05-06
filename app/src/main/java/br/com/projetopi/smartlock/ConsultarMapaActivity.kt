@@ -25,15 +25,14 @@ import com.google.firebase.firestore.firestore
 
 class ConsultarMapaActivity : AppCompatActivity() {
 
-    //Lista de lugares que exitem armarios no mapa
     private val establishments: ArrayList<Establishment>? = arrayListOf()
-
     private lateinit var binding: ActivityConsultarMapaBinding
-
     private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         binding = ActivityConsultarMapaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -45,10 +44,16 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
         db = Firebase.firestore
 
-        //Esconde o linear layout lnlaBtnMenu
+        // Esconde o lnlaBtnMenu
         binding.lnlaBtnMenu.visibility = View.GONE
 
-        db.collection("establishments").get().addOnSuccessListener { documents ->
+        /***
+         * Busca estabelecimentos e para cada estabelecimento buscado, pega
+         * os dados do estabelecimento, atribui-os em uma variavel do tipo
+         * Establishment e adiciona à uma lista de estabelecimentos
+         */
+        db.collection("establishments").get()
+            .addOnSuccessListener { documents ->
             for (document in documents) {
                 val id = document.id
                 val name = document.getString("name") ?: ""
@@ -58,44 +63,54 @@ class ConsultarMapaActivity : AppCompatActivity() {
                 val reference = document.getString("reference") ?: ""
                 val managerName = document.getString("managerName") ?: ""
 
-                val establishment = Establishment(id, name, LatLng(latitude, longitude), address, reference, managerName)
+                val establishment = Establishment(
+                    id,
+                    name,
+                    LatLng(latitude, longitude),
+                    address,
+                    reference,
+                    managerName)
 
                 establishments?.add(establishment)
             }
 
-            //Atribui ao map_fragment o mapa vindo do google cloud
+            // Atribui à variavel mapFragment o supportFragment map_fragment
             val mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
 
-            //Executa quando o mapa é carregado
+            /***
+            * Quando é obtido o mapa assincrono, adiciona os marcadores,
+            * define as janela de informações dos marcadores, define o estilo do mapa exibido e
+            * define o uiSettings.isMapToolbarEnabled como false
+            */
             mapFragment.getMapAsync { googleMap ->
 
-                //Adiciona marcadores no mapa
                 addMarkers(googleMap)
 
-                //Define as informacoes do marcador com uma classe externa
                 googleMap.setInfoWindowAdapter(MarkerInfoAdapter(this))
 
-                //Define o estilo do mapa com um arquivo JSON da pasta raw
                 googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
 
-                //Desativa os botoes que ficam no canto inferior direito que aparece quando o usuario clica em um marcador
                 googleMap.uiSettings.isMapToolbarEnabled = false
 
-                //Executa quando um marcador recebe um click
-                googleMap.setOnMarkerClickListener { marker -> //Se o marcador nao for nulo
+                /***
+                 * Quando um marcador é clicado atribui em variaveis algumas informações e
+                 * mostra o lnlaBtnMenuFragment
+                 */
+                googleMap.setOnMarkerClickListener { marker ->
 
-                    //Atribui em variaveis as coordenadas desse marcador
                     val markerPosition = marker.position
                     val markerLatitude = markerPosition.latitude
                     val markerLongitude = markerPosition.longitude
 
-                    //Mostra o linear layout lnlaBtnMenu
+                    // Mostra o lnlaBtnMenu
                     binding.lnlaBtnMenu.visibility = View.VISIBLE
 
-                    //Executa quando o btnIr recebe um click
+                    /***
+                     * Quando o btnIrFragment é clicado, direciona o usuario ao google maps
+                     * com a latitude e longitude do marcador selecionado para que seja
+                     * traçada a rota
+                     */
                     binding.btnIr.setOnClickListener {
-
-                        //Abre o Google Maps para calcular a rota ate o marcador referenciado
 
                         startActivity(Intent(
                             Intent.ACTION_VIEW,
@@ -104,27 +119,33 @@ class ConsultarMapaActivity : AppCompatActivity() {
                         )
                     }
 
+                    /***
+                     * Quando o btnAlugar é clicado, mostra um Toast com a mensagem
+                     * de que é necessaio entrar com a conta do usuario para alugar um armario,
+                     * fechando a activity atual
+                     */
                     binding.btnAlugar.setOnClickListener {
-                        Toast.makeText(baseContext, "Você precisa estar logado para alugar um armário", Toast.LENGTH_LONG).show()
+                        Toast.makeText(baseContext, "Você precisa entrar com sua conta para alugar um armário", Toast.LENGTH_LONG).show()
                         finish()
                     }
-                    // Retorna false para permitir que o Google Maps trate o evento e exiba a janela de informações do marcador
                     false
                 }
 
-                //Executa quando uma janela de informacoes de um marcador
-                googleMap.setOnInfoWindowCloseListener { //Esconde o linear layout lnlaBtnMenu
+                // Quando a janela de informações do marcador é fechada, esconde o lnlaBtnMenuFragment
+                googleMap.setOnInfoWindowCloseListener {
                     binding.lnlaBtnMenu.visibility = View.GONE
                 }
 
-                //Executa quando o mapa é carregado
+                /***
+                 * Quando o mapa é carregado, pega a latitude e longitude de cada estabelecimento e
+                 * constroi os limites da area de todos os marcadores, em seguida, move a camera do
+                 * mapa para se adequar ao limites definidos anteriormente com um padding das bordas de 300px
+                 */
                 googleMap.setOnMapLoadedCallback{
-                    //Define os limites do mapa
                     val bounds = LatLngBounds.builder()
                     establishments?.forEach{
                         bounds.include(it.latLng)
                     }
-                    //Move a camera para mostrar o mapa com os limites definidos com um padding das bordas de 300px
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
                 }
             }
@@ -135,10 +156,12 @@ class ConsultarMapaActivity : AppCompatActivity() {
         }
     }
 
-    //Funcao para acidionar marcadores
+    /***
+     * Faz com que quando executada, para cada estabelecimento da lista de estabelecimentos,
+     * adiciona um marcador no mapa e define o title, snippet, position e tag ultilizando
+     * value-parameter googleMap do getMapAsync vindo da lista de paramentros
+     */
     private fun addMarkers(googleMap: GoogleMap) {
-
-        //Para cada lugar da lista establishments adiciona um marcador com as opcoes definidas
         establishments?.forEach {establishment ->
             val marker = googleMap.addMarker(
                 MarkerOptions()
@@ -146,7 +169,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                     .snippet(establishment.address)
                     .position(establishment.latLng)
                     .icon(
-                        BitmapHelper.vectorToBitmap(this, R.drawable.logo, ContextCompat.getColor(this, R.color.white))
+                        BitmapHelper.vectorToBitmap(this, R.drawable.marker_icon, ContextCompat.getColor(this, R.color.red))
                     )
                     .alpha(0.8f)
             )
@@ -155,5 +178,4 @@ class ConsultarMapaActivity : AppCompatActivity() {
             }
         }
     }
-
 }

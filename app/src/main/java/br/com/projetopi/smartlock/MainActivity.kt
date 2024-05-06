@@ -20,17 +20,17 @@ import java.util.TimerTask
 class MainActivity : AppCompatActivity(), FragmentHandler {
 
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var simpleStorage: SimpleStorage
     private lateinit var db: FirebaseFirestore
-
     private val timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         replaceFragment(Mapa())
         binding.bottomNavigationView.menu.findItem(R.id.page_2).isChecked = true
                 binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -39,7 +39,9 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
             insets
         }
 
+        // Executa a função startPeriodicUpdate
         startPeriodicUpdate(this, binding)
+
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
@@ -51,6 +53,10 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
         }
     }
 
+    /***
+     * Faz com que quando executada, troca o fragmento exibido no fragmento
+     * que foi passado pela lista de parametros
+     */
     private fun replaceFragment(fragment: Fragment){
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -58,6 +64,11 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
         fragmentTransaction.commit()
     }
 
+    /***
+     * Faz com que quando executado, realiza uma verificação no Firestore
+     * a cada 1 segundo se o usuario possui uma locação aberta, caso tenha,
+     * define um badge visivel no item 3 (Locacoes)
+     */
     private fun startPeriodicUpdate(context: MainActivity, binding: ActivityMainBinding) {
         val timerTask = object : TimerTask() {
             override fun run() {
@@ -81,6 +92,9 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
         timer.schedule(timerTask, 0, 1000L)
     }
 
+    // Override fun usada pela interface FragmentHandler que, quando executada,
+    // muda o fragmento exibido nessa activity por outro fragmento desejado
+    // de acordo com o comando executado em outro fragmento
     override fun changeFragment(fragment: Fragment) {
         replaceFragment(fragment)
     }
