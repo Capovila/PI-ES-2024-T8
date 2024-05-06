@@ -1,12 +1,19 @@
 package br.com.projetopi.smartlock
 
 import android.content.Context
+import br.com.projetopi.smartlock.Classes.User
 
+// Esta classe é responsável por lidar com o armazenamento simples de dados do usuário usando SharedPreferences.
 class SimpleStorage (context: Context) {
 
+    // Inicializa o SharedPreferences com o nome "SIMPLE_STORAGE" e o modo privado.
     val sharedPreferences = context.getSharedPreferences("SIMPLE_STORAGE",
         Context.MODE_PRIVATE)
 
+    /***
+     * Faz com que quando executada recupera os dados da conta do usuário armazenados
+     * no SharedPreferences e os retorna como um objeto do tipo User.
+     */
     fun getUserAccountData(): User {
 
         val name: String? = sharedPreferences.getString("account_name", null)
@@ -19,6 +26,9 @@ class SimpleStorage (context: Context) {
         return User(uid,name,email,null,age,CPF,phone)
     }
 
+    /***
+     * Faz com que quando executad, armazena os dados da conta do usuário no SharedPreferences.
+     */
     fun storageUserAccount(user: User){
         with (sharedPreferences.edit()) {
             putString("account_name", user.name)
@@ -31,6 +41,9 @@ class SimpleStorage (context: Context) {
         }
     }
 
+    /***
+     * Faz com que quando executada, limpa os dados da conta do usuário no SharedPreferences.
+     */
     fun clearUserAccount(){
         with (sharedPreferences.edit()) {
             putString("account_name", null)

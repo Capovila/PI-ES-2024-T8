@@ -11,25 +11,32 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 
 object BitmapHelper {
+    /**
+     * Faz com que quando executada, converte um vetor para um bitmap colorido
+     */
     fun vectorToBitmap (
         context: Context,
         @DrawableRes id: Int,
         @ColorInt color: Int
     ): BitmapDescriptor{
+        // Obtém o vetor drawable
         val vectorDrawable = ResourcesCompat.getDrawable(context.resources, id, null)
             ?: return BitmapDescriptorFactory.defaultMarker()
 
+        // Cria um bitmap com base nas dimensões do vetor drawable
         val bitmap = Bitmap.createBitmap(
             vectorDrawable.intrinsicWidth,
             vectorDrawable.intrinsicHeight,
             Bitmap.Config.ARGB_8888
         )
 
+        // Desenha o vetor no bitmap
         val canvas = Canvas(bitmap)
         vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
         DrawableCompat.setTint(vectorDrawable, color)
         vectorDrawable.draw(canvas)
 
+        // Retorna um BitmapDescriptor do bitmap
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 }
