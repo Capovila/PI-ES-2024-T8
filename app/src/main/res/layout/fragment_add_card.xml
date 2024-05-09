@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Todas as vezes que for realizada uma locação, será cobrada a caução de uma diária e estornada proporcionalmente
+            android:text="Todas as vezes que for realizada uma locação, será cobrada o caução de uma diária e estornada proporcionalmente
 de acordo com o período utilizado."
             android:textColor="@color/main_blue"
             android:textSize="10sp"

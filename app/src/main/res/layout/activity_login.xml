@@ -17,10 +17,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="300dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:src="@drawable/logo_smart_lock" />
+            android:src="@drawable/smart_lock_logo" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
