@@ -25,13 +25,13 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
     private val timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
 
         super.onCreate(savedInstanceState)
-        replaceFragment(Mapa())
-        binding.bottomNavigationView.menu.findItem(R.id.page_2).isChecked = true
-                binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+        replaceFragment(Mapa())
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
 
         // Executa a função startPeriodicUpdate
         startPeriodicUpdate(this, binding)
+
+        binding.bottomNavigationView.menu.findItem(R.id.page_2).isChecked = true
+
 
 
         binding.bottomNavigationView.setOnItemSelectedListener {

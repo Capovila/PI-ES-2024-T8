@@ -107,11 +107,11 @@ class LoginActivity : AppCompatActivity() {
                                             user.CPF = document.getString("cpf")
                                             user.phone = document.getString("phone")
                                             user.age = (document.get("age") as Long).toInt()
-                                            val isManager = document.getBoolean("manager")
+                                            user.manager = document.getBoolean("manager")
 
                                             simpleStorage.storageUserAccount(user)
 
-                                            if(isManager == true){
+                                            if(user.manager == true){
                                                 startActivity(Intent(this, ManagerMainActivity::class.java))
                                                 finish()
                                             } else {
