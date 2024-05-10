@@ -52,7 +52,7 @@
     <string name="nome">Nome</string>
     <string name="email">Email</string>
     <string name="senha">Senha</string>
-    <string name="idade">Idade</string>
+    <string name="idade">Data de Nascimento</string>
     <string name="cpf">CPF</string>
     <string name="telefone">Telefone</string>
     <string name="cadastrar">Cadastrar</string>

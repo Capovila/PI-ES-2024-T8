@@ -74,10 +74,11 @@ class SplashScreenActivity : AppCompatActivity() {
                         }
                     }
                 }
+
             if(user.uid == null){
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
-        }, 2000)
+        }, 1500)
     }
 }

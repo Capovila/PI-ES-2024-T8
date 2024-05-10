@@ -1,5 +1,6 @@
 package br.com.projetopi.smartlock.Fragments
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import java.util.Calendar
 
 class AddCard : Fragment() {
 
@@ -54,6 +56,19 @@ class AddCard : Fragment() {
                 binding.tlData,
                 binding.tlNomeTitular
             )
+
+        val c = Calendar.getInstance()
+
+
+        binding.btnData.setOnClickListener{
+            val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
+                binding.etData.setText("$mMonth / $mYear")
+            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), 0)
+
+            dpd.show()
+
+
+        }
 
         /***
          * Faz com que para cada editText junto com seu textLayout

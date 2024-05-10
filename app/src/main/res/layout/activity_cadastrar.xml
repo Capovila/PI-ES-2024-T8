@@ -117,26 +117,56 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tlAge"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:hint="@string/idade"
-            app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/baseline_calendar_month_24">
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etAge"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tlAge"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="3"
-                android:textColor="@color/black" />
+                android:hint="@string/idade"
+                android:layout_weight="1"
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/baseline_calendar_month_24">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAge"
+                    android:layout_width="match_parent"
+                    android:focusable="false"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnData"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardBackgroundColor="@color/main_dark_blue"
+                app:cardCornerRadius="25dp"
+                android:layout_gravity="end|bottom"
+                android:layout_marginStart="25dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/baseline_calendar_month_24_white"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlCPF"

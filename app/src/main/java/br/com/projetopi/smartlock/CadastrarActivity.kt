@@ -1,5 +1,6 @@
 package br.com.projetopi.smartlock
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -19,6 +20,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Calendar
 
 class CadastrarActivity : AppCompatActivity() {
 
@@ -34,7 +36,6 @@ class CadastrarActivity : AppCompatActivity() {
         binding = ActivityCadastrarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -56,6 +57,7 @@ class CadastrarActivity : AppCompatActivity() {
             binding.etPhone
         )
 
+
         val textLayouts = listOf(
             binding.tlName,
             binding.tlEmail,
@@ -64,6 +66,17 @@ class CadastrarActivity : AppCompatActivity() {
             binding.tlCPF,
             binding.tlPhone
         )
+
+        val c = Calendar.getInstance()
+
+
+        binding.btnData.setOnClickListener{
+            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
+                binding.etAge.setText(" $mDay/ $mMonth / $mYear")
+            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+
+            dpd.show()
+        }
 
         /***
          * Faz com que para cada editText junto com seu textLayout
