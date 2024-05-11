@@ -116,14 +116,14 @@
 
         <Button
             android:id="@+id/btnConferir"
-            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:paddingHorizontal="10dp"
             android:text="@string/consultar_armarios"
-            android:textColor="@color/main_dark_blue"
+            android:backgroundTint="@color/main_dark_blue"
+            android:textColor="@color/main_white"
             android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

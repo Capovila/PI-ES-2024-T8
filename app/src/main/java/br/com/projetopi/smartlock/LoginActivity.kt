@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -121,34 +122,34 @@ class LoginActivity : AppCompatActivity() {
                                         }
                                     }
                                     .addOnFailureListener { exception ->
-                                        Snackbar.make(
-                                            binding.btnEntrar,
-                                            "Falha ao buscar os dados",
-                                            Snackbar.LENGTH_LONG
+                                        Toast.makeText(
+                                            this,
+                                            "Falha ao logar",
+                                            Toast.LENGTH_LONG
                                         ).show()
                                     }
                             } else {
-                                Snackbar.make(
-                                    binding.btnEntrar,
+                                Toast.makeText(
+                                    this,
                                     "Seu email ainda não foi verificado",
-                                    Snackbar.LENGTH_LONG
+                                    Toast.LENGTH_LONG
                                 ).show()
                             }
                         } else {
-                            Snackbar.make(
-                                binding.btnEntrar,
+                            Toast.makeText(
+                                this,
                                 "E-mail ou senha incorretos",
-                                Snackbar.LENGTH_LONG
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                     }
                 hideKeyboard(it)
             } else {
                 showFieldErrors()
-                Snackbar.make(
-                    binding.btnEntrar,
+                Toast.makeText(
+                    this,
                     "Preencha todos os campos corretamente",
-                    Snackbar.LENGTH_LONG
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }

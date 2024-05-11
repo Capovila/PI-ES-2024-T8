@@ -194,7 +194,6 @@ class CadastrarActivity : AppCompatActivity() {
                 || binding.etPhone.text.toString().isEmpty()
                 )
     }
-
     /***
      * Faz com que quando chamada, esconde o teclado do dispositivo
      */

@@ -1,17 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    tools:context=".ManagerMainActivity">
+    android:background="@color/main_white"
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Manager Main"/>
+        android:id="@+id/main"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        tools:context=".ManagerMainActivity"
+        android:orientation="vertical">
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/smart_lock_logo" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bem Vindo"
+            android:textStyle="bold"
+            android:layout_marginTop="75dp"
+            android:textSize="20sp"
+            android:textColor="@color/main_blue"/>
+        
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNomeGerente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="100dp"
+            android:textSize="20sp"
+            android:textColor="@color/main_blue"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnLiberar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Liberar Locação"
+                android:textStyle="bold"
+                style="?attr/materialButtonOutlinedStyle"
+                android:textColor="@color/main_dark_blue"/>
+
+            <Button
+                android:id="@+id/btnAcessar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acessar Armário"
+                android:layout_marginStart="20dp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/main_dark_blue"
+                android:textColor="@color/main_white"/>
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+</ScrollView>

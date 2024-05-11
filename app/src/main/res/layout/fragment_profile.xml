@@ -93,17 +93,20 @@
             android:id="@+id/tvGetCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="45dp"
+            android:layout_marginHorizontal="30dp"
             android:text="@string/nenhum_cartao_cadastrado"
             android:textColor="@color/main_dark_blue"
             android:textSize="15sp"
             android:textStyle="bold" />
 
+
+
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cvCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="45dp"
+            android:layout_marginHorizontal="30dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="15dp">
 
@@ -159,21 +162,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginHorizontal="15dp"
                     android:orientation="vertical">
+
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        app:cardCornerRadius="15dp"
                         app:cardBackgroundColor="@color/main_dark_blue"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="8dp">
+                        >
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/btnDelete"
-                            android:layout_width="25dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/baseline_delete_forever_24" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/main_light_blue"
+                            app:cardCornerRadius="15dp"
+                            android:layout_margin="3dp"
+                            >
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnDelete"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/baseline_delete_forever_24" />
+
+                        </androidx.cardview.widget.CardView>
+
 
                     </androidx.cardview.widget.CardView>
 
@@ -184,16 +200,17 @@
         </androidx.cardview.widget.CardView>
 
 
+
         <Button
             android:id="@+id/btnLogout"
-            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
+            android:backgroundTint="@color/main_dark_blue"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="200dp"
             android:text="Sair"
-            android:textColor="@color/main_dark_blue"
+            android:textColor="@color/main_white"
             android:textSize="15sp"
             android:textStyle="bold" />
 

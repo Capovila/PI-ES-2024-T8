@@ -45,7 +45,8 @@ class AddCard : Fragment() {
             listOf(
                 binding.etNumeroCartao,
                 binding.etCVV,
-                binding.etData,
+                binding.etDataMes,
+                binding.etDataAno,
                 binding.etNomeTitular
             )
 
@@ -53,22 +54,10 @@ class AddCard : Fragment() {
             listOf(
                 binding.tlNumeroCartao,
                 binding.tlCVV,
-                binding.tlData,
+                binding.tlDataMes,
+                binding.tlDataAno,
                 binding.tlNomeTitular
             )
-
-        val c = Calendar.getInstance()
-
-
-        binding.btnData.setOnClickListener{
-            val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                binding.etData.setText("$mMonth / $mYear")
-            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), 0)
-
-            dpd.show()
-
-
-        }
 
         /***
          * Faz com que para cada editText junto com seu textLayout
@@ -101,12 +90,15 @@ class AddCard : Fragment() {
          * mostrado na MainActivity para o fragment Profile
          */
         binding.btnAdicionar.setOnClickListener {
-            if (isFilled()) {
+            if (isFilled() && currentDate()) {
+
+                val data:String = "${binding.etDataMes.text.toString()} / ${binding.etDataAno.text.toString()}"
+
                 val card = CreditCard(
                     user.uid.toString(),
                     binding.etNumeroCartao.text.toString(),
                     binding.etCVV.text.toString(),
-                    binding.etData.text.toString(),
+                    data,
                     binding.etNomeTitular.text.toString()
                 )
                 db.collection("cards")
@@ -177,9 +169,24 @@ class AddCard : Fragment() {
         return !(
                 binding.etNumeroCartao.text.toString().isEmpty()
                 || binding.etCVV.text.toString().isEmpty()
-                || binding.etData.text.toString().isEmpty()
+                || binding.etDataMes.text.toString().isEmpty()
+                || binding.etDataAno.text.toString().isEmpty()
                 || binding.etNomeTitular.text.toString().isEmpty()
                 )
+    }
+
+    private fun currentDate():Boolean {
+        return if (binding.etDataAno.text.toString().toInt() > Calendar.getInstance().get(Calendar.YEAR)){
+            true
+        }else if (binding.etDataAno.text.toString().toInt() == Calendar.getInstance().get(Calendar.YEAR)){
+            if((binding.etDataMes.text.toString().toInt() >= Calendar.getInstance().get(Calendar.MONTH))){
+                true
+            }else{
+                false
+            }
+        }else{
+            false
+        }
     }
 
     /***
@@ -194,19 +201,20 @@ class AddCard : Fragment() {
             listOf(
                 binding.etNumeroCartao,
                 binding.etCVV,
-                binding.etData,
+                binding.etDataMes,
+                binding.etDataAno,
                 binding.etNomeTitular
             )
         val textLayouts =
             listOf(
                 binding.tlNumeroCartao,
                 binding.tlCVV,
-                binding.tlData,
+                binding.tlDataMes,
+                binding.tlDataAno,
                 binding.tlNomeTitular
             )
 
-        editTexts
-            .forEachIndexed { index, et ->
+        editTexts.forEachIndexed { index, et ->
             if (et.text.toString().isEmpty()) {
                 textLayouts[index].error = getString(R.string.preencha_campo)
             } else {

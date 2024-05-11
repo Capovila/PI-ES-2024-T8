@@ -183,7 +183,7 @@
                 android:id="@+id/etCPF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="number"
                 android:maxLength="11"
                 android:textColor="@color/black" />
 
