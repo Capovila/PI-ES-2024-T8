@@ -44,7 +44,6 @@ class QRCode : Fragment() {
         val sharedViewModelRental: SharedViewModelRental by activityViewModels()
         sharedViewModelRental.selectedRental.observe(viewLifecycleOwner) { rental ->
             rentalID = rental.uid.toString()
-            binding.tvApresenteGerente.text = "Apresente esse QR Code ao gerente "
             val multiFormatWriter = MultiFormatWriter()
             val bitMatrix = multiFormatWriter.encode(rentalID, BarcodeFormat.QR_CODE, 300, 300)
             val barcodeEncoder = BarcodeEncoder()

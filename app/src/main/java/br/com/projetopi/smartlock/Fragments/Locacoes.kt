@@ -24,7 +24,6 @@ class Locacoes : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var rentalID: String
     private lateinit var establishmentID: String
-    private lateinit var establishmentManagerName: String
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -72,8 +71,7 @@ class Locacoes : Fragment() {
                         .document(establishmentID)
                         .get()
                         .addOnSuccessListener { document ->
-                            establishmentManagerName = document.getString("managerName").toString()
-                            binding.tvInfo.text = "Apresente esse QR Code ao gerente $establishmentManagerName"
+                            binding.tvInfo.text = "Apresente esse QR Code ao gerente"
                         }
                 }
             }

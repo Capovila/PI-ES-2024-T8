@@ -72,11 +72,11 @@
 
         <Button
             android:id="@+id/btnAlugar"
-            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="150dp"
+            android:backgroundTint="@color/main_dark_blue"
             android:layout_height="wrap_content"
             android:text="@string/alugar_armario"
-            android:textColor="@color/main_dark_blue"
+            android:textColor="@color/main_white"
             android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

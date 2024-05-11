@@ -58,31 +58,31 @@
                 android:id="@+id/op1"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:id="@+id/op2"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:id="@+id/op3"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:id="@+id/op4"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:id="@+id/op5"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
         </RadioGroup>
 
         <Button
