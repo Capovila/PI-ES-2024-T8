@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/main"
         android:gravity="center"
-        android:layout_margin="20dp"
+        android:layout_margin="15dp"
         tools:context=".ManagerMainActivity"
         android:orientation="vertical">
 
@@ -37,7 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="100dp"
             android:textSize="20sp"
             android:textColor="@color/main_blue"/>
@@ -63,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Acessar Armário"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="15dp"
                 android:textStyle="bold"
                 android:backgroundTint="@color/main_dark_blue"
                 android:textColor="@color/main_white"/>

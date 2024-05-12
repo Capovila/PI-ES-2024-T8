@@ -1,7 +1,10 @@
 package br.com.projetopi.smartlock
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -30,7 +33,18 @@ class ManagerMainActivity : AppCompatActivity() {
 
         binding.tvNomeGerente.setText(user.name)
 
-
-
+        binding.btnLiberar.setOnClickListener{
+            cameraPermission.launch(android.Manifest.permission.CAMERA)
+        }
     }
+
+    private val cameraPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){
+            if(it){
+                startActivity(Intent(this, LiberarActivity::class.java))
+            }else{
+                Toast.makeText(this, "Acesso à câmera necessário para progredir", Toast.LENGTH_LONG).show()
+            }
+        }
+
 }
