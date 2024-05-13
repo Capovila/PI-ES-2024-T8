@@ -44,8 +44,7 @@ class SplashScreenActivity : AppCompatActivity() {
         simpleStorage = SimpleStorage(this)
 
         // Atribui à variavel user os dados do usuario guardados no simpleStorage
-
-        //val user:User = simpleStorage.getUserAccountData()
+        val user:User = simpleStorage.getUserAccountData()
 
         // Executa com um atraso de 1.5 segundos
         Handler().postDelayed({
@@ -58,12 +57,28 @@ class SplashScreenActivity : AppCompatActivity() {
              * um id de usuario no simpleStorage
              * inicia o LoginActivity e fecha a activity atual
              */
+            db.collection("users")
+                .whereEqualTo("uid",user.uid)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        val isManager = document.getBoolean("manager")
 
+                        if(user.uid != null && isManager == true){
+                            startActivity(Intent(this, ManagerMainActivity::class.java))
+                            finish()
+                        }
+                        if(user.uid != null && isManager == false) {
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
+                        }
+                    }
+                }
 
-            //if(user.uid == null){
+            if(user.uid == null){
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
-           // }
+            }
         }, 1500)
     }
 }
