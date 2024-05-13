@@ -115,7 +115,8 @@ class CadastrarActivity : AppCompatActivity() {
                             user.password = ""
 
                             db.collection("users")
-                                .add(user)
+                                .document(user.uid.toString())
+                                .set(user)
                                 .addOnSuccessListener {
                                     auth.currentUser?.sendEmailVerification()
                                         ?.addOnCompleteListener {
@@ -130,20 +131,20 @@ class CadastrarActivity : AppCompatActivity() {
                                         }
                                 }
                         } else {
-                            Snackbar.make(
-                                binding.btnCadastrar,
-                                authResult.exception!!.message.toString(),
-                                Snackbar.LENGTH_LONG
+                            Toast.makeText(
+                                this,
+                                "E-mail já cadastrado",
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                     }
                 hideKeybard(it)
             } else {
                 showFieldErrors()
-                Snackbar.make(
-                    binding.btnCadastrar,
+                Toast.makeText(
+                    this,
                     "Preencha todos os campos corretamente",
-                    Snackbar.LENGTH_LONG
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }

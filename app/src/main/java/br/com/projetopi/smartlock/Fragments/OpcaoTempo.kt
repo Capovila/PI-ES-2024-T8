@@ -60,6 +60,11 @@ class OpcaoTempo : Fragment() {
             establishmentID = establishment.uid.toString()
             establishmentManagerName = establishment.managerName.toString()
 
+            binding.tvHour.setText("Horário: ${getHour()}:${getMin()}")
+
+
+
+
             db.collection("establishments")
                 .document(establishmentID)
                 .get()
@@ -76,14 +81,26 @@ class OpcaoTempo : Fragment() {
                     val preco4 = document.getDouble("planPrice4") ?: 0.0
                     binding.op4.text = "${descList[3]} = R$ $preco4"
 
-                    val currentTime = getCurrentTime()
+                    val preco5 = document.getDouble("planPrice5") ?: 0.0
+                    binding.op5.text = "${descList[4]} = R$ $preco5"
 
-                    if (currentTime < "07:00:00" || currentTime > "08:00:00") {
-                        binding.op5.visibility = View.GONE
-                    } else {
-                        val preco5 = document.getDouble("planPrice5") ?: 0.0
-                        binding.op5.text = "${descList[4]} = R$ $preco5"
+
+                    if(getHour() >= 8 && getMin() > 0) {
+                        binding.op5.isEnabled  = false
                     }
+                    if(getHour() >= 17 && getMin() > 0){
+                        binding.op2.isEnabled = false
+                        if(getMin() > 30 || getHour() >= 18){
+                            binding.op1.isEnabled = false
+                        }
+                    }
+                    if(getHour() >= 16 && getMin() > 0){
+                        binding.op3.isEnabled = false
+                    }
+                    if(getHour() >= 14 && getMin() > 0){
+                        binding.op4.isEnabled = false
+                    }
+
 
                     /***
                      * Quando o btnConfirmarLocacao é clicado, verifica se algum RadioButton foi selecionado,
@@ -106,10 +123,10 @@ class OpcaoTempo : Fragment() {
                                 establishmentManagerName
                             )
                             db.collection("rentals")
-                                .add(locacaoAtual)
+                                .document(user.uid.toString())
+                                .set(locacaoAtual)
                                 .addOnSuccessListener {document ->
-                                    val locacaoAtualID = document.id
-                                    locacaoAtual.uid = locacaoAtualID
+                                    locacaoAtual.uid = user.uid
                                     sharedViewModelRental.selectRental(locacaoAtual)
                                     (activity as MainActivity).changeFragment(QRCode())
                                 }
@@ -144,6 +161,15 @@ class OpcaoTempo : Fragment() {
                 || binding.op3.isChecked
                 || binding.op4.isChecked
                 || binding.op5.isChecked
+    }
+
+    private fun getHour():Int{
+        return Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+    }
+
+
+    private fun getMin():Int{
+        return Calendar.getInstance().get(Calendar.MINUTE)
     }
 
     /***

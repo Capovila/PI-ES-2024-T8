@@ -22,6 +22,8 @@ class SplashScreenActivity : AppCompatActivity() {
     private lateinit var simpleStorage: SimpleStorage
     private lateinit var db: FirebaseFirestore
 
+
+    // Caso o app não abra no celular, zere os dados e o cache, vá em config -> aplicativos -> SmartLock -> Armazenamento
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
