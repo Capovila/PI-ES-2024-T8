@@ -1,13 +1,17 @@
 package br.com.projetopi.smartlock
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.os.postDelayed
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -49,6 +53,18 @@ class SplashScreenActivity : AppCompatActivity() {
         // Executa com um atraso de 1.5 segundos
         Handler().postDelayed({
 
+            requestPermission()
+
+            var allPermissionsIsGranted : Boolean
+
+            allPermissionsIsGranted = checkPermission()
+
+            // Faz com que o aplicativo peça as permissoes necessarias até que todas sejam concedidas
+            while (!allPermissionsIsGranted) {
+                requestPermission()
+                allPermissionsIsGranted = checkPermission()
+            }
+
             /***
              * Verifica se possui um id de usuario no simpleStorage, caso tenha e
              * caso o usuario seja gerente, inicia direto a ManagerMainActivity e fecha
@@ -80,5 +96,33 @@ class SplashScreenActivity : AppCompatActivity() {
                 finish()
             }
         }, 1500)
+    }
+
+    /***
+     * Faz com que quando executada, faz um request das permições de ACCESS_COARSE_LOCATION,
+     * ACCESS_FINE_LOCATION e ACCESS_NETWORK_STATE
+     */
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this as Activity, arrayOf(
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_NETWORK_STATE
+            ),
+            100
+        )
+    }
+
+    /***
+     * Faz com que quando executada, verifica se o usuario permitiu que o aplicativo
+     * use sua localização e o estado de sua internet
+     */
+    private fun checkPermission() : Boolean {
+        return !(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)
+                != PackageManager.PERMISSION_GRANTED)
     }
 }

@@ -50,17 +50,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED) {
-            requestPermission()
-        }
-
         binding = ActivityConsultarMapaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -167,22 +156,19 @@ class ConsultarMapaActivity : AppCompatActivity() {
                 }
 
                 /***
-                 * Quando o mapa é carregado, pega a latitude e longitude de cada estabelecimento e
-                 * constroi os limites da area de todos os marcadores, em seguida, move a camera do
-                 * mapa para se adequar ao limites definidos anteriormente com um padding das bordas de 300px
+                 * Quando o mapa é carregado, verifica se o aplicativo tem acesso a localização do usuario, pega a
+                 * latitude e longitude do usuario e adiciona um marcador com a localização do usuario, centralizando
+                 * a camera do mapa no usuario
                  */
                 googleMap.setOnMapLoadedCallback{
                     if (ActivityCompat.checkSelfPermission(
                             this,
                             Manifest.permission.ACCESS_FINE_LOCATION
-                        ) != PackageManager.PERMISSION_GRANTED &&
+                        ) == PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(
                             this,
                             Manifest.permission.ACCESS_COARSE_LOCATION
-                        ) != PackageManager.PERMISSION_GRANTED) {
-                        Toast.makeText(baseContext, "Você permitir que o aplicativo acesse sua localização", Toast.LENGTH_LONG).show()
-                        finish()
-                    } else {
+                        ) == PackageManager.PERMISSION_GRANTED) {
                         fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                             val userLocation = LatLng(location.latitude, location.longitude)
 
@@ -198,10 +184,9 @@ class ConsultarMapaActivity : AppCompatActivity() {
                     }
                 }
 
+                // Inicia um loop para que atualize a localização do usuario
                 startPeriodicUpdate(this, binding)
             }
-
-
         }
 
         binding.btnBack.setOnClickListener{
@@ -233,19 +218,9 @@ class ConsultarMapaActivity : AppCompatActivity() {
     }
 
     /***
-     * Faz com que quando executada, faz um request das permições de ACCESS_COARSE_LOCATION e
-     * ACCESS_FINE_LOCATION
+     * Faz com que quando executada, a cada 1 segundo, verifica se o aplicativo tem acesso a localização do usuario,
+     * puxa novamente a localização do usuario e atualiza a latitude e longitude do marcador que representa o usuario
      */
-    private fun requestPermission() {
-        ActivityCompat.requestPermissions(
-            this as Activity, arrayOf(
-                android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            100
-        )
-    }
-
     private fun startPeriodicUpdate(context: ConsultarMapaActivity, binding: ActivityConsultarMapaBinding) {
         val timerTask = object : TimerTask() {
             override fun run() {
@@ -256,7 +231,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
                         if (userMarker != null) {
                             val userLocation = LatLng(location.latitude, location.longitude)
                             userMarker?.position = userLocation
-                            Log.e("marker", userLocation.toString())
                         }
                     }
                 }
@@ -264,5 +238,4 @@ class ConsultarMapaActivity : AppCompatActivity() {
         }
         timer.schedule(timerTask, 0, 1000L)
     }
-
 }
