@@ -15,8 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartLock"
         tools:targetApi="31">
-        <activity
-            android:name=".ConsultarMapaActivity"
+        <activity android:name=".ConsultarMapaActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -42,7 +41,8 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCqCdxz022vyWqmNhgGXjBj2KrtFTuNVqU" />
+            android:value="AIzaSyCqCdxz022vyWqmNhgGXjBj2KrtFTuNVqU"/>
+
     </application>
 
 </manifest>

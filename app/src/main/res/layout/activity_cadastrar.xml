@@ -1,198 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="@color/main_white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/cardview_shadow_start_color"
+    tools:context="CadastrarActivity">
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
-
-        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".CadastrarActivity">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="25dp">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/main_dark_blue"
-                android:padding="15dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnBack"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/baseline_arrow_back_24" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="@string/smartlock"
-                    android:textColor="@color/main_light_blue"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </androidx.cardview.widget.CardView>
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_height="150dp"
+        android:background="@drawable/wave__1_">
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:text="@string/cadastrar_usuario"
-            android:textColor="@color/main_blue"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="Cadastrar"
+            android:textStyle="bold"
+            android:gravity="left|center"
+            android:paddingLeft="40dp"
+            android:paddingBottom="30dp"
             android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tlName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="15dp"
-            android:hint="@string/nome"
-            app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/baseline_person_black_18dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tlEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:hint="@string/email"
-            app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/baseline_email_black_18dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tlPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:hint="@string/senha"
-            app:endIconMode="password_toggle"
-            app:startIconDrawable="@drawable/baseline_vpn_key_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tlAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:hint="@string/idade"
-            app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/baseline_calendar_month_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etAge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="3"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tlCPF"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:hint="@string/cpf"
-            app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/baseline_perm_identity_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etCPF"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLength="11"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tlPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:hint="@string/telefone"
-            app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/baseline_local_phone_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:maxLength="15"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:textColor="@color/white"
+            android:layout_weight="1"/>
 
 
-        <Button
-            android:id="@+id/btnCadastrar"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:text="@string/cadastrar"
-            android:textColor="@color/main_dark_blue"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="35dp"
+            android:src="@drawable/logo"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-</ScrollView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlName"
+        android:layout_width="300dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:hint="Nome"
+        app:startIconDrawable="@drawable/baseline_person_black_18dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlEmail"
+        android:layout_width="300dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        app:startIconDrawable="@drawable/baseline_email_black_18dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlPassword"
+        android:layout_width="300dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:hint="Senha"
+        app:endIconMode="password_toggle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlAge"
+        android:layout_width="300dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:hint="Idade">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="3"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlCPF"
+        android:layout_width="300dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:hint="CPF">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCPF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="11"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlPhone"
+        android:layout_width="300dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:hint="Telefone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:maxLength="15"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCadastrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/my_button"
+        android:paddingHorizontal="20dp"
+        android:text="Cadastrar"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/navy_blue"
+         />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
