@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
                                             finish()
                                         }
                                     }
-                                    .addOnFailureListener { exception ->
+                                    .addOnFailureListener {
                                         Snackbar.make(
                                             binding.btnEntrar,
                                             "Falha ao buscar os dados",
