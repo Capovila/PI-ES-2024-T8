@@ -1,37 +1,54 @@
 package br.com.projetopi.smartlock
 
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.com.projetopi.smartlock.Classes.Establishment
+import br.com.projetopi.smartlock.Classes.User
 import br.com.projetopi.smartlock.databinding.ActivityConsultarMapaBinding
+import br.com.projetopi.smartlock.databinding.ActivityMainBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import java.util.Timer
+import java.util.TimerTask
 
 class ConsultarMapaActivity : AppCompatActivity() {
 
     private val establishments: ArrayList<Establishment>? = arrayListOf()
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var binding: ActivityConsultarMapaBinding
     private lateinit var db: FirebaseFirestore
+    private val timer = Timer()
+    private var userMarker: Marker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         binding = ActivityConsultarMapaBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -97,36 +114,38 @@ class ConsultarMapaActivity : AppCompatActivity() {
                  * mostra o lnlaBtnMenuFragment
                  */
                 googleMap.setOnMarkerClickListener { marker ->
+                    if(marker.title != "Sua localização atual"){
 
-                    val markerPosition = marker.position
-                    val markerLatitude = markerPosition.latitude
-                    val markerLongitude = markerPosition.longitude
+                        val markerPosition = marker.position
+                        val markerLatitude = markerPosition.latitude
+                        val markerLongitude = markerPosition.longitude
 
-                    // Mostra o lnlaBtnMenu
-                    binding.lnlaBtnMenu.visibility = View.VISIBLE
+                        // Mostra o lnlaBtnMenu
+                        binding.lnlaBtnMenu.visibility = View.VISIBLE
 
-                    /***
-                     * Quando o btnIrFragment é clicado, direciona o usuario ao google maps
-                     * com a latitude e longitude do marcador selecionado para que seja
-                     * traçada a rota
-                     */
-                    binding.btnIr.setOnClickListener {
+                        /***
+                         * Quando o btnIrFragment é clicado, direciona o usuario ao google maps
+                         * com a latitude e longitude do marcador selecionado para que seja
+                         * traçada a rota
+                         */
+                        binding.btnIr.setOnClickListener {
 
-                        startActivity(Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("http://maps.google.com/maps?q=$markerLatitude,$markerLongitude")
-                        )
-                        )
-                    }
+                            startActivity(Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("http://maps.google.com/maps?q=$markerLatitude,$markerLongitude")
+                            )
+                            )
+                        }
 
-                    /***
-                     * Quando o btnAlugar é clicado, mostra um Toast com a mensagem
-                     * de que é necessaio entrar com a conta do usuario para alugar um armario,
-                     * fechando a activity atual
-                     */
-                    binding.btnAlugar.setOnClickListener {
-                        Toast.makeText(baseContext, "Você precisa entrar com sua conta para alugar um armário", Toast.LENGTH_LONG).show()
-                        finish()
+                        /***
+                         * Quando o btnAlugar é clicado, mostra um Toast com a mensagem
+                         * de que é necessaio entrar com a conta do usuario para alugar um armario,
+                         * fechando a activity atual
+                         */
+                        binding.btnAlugar.setOnClickListener {
+                            Toast.makeText(baseContext, "Você precisa entrar com sua conta para alugar um armário", Toast.LENGTH_LONG).show()
+                            finish()
+                        }
                     }
                     false
                 }
@@ -137,17 +156,36 @@ class ConsultarMapaActivity : AppCompatActivity() {
                 }
 
                 /***
-                 * Quando o mapa é carregado, pega a latitude e longitude de cada estabelecimento e
-                 * constroi os limites da area de todos os marcadores, em seguida, move a camera do
-                 * mapa para se adequar ao limites definidos anteriormente com um padding das bordas de 300px
+                 * Quando o mapa é carregado, verifica se o aplicativo tem acesso a localização do usuario, pega a
+                 * latitude e longitude do usuario e adiciona um marcador com a localização do usuario, centralizando
+                 * a camera do mapa no usuario
                  */
                 googleMap.setOnMapLoadedCallback{
-                    val bounds = LatLngBounds.builder()
-                    establishments?.forEach{
-                        bounds.include(it.latLng)
+                    if (ActivityCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) == PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) == PackageManager.PERMISSION_GRANTED) {
+                        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                            val userLocation = LatLng(location.latitude, location.longitude)
+
+                            userMarker = googleMap.addMarker(
+                                MarkerOptions()
+                                    .position(userLocation)
+                                    .title("Sua localização atual")
+                                    .icon(BitmapHelper.vectorToBitmap(this, R.drawable.user_map_icon, ContextCompat.getColor(this, R.color.red)))
+                            )
+
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10f))
+                        }
                     }
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
                 }
+
+                // Inicia um loop para que atualize a localização do usuario
+                startPeriodicUpdate(this, binding)
             }
         }
 
@@ -177,5 +215,27 @@ class ConsultarMapaActivity : AppCompatActivity() {
                 marker.tag = establishment
             }
         }
+    }
+
+    /***
+     * Faz com que quando executada, a cada 1 segundo, verifica se o aplicativo tem acesso a localização do usuario,
+     * puxa novamente a localização do usuario e atualiza a latitude e longitude do marcador que representa o usuario
+     */
+    private fun startPeriodicUpdate(context: ConsultarMapaActivity, binding: ActivityConsultarMapaBinding) {
+        val timerTask = object : TimerTask() {
+            override fun run() {
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                    fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                        if (userMarker != null) {
+                            val userLocation = LatLng(location.latitude, location.longitude)
+                            userMarker?.position = userLocation
+                        }
+                    }
+                }
+            }
+        }
+        timer.schedule(timerTask, 0, 1000L)
     }
 }
