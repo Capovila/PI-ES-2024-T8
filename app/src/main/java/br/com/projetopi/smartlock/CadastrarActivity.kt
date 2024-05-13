@@ -52,7 +52,9 @@ class CadastrarActivity : AppCompatActivity() {
             binding.etName,
             binding.etEmail,
             binding.etPassword,
-            binding.etAge,
+            binding.etYear,
+            binding.etMonth,
+            binding.etDay,
             binding.etCPF,
             binding.etPhone
         )
@@ -62,21 +64,15 @@ class CadastrarActivity : AppCompatActivity() {
             binding.tlName,
             binding.tlEmail,
             binding.tlPassword,
-            binding.tlAge,
+            binding.tlDay,
+            binding.tlMonth,
+            binding.tlYear,
             binding.tlCPF,
             binding.tlPhone
         )
 
         val c = Calendar.getInstance()
 
-
-        binding.btnData.setOnClickListener{
-            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                binding.etAge.setText(" $mDay/ $mMonth / $mYear")
-            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
-
-            dpd.show()
-        }
 
         /***
          * Faz com que para cada editText junto com seu textLayout
@@ -98,13 +94,16 @@ class CadastrarActivity : AppCompatActivity() {
          * atual escondendo o teclado
          */
         binding.btnCadastrar.setOnClickListener{ it ->
-            if(isFilled()) {
+            if(isFilled() && dateValid()) {
+
+                val birth: String = "${binding.etDay.text.toString()} / ${binding.etMonth.text.toString()} / ${binding.etYear.text.toString()}"
+
                 val user = User(
                     null,
                     binding.etName.text.toString(),
                     binding.etEmail.text.toString(),
                     binding.etPassword.text.toString(),
-                    binding.etAge.text.toString().toInt(),
+                    birth,
                     binding.etCPF.text.toString(),
                     binding.etPhone.text.toString()
                 )
@@ -179,6 +178,22 @@ class CadastrarActivity : AppCompatActivity() {
         }
     }
 
+    private fun dateValid():Boolean{
+
+        return if(binding.etYear.text.toString().toInt() > Calendar.getInstance().get(Calendar.YEAR)){
+            false
+        } else if(Calendar.getInstance().get(Calendar.YEAR) - binding.etYear.text.toString().toInt() < 18){
+            Toast.makeText(this, "Apenas maiores de 18 anos", Toast.LENGTH_LONG).show()
+            false
+        }else if(binding.etDay.text.toString().toInt() > 31){
+            false
+        }else if(binding.etMonth.text.toString().toInt() > 12){
+            false
+        }else{
+            true
+        }
+    }
+
     /***
      * Faz com que quando executada, retorna um boolean
      * True caso todos os editText tenham sido preenchidos, e False
@@ -189,8 +204,10 @@ class CadastrarActivity : AppCompatActivity() {
                 binding.etName.text.toString().isEmpty()
                 || binding.etEmail.text.toString().isEmpty()
                 || binding.etPassword.text.toString().isEmpty()
-                || binding.etAge.text.toString().isEmpty()
-                || binding.etCPF.text.toString().isEmpty()
+                        || binding.etMonth.text.toString().isEmpty()
+                        || binding.etDay.text.toString().isEmpty()
+                        || binding.etYear.text.toString().isEmpty()
+                        || binding.etCPF.text.toString().isEmpty()
                 || binding.etPhone.text.toString().isEmpty()
                 )
     }
@@ -214,7 +231,9 @@ class CadastrarActivity : AppCompatActivity() {
             binding.etName,
             binding.etEmail,
             binding.etPassword,
-            binding.etAge,
+            binding.etDay,
+            binding.etMonth,
+            binding.etYear,
             binding.etCPF,
             binding.etPhone
         )
@@ -223,7 +242,9 @@ class CadastrarActivity : AppCompatActivity() {
             binding.tlName,
             binding.tlEmail,
             binding.tlPassword,
-            binding.tlAge,
+            binding.tlDay,
+            binding.tlMonth,
+            binding.tlYear,
             binding.tlCPF,
             binding.tlPhone
         )

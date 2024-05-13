@@ -8,7 +8,7 @@ class User(
     var name: String?,
     var email: String?,
     var password: String?,
-    var age: Int,
+    var age: String?,
     var CPF: String?,
     var phone: String?,
     var manager: Boolean? = false,

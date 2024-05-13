@@ -18,7 +18,7 @@ class SimpleStorage (context: Context) {
 
         val name: String? = sharedPreferences.getString("account_name", null)
         val email: String? = sharedPreferences.getString("account_email", null)
-        val age: Int = sharedPreferences.getInt("account_age", 0)
+        val age: String? = sharedPreferences.getString("account_age", null)
         val CPF: String? = sharedPreferences.getString("account_CPF", null)
         val phone: String? = sharedPreferences.getString("account_phone", null)
         val uid: String? = sharedPreferences.getString("account_uid", null)
@@ -33,7 +33,7 @@ class SimpleStorage (context: Context) {
         with (sharedPreferences.edit()) {
             putString("account_name", user.name)
             putString("account_email", user.email)
-            putInt("account_age", user.age)
+            putString("account_age", user.age)
             putString("account_CPF", user.CPF)
             putString("account_phone", user.phone)
             putString("account_uid", user.uid)
@@ -48,7 +48,7 @@ class SimpleStorage (context: Context) {
         with (sharedPreferences.edit()) {
             putString("account_name", null)
             putString("account_email", null)
-            putInt("account_age", 0)
+            putString("account_age", null)
             putString("account_CPF", null)
             putString("account_phone", null)
             putString("account_uid", null)

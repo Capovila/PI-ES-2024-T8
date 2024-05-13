@@ -94,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
                                     account.displayName,
                                     account.email,
                                     null,
-                                    0,
+                                    null,
                                     null,
                                     null
                                 )
@@ -107,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
                                             user.name = document.getString("name")
                                             user.CPF = document.getString("cpf")
                                             user.phone = document.getString("phone")
-                                            user.age = (document.get("age") as Long).toInt()
+                                            user.age = document.getString("age")
                                             user.manager = document.getBoolean("manager")
 
                                             simpleStorage.storageUserAccount(user)

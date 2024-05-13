@@ -118,48 +118,110 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data de Nascimento"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/main_dark_blue"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/baseline_calendar_month_24_darkblue"
+                android:layout_marginStart="5dp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tlAge"
-                android:layout_width="wrap_content"
+                android:id="@+id/tlDay"
+                android:layout_width="105dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/idade"
-                android:layout_weight="1"
+                android:hint= "Dia"
                 app:endIconMode="clear_text"
-                app:startIconDrawable="@drawable/baseline_calendar_month_24">
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etAge"
+                    android:id="@+id/etDay"
                     android:layout_width="match_parent"
-                    android:focusable="false"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_dark_blue"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tlMonth"
+                android:layout_width="105dp"
+                android:layout_height="wrap_content"
+                android:hint= "Mês"
+                app:endIconMode="clear_text"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etMonth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:maxLength="2"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/btnData"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:cardBackgroundColor="@color/main_dark_blue"
-                app:cardCornerRadius="25dp"
-                android:layout_gravity="end|bottom"
-                android:layout_marginStart="25dp">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_dark_blue"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/baseline_calendar_month_24_white"/>
 
-            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tlYear"
+                android:layout_width="105dp"
+                android:layout_height="wrap_content"
+                android:hint= "Ano"
+                app:endIconMode="clear_text"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:maxLength="4"/>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
 
