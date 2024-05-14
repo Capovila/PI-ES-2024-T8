@@ -176,10 +176,12 @@ class AddCard : Fragment() {
     }
 
     private fun currentDate():Boolean {
-        return if (binding.etDataAno.text.toString().toInt() > Calendar.getInstance().get(Calendar.YEAR)){
+        return if (binding.etDataAno.text.toString().toInt() > Calendar.getInstance().get(Calendar.YEAR) &&
+            binding.etDataMes.text.toString().toInt() <= 12){
             true
         }else if (binding.etDataAno.text.toString().toInt() == Calendar.getInstance().get(Calendar.YEAR)){
-            if((binding.etDataMes.text.toString().toInt() >= Calendar.getInstance().get(Calendar.MONTH))){
+            if(binding.etDataMes.text.toString().toInt() >= Calendar.getInstance().get(Calendar.MONTH)&&
+                binding.etDataMes.text.toString().toInt() <= 12){
                 true
             }else{
                 false
@@ -187,6 +189,8 @@ class AddCard : Fragment() {
         }else{
             false
         }
+
+
     }
 
     /***
