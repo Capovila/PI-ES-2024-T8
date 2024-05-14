@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,10 +20,12 @@ import androidx.fragment.app.activityViewModels
 import br.com.projetopi.smartlock.BitmapHelper
 import br.com.projetopi.smartlock.Classes.Establishment
 import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.ConsultarMapaActivity
 import br.com.projetopi.smartlock.MainActivity
 import br.com.projetopi.smartlock.MarkerInfoAdapter
 import br.com.projetopi.smartlock.R
 import br.com.projetopi.smartlock.SimpleStorage
+import br.com.projetopi.smartlock.databinding.ActivityConsultarMapaBinding
 import br.com.projetopi.smartlock.databinding.FragmentMapaBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -32,10 +35,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import java.util.Timer
+import java.util.TimerTask
 
 class Mapa() : Fragment() {
 
@@ -45,6 +51,8 @@ class Mapa() : Fragment() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var db: FirebaseFirestore
     private lateinit var simpleStorage: SimpleStorage
+    private val timer = Timer()
+    private var userMarker: Marker? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -122,6 +130,8 @@ class Mapa() : Fragment() {
                  * define o uiSettings.isMapToolbarEnabled como false
                  */
                 mapFragment.getMapAsync{ googleMap ->
+                    mapFragment.view?.visibility = View.GONE
+
                     addMarkers(googleMap)
 
                     googleMap.setInfoWindowAdapter(MarkerInfoAdapter(requireContext()))
@@ -217,13 +227,11 @@ class Mapa() : Fragment() {
                                                                 if (ActivityCompat.checkSelfPermission(
                                                                         requireContext(),
                                                                         Manifest.permission.ACCESS_FINE_LOCATION
-                                                                    ) != PackageManager.PERMISSION_GRANTED &&
+                                                                    ) == PackageManager.PERMISSION_GRANTED &&
                                                                     ActivityCompat.checkSelfPermission(
                                                                         requireContext(),
                                                                         Manifest.permission.ACCESS_COARSE_LOCATION
-                                                                    ) != PackageManager.PERMISSION_GRANTED) {
-                                                                    requestPermission()
-                                                                } else {
+                                                                    ) == PackageManager.PERMISSION_GRANTED) {
                                                                     fusedLocationProviderClient.lastLocation
                                                                         .addOnCompleteListener { task ->
                                                                             if (task.isSuccessful) {
@@ -260,7 +268,7 @@ class Mapa() : Fragment() {
                                                                                     Toast.LENGTH_LONG
                                                                                 ).show()
                                                                             }
-                                                                    }
+                                                                        }
                                                                 }
                                                             }
                                                         }
@@ -278,18 +286,39 @@ class Mapa() : Fragment() {
                     }
 
                     /***
-                     * Quando o mapa é carregado, pega a latitude e longitude de cada estabelecimento e
-                     * constroi os limites da area de todos os marcadores, em seguida, move a camera do
-                     * mapa para se adequar ao limites definidos anteriormente com um padding das bordas de 300px
+                     * Quando o mapa é carregado, verifica se o aplicativo tem acesso a localização do usuario, pega a
+                     * latitude e longitude do usuario e adiciona um marcador com a localização do usuario, centralizando
+                     * a camera do mapa no usuario
                      */
                     googleMap.setOnMapLoadedCallback {
-                        val bounds = LatLngBounds.builder()
-                        establishments
-                            .forEach{
-                                bounds.include(it.latLng)
+                        Handler().postDelayed({
+                            mapFragment.view?.visibility = View.VISIBLE
+                        }, 1000L)
+                        if (ActivityCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                            ) == PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            ) == PackageManager.PERMISSION_GRANTED) {
+                            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                                val userLocation = LatLng(location.latitude, location.longitude)
+
+                                userMarker = googleMap.addMarker(
+                                    MarkerOptions()
+                                        .position(userLocation)
+                                        .title("Sua localização atual")
+                                        .icon(BitmapHelper.vectorToBitmap(requireContext(), R.drawable.user_map_icon, ContextCompat.getColor(requireContext(), R.color.red)))
+                                )
+
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 20f))
                             }
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+                        }
                     }
+
+                    // Inicia um loop para que atualize a localização do usuario
+                    startPeriodicUpdate(this, binding)
                 }
         }
         return binding.root
@@ -320,7 +349,6 @@ class Mapa() : Fragment() {
             }
     }
 
-
     /***
      * Faz com que quando executada, usa a localização do usuario e a localização do marcador vindos
      * da lista de parametros e calcula a distancia entre eles, retornando a distancia em metros (Float)
@@ -338,16 +366,30 @@ class Mapa() : Fragment() {
     }
 
     /***
-     * Faz com que quando executada, faz um request das permições de ACCESS_COARSE_LOCATION e
-     * ACCESS_FINE_LOCATION
+     * Faz com que quando executada, a cada 1 segundo, verifica se o aplicativo tem acesso a localização do usuario,
+     * puxa novamente a localização do usuario e atualiza a latitude e longitude do marcador que representa o usuario
      */
-    private fun requestPermission() {
-        ActivityCompat.requestPermissions(
-            requireContext() as Activity, arrayOf(
-                android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            100
-        )
+    private fun startPeriodicUpdate(context: Mapa, binding: FragmentMapaBinding) {
+        val timerTask = object : TimerTask() {
+            override fun run() {
+                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                    fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                        if (userMarker != null) {
+                            val userLocation = LatLng(location.latitude, location.longitude)
+                            userMarker?.position = userLocation
+                        }
+                    }
+                }
+            }
+        }
+        timer.schedule(timerTask, 0, 1000L)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Cancela o fragment para que ele nao continue rodando com outro fragment carregado na main
+        timer.cancel()
     }
 }

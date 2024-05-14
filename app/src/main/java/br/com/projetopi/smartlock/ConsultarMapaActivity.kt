@@ -6,13 +6,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.postDelayed
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.com.projetopi.smartlock.Classes.Establishment
@@ -100,6 +103,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
             * define o uiSettings.isMapToolbarEnabled como false
             */
             mapFragment.getMapAsync { googleMap ->
+                mapFragment.view?.visibility = View.GONE
 
                 addMarkers(googleMap)
 
@@ -161,6 +165,9 @@ class ConsultarMapaActivity : AppCompatActivity() {
                  * a camera do mapa no usuario
                  */
                 googleMap.setOnMapLoadedCallback{
+                    Handler().postDelayed({
+                        mapFragment.view?.visibility = View.VISIBLE
+                    }, 1000L)
                     if (ActivityCompat.checkSelfPermission(
                             this,
                             Manifest.permission.ACCESS_FINE_LOCATION
@@ -179,7 +186,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                                     .icon(BitmapHelper.vectorToBitmap(this, R.drawable.user_map_icon, ContextCompat.getColor(this, R.color.red)))
                             )
 
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10f))
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 20f))
                         }
                     }
                 }

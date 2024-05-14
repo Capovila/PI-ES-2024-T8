@@ -43,13 +43,13 @@
 
     </androidx.cardview.widget.CardView>
 
-
     <fragment
         android:id="@+id/map_fragment"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:visibility="gone"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/lnlaBtnMenu"
