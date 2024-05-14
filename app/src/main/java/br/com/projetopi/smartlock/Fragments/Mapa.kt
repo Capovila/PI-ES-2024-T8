@@ -312,7 +312,7 @@ class Mapa() : Fragment() {
                                         .icon(BitmapHelper.vectorToBitmap(requireContext(), R.drawable.user_map_icon, ContextCompat.getColor(requireContext(), R.color.red)))
                                 )
 
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 20f))
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
                             }
                         }
                     }

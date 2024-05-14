@@ -55,17 +55,17 @@ class SplashScreenActivity : AppCompatActivity() {
         // Executa com um atraso de 1.5 segundos
         Handler().postDelayed({
 
-            requestPermission()
+            //requestPermission()
 
-            var allPermissionsIsGranted : Boolean
+            //var allPermissionsIsGranted : Boolean
 
-            allPermissionsIsGranted = checkPermission()
+            //allPermissionsIsGranted = checkPermission()
 
             // Faz com que o aplicativo peça as permissoes necessarias até que todas sejam concedidas
-            while (!allPermissionsIsGranted) {
-                requestPermission()
-                allPermissionsIsGranted = checkPermission()
-            }
+            //while (!allPermissionsIsGranted) {
+            //    requestPermission()
+            //    allPermissionsIsGranted = checkPermission()
+            //}
 
             /***
              * Verifica se possui um id de usuario no simpleStorage, caso tenha e
