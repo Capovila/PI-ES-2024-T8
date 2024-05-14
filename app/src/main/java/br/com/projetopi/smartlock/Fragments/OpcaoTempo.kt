@@ -62,8 +62,7 @@ class OpcaoTempo : Fragment() {
 
             binding.tvHour.setText("Horário: ${getHour()}:${getMin()}")
 
-
-
+            Toast.makeText(requireContext(), "O estabelecimento fecha as 18 horas", Toast.LENGTH_LONG).show()
 
             db.collection("establishments")
                 .document(establishmentID)
@@ -166,22 +165,8 @@ class OpcaoTempo : Fragment() {
     private fun getHour():Int{
         return Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
     }
-
-
     private fun getMin():Int{
         return Calendar.getInstance().get(Calendar.MINUTE)
     }
 
-    /***
-     * Faz com que quando executada, pega a hora, minuto e
-     * segundo do exato momento que a função for executada e
-     * retorna em formato de String
-     */
-    @SuppressLint("SimpleDateFormat")
-    private fun getCurrentTime(): String {
-        val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("HH:mm:ss")
-
-        return dateFormat.format(calendar.time)
-    }
 }
