@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,6 +9,7 @@
     android:background="@color/main_white"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -15,22 +17,36 @@
         android:orientation="vertical"
         tools:context=".LoginActivity">
 
+
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="300dp"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:src="@drawable/smart_lock_logo" />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:text="@string/entre_ou_crie_sua_conta"
-            android:textColor="@color/main_blue"
+            android:text="Bem-vindo!"
+            android:textColor="@color/main_dark_blue"
             android:textSize="25sp"
             android:textStyle="bold" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Você pode consultar os armários..."
+            android:textColor="@color/main_blue"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlEmail"
@@ -43,6 +59,7 @@
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_email_black_18dp">
 
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
@@ -50,7 +67,9 @@
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlPassword"
@@ -63,6 +82,7 @@
             app:endIconMode="password_toggle"
             app:startIconDrawable="@drawable/baseline_vpn_key_24">
 
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
@@ -70,7 +90,9 @@
                 android:inputType="textPassword"
                 android:textColor="@color/black" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnRecuperarSenha"
@@ -81,8 +103,9 @@
             android:layout_marginEnd="15dp"
             android:background="@color/blank"
             android:text="@string/recuperar_senha"
-            android:textColor="@color/main_purple"
+            android:textColor="@color/main_dark_blue"
             android:textStyle="italic" />
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
@@ -91,6 +114,7 @@
             android:layout_marginTop="50dp"
             android:orientation="horizontal">
 
+
             <Button
                 android:id="@+id/btnEntrar"
                 style="?attr/materialButtonOutlinedStyle"
@@ -98,9 +122,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
                 android:text="@string/entrar"
-                android:textColor="@color/main_dark_blue"
+                android:backgroundTint="@color/main_dark_blue"
+                android:textColor="#fff"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
 
             <Button
                 android:id="@+id/btnCadastrar"
@@ -109,25 +135,30 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
                 android:text="@string/cadastrar"
-                android:textColor="@color/main_dark_blue"
+                android:backgroundTint="@color/main_dark_blue"
+                android:textColor="#fff"
                 android:textSize="15sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+
         <Button
             android:id="@+id/btnConferir"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:paddingHorizontal="10dp"
             android:text="@string/consultar_armarios"
-            android:backgroundTint="@color/main_dark_blue"
-            android:textColor="@color/main_white"
+            android:textColor="#fff"
+            android:backgroundTint="@color/main_blue"
             android:textStyle="bold" />
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-</ScrollView>
 
+
+</ScrollView>

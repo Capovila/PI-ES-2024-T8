@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
+
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/main_white">
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/main"
@@ -15,10 +18,12 @@
         android:orientation="vertical"
         tools:context=".RecuperarSenhaActivity">
 
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="25dp">
+
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -26,36 +31,46 @@
                 android:background="@color/main_dark_blue"
                 android:padding="15dp">
 
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/btnBack"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/baseline_arrow_back_24" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="@string/smartlock"
-                    android:textColor="@color/main_light_blue"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
+
+
         </androidx.cardview.widget.CardView>
+
+
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="80dp"
             android:text="@string/recuperar_senha"
-            android:textColor="@color/main_blue"
+            android:textColor="@color/main_dark_blue"
             android:textSize="25sp"
             android:textStyle="bold" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="Insira o e-mail associado com sua conta"
+            android:textColor="@color/main_blue"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -68,6 +83,7 @@
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_email_black_18dp">
 
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
@@ -75,7 +91,9 @@
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/btnRecuperar"
@@ -85,9 +103,11 @@
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:text="@string/recuperar"
-            android:textColor="@color/main_dark_blue"
+            android:backgroundTint="@color/main_dark_blue"
+            android:textColor="#fff"
             android:textSize="15sp"
             android:textStyle="bold" />
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </ScrollView>

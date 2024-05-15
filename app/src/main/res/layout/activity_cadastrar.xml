@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,43 +9,42 @@
     android:background="@color/main_white"
     android:layout_height="match_parent">
 
+
     <androidx.appcompat.widget.LinearLayoutCompat
+
 
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".CadastrarActivity">
+        tools:context=".activity_tela_cadastro_nova">
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="25dp">
 
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/main_dark_blue"
-                android:padding="15dp">
+                android:padding="10dp"
+                >
+
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/btnBack"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/baseline_arrow_back_24" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="@string/smartlock"
-                    android:textColor="@color/main_light_blue"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+
         </androidx.cardview.widget.CardView>
+
+
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -52,10 +52,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
-            android:text="@string/cadastrar_usuario"
-            android:textColor="@color/main_blue"
-            android:textSize="25sp"
+            android:text="Cadastre-se"
+            android:textColor="@color/main_dark_blue"
+            android:textSize="30sp"
             android:textStyle="bold" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="Crie sua conta para continuar"
+            android:textColor="@color/main_blue"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlName"
@@ -68,6 +80,7 @@
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_person_black_18dp">
 
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etName"
                 android:layout_width="match_parent"
@@ -75,7 +88,9 @@
                 android:inputType="textPersonName"
                 android:textColor="@color/black" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlEmail"
@@ -88,6 +103,7 @@
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_email_black_18dp">
 
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
@@ -95,7 +111,9 @@
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlPassword"
@@ -108,6 +126,7 @@
             app:endIconMode="password_toggle"
             app:startIconDrawable="@drawable/baseline_vpn_key_24">
 
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
@@ -115,119 +134,32 @@
                 android:inputType="textPassword"
                 android:textColor="@color/black" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="15dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Data de Nascimento"
-                android:textStyle="bold"
-                android:textSize="12sp"
-                android:textColor="@color/main_dark_blue"/>
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/baseline_calendar_month_24_darkblue"
-                android:layout_marginStart="5dp"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:orientation="horizontal">
+            android:hint="@string/idade"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_calendar_month_24">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tlDay"
-                android:layout_width="105dp"
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAge"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint= "Dia"
-                app:endIconMode="clear_text"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDay"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:inputType="number"
-                    android:maxLength="2"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/main_dark_blue"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tlMonth"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:hint= "Mês"
-                app:endIconMode="clear_text"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMonth"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:inputType="number"
-                    android:maxLength="2"/>
+                android:inputType="number"
+                android:maxLength="3"
+                android:textColor="@color/black" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/main_dark_blue"/>
-
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tlYear"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:hint= "Ano"
-                app:endIconMode="clear_text"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etYear"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:inputType="number"
-                    android:maxLength="4"/>
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-
-
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -241,15 +173,18 @@
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_perm_identity_24">
 
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etCPF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:inputType="text"
                 android:maxLength="11"
                 android:textColor="@color/black" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlPhone"
@@ -262,6 +197,7 @@
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/baseline_local_phone_24">
 
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPhone"
                 android:layout_width="match_parent"
@@ -270,7 +206,10 @@
                 android:maxLength="15"
                 android:textColor="@color/black" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
         <Button
@@ -279,12 +218,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:text="@string/cadastrar"
-            android:textColor="@color/main_dark_blue"
+            android:layout_marginTop="40dp"
+            android:text="Cadastrar"
+            android:textColor="#ffff"
+            android:backgroundTint="@color/main_dark_blue"
             android:textSize="15sp"
             android:textStyle="bold" />
 
+
     </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 </ScrollView>
