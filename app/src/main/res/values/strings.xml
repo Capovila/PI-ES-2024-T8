@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartLock</string>
+    <string name="app_name">Smart Lock</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -43,4 +43,45 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="preencha_campo">Preencha o campo</string>
+    <string name="formato_email">O formato do email digitado está incorreto</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="smartlock">Smart Lock</string>
+    <string name="cadastrar_usuario">Cadastrar usuário</string>
+    <string name="nome">Nome</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="idade">Data de Nascimento</string>
+    <string name="cpf">CPF</string>
+    <string name="telefone">Telefone</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="ir_ate_la">Ir até lá</string>
+    <string name="alugar_armario">Alugar Armário</string>
+    <string name="entre_ou_crie_sua_conta">Entre ou crie sua conta</string>
+    <string name="recuperar_senha">Recuperar senha</string>
+    <string name="entrar">Entrar</string>
+    <string name="consultar_armarios">Consultar Armários</string>
+    <string name="recuperar">Recuperar</string>
+    <string name="adicionar_cartao">Adicionar Cartão</string>
+    <string name="nome_do_titular">Nome do Titular</string>
+    <string name="numero_do_cartao">Número do Cartão</string>
+    <string name="cvv">CVV</string>
+    <string name="ano_de_validade">Ano de Validade</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="voce_nao_possui_nenhuma_locacao_aberta">Você não possui nenhuma locação aberta</string>
+    <string name="escolha_o_tempo_que_ira_usar_o_armario">Escolha o tempo que irá usar o armário</string>
+    <string name="confirmar_locacao">Confirmar Locação</string>
+    <string name="nome_do_usuario">Nome do usuário</string>
+    <string name="email_do_usuario">Email do usuário</string>
+    <string name="cartao_cadastrado">Cartão Cadastrado:</string>
+    <string name="nenhum_cartao_cadastrado">Nenhum cartão cadastrado...</string>
+    <string name="sair">Sair</string>
+    <string name="apresente_esse_qr_code_ao_gerente_nomegerente">Apresente esse QR Code ao gerente</string>
+    <string name="concluir">Concluir</string>
+    <string name="perfil">Perfil</string>
+    <string name="mapa">Mapa</string>
+    <string name="locacao">Locação</string>
+    <string name="nenhuma_locacao_aberta">Nenhuma locação aberta...</string>
+    <string name="todo">TODO</string>
 </resources>

@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,16 +26,45 @@
             android:name=".CadastrarCartaoActivity"
             android:exported="false" />
         <activity
+            android:name=".LiberarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManagerMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConsultarMapaActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
+<<<<<<< HEAD
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SmartLock" >
+=======
+            android:exported="false" />
+        <activity
+            android:name=".RecuperarSenhaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CadastrarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true">
+>>>>>>> Vinícius
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCqCdxz022vyWqmNhgGXjBj2KrtFTuNVqU" />
     </application>
 
 </manifest>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AppInsightsSettings">
+    <option name="selectedTabId" value="Firebase Crashlytics" />
+    <option name="tabSettings">
+      <map>
+        <entry key="Firebase Crashlytics">
+          <value>
+            <InsightsFilterSettings>
+              <option name="connection">
+                <ConnectionSetting>
+                  <option name="appId" value="br.com.projetopi.smartlock" />
+                  <option name="mobileSdkAppId" value="1:749504388752:android:a1348a37ecf7241a084215" />
+                  <option name="projectId" value="pi-es-2024-t8" />
+                  <option name="projectNumber" value="749504388752" />
+                </ConnectionSetting>
+              </option>
+              <option name="failureTypes">
+                <list />
+              </option>
+              <option name="signal" value="SIGNAL_UNSPECIFIED" />
+              <option name="timeIntervalDays" value="NINETY_DAYS" />
+              <option name="visibilityType" value="ALL" />
+            </InsightsFilterSettings>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

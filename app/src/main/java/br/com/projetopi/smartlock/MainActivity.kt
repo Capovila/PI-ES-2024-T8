@@ -1,58 +1,106 @@
 package br.com.projetopi.smartlock
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
+import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.Fragments.Locacoes
+import br.com.projetopi.smartlock.Fragments.Mapa
+import br.com.projetopi.smartlock.Fragments.Profile
 import br.com.projetopi.smartlock.databinding.ActivityMainBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
+import java.util.Timer
+import java.util.TimerTask
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FragmentHandler {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var simpleStorage: SimpleStorage
+    private lateinit var db: FirebaseFirestore
+    private val timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        replaceFragment(Mapa())
 
-        setSupportActionBar(binding.toolbar)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        // Executa a função startPeriodicUpdate
+        startPeriodicUpdate(this, binding)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        binding.bottomNavigationView.menu.findItem(R.id.page_2).isChecked = true
+
+
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.page_1 -> replaceFragment(Profile())
+                R.id.page_2 -> replaceFragment(Mapa())
+                R.id.page_3 -> replaceFragment(Locacoes())
+            }
+            true
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+    /***
+     * Faz com que quando executada, troca o fragmento exibido no fragmento
+     * que foi passado pela lista de parametros
+     */
+    private fun replaceFragment(fragment: Fragment){
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.commit()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+    /***
+     * Faz com que quando executado, realiza uma verificação no Firestore
+     * a cada 1 segundo se o usuario possui uma locação aberta, caso tenha,
+     * define um badge visivel no item 3 (Locacoes)
+     */
+    private fun startPeriodicUpdate(context: MainActivity, binding: ActivityMainBinding) {
+        val timerTask = object : TimerTask() {
+            override fun run() {
+                simpleStorage = SimpleStorage(context)
+
+                val user: User = simpleStorage.getUserAccountData()
+
+                db = Firebase.firestore
+
+                val badge = binding.bottomNavigationView.getOrCreateBadge(R.id.page_3)
+
+                db.collection("rentals")
+                    .whereEqualTo("idUser", user.uid)
+                    .whereEqualTo("rentalOpen", true)
+                    .get()
+                    .addOnSuccessListener {
+                        badge.isVisible = !it.isEmpty
+                    }
+            }
         }
+        timer.schedule(timerTask, 0, 1000L)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+    // Override fun usada pela interface FragmentHandler que, quando executada,
+    // muda o fragmento exibido nessa activity por outro fragmento desejado
+    // de acordo com o comando executado em outro fragmento
+    override fun changeFragment(fragment: Fragment) {
+        replaceFragment(fragment)
     }
 }
+
+

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "749504388752",
+    "project_id": "pi-es-2024-t8",
+    "storage_bucket": "pi-es-2024-t8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749504388752:android:a1348a37ecf7241a084215",
+        "android_client_info": {
+          "package_name": "br.com.projetopi.smartlock"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqCdxz022vyWqmNhgGXjBj2KrtFTuNVqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
