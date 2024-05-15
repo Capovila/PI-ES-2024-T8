@@ -43,13 +43,13 @@
 
     </androidx.cardview.widget.CardView>
 
-
     <fragment
         android:id="@+id/map_fragment"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:visibility="gone"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/lnlaBtnMenu"
@@ -72,11 +72,11 @@
 
         <Button
             android:id="@+id/btnAlugar"
-            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="150dp"
+            android:backgroundTint="@color/main_dark_blue"
             android:layout_height="wrap_content"
             android:text="@string/alugar_armario"
-            android:textColor="@color/main_dark_blue"
+            android:textColor="@color/main_white"
             android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

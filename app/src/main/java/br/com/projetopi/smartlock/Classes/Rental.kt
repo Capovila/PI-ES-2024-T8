@@ -1,5 +1,9 @@
 package br.com.projetopi.smartlock.Classes
 
+/***
+ * Essa classe representa uma locação
+ * de um armário
+ */
 data class Rental (
     var uid: String?,
     val idUser: String?,

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartLock</string>
+    <string name="app_name">Smart Lock</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -52,7 +52,7 @@
     <string name="nome">Nome</string>
     <string name="email">Email</string>
     <string name="senha">Senha</string>
-    <string name="idade">Idade</string>
+    <string name="idade">Data de Nascimento</string>
     <string name="cpf">CPF</string>
     <string name="telefone">Telefone</string>
     <string name="cadastrar">Cadastrar</string>
@@ -77,7 +77,7 @@
     <string name="cartao_cadastrado">Cartão Cadastrado:</string>
     <string name="nenhum_cartao_cadastrado">Nenhum cartão cadastrado...</string>
     <string name="sair">Sair</string>
-    <string name="apresente_esse_qr_code_ao_gerente_nomegerente">Apresente esse QR Code ao gerente (nomeGerente)</string>
+    <string name="apresente_esse_qr_code_ao_gerente_nomegerente">Apresente esse QR Code ao gerente</string>
     <string name="concluir">Concluir</string>
     <string name="perfil">Perfil</string>
     <string name="mapa">Mapa</string>

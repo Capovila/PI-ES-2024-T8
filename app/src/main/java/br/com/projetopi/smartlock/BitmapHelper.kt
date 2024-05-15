@@ -12,12 +12,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 
 object BitmapHelper {
     /**
-     * Converte um vetor para um bitmap colorido.
-     *
-     * @param context O contexto atual.
-     * @param id O ID do recurso do vetor.
-     * @param color A cor para aplicar ao vetor.
-     * @return Um BitmapDescriptor do vetor com a cor especificada.
+     * Faz com que quando executada, converte um vetor para um bitmap colorido
      */
     fun vectorToBitmap (
         context: Context,

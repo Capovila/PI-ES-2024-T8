@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:text="@string/adicionar_cartao"
             android:textColor="@color/main_blue"
             android:textSize="20sp"
@@ -58,8 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
-            android:text="Todas as vezes que for realizada uma locação, será cobrada a caução de uma diária e estornada proporcionalmente
+            android:text="Todas as vezes que for realizada uma locação, será cobrada o caução de uma diária e estornada proporcionalmente
 de acordo com o período utilizado."
             android:textColor="@color/main_blue"
             android:textSize="10sp"
@@ -105,54 +106,96 @@ de acordo com o período utilizado."
                 android:maxLength="16"
                 android:textColor="@color/black" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Validade do cartão"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="15dp"
+            android:textColor="@color/main_dark_blue"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tlCVV"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:hint="@string/cvv"
-                app:endIconMode="clear_text"
-                app:startIconDrawable="@drawable/baseline_vpn_key_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etCVV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:textColor="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tlData"
-                android:layout_width="175dp"
+                android:id="@+id/tlDataMes"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/ano_de_validade"
+                android:hint="Mês"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/baseline_calendar_month_24">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etData"
+                    android:id="@+id/etDataMes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="date"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="10dp"
+                android:textColor="@color/main_dark_blue"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tlDataAno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Ano"
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/baseline_calendar_month_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDataAno"
+                    android:layout_width="match_parent"
+                    android:inputType="number"
                     android:maxLength="4"
+                    android:layout_height="wrap_content"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
+
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlCVV"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:hint="@string/cvv"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_vpn_key_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCVV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="3"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/btnAdicionar"

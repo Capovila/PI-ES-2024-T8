@@ -1,14 +1,17 @@
 package br.com.projetopi.smartlock.Classes
 
+/***
+ * Essa classe representa o usuário
+ */
 class User(
     var uid: String?,
     var name: String?,
-    val email: String?,
+    var email: String?,
     var password: String?,
-    var age: Int,
+    var age: String?,
     var CPF: String?,
     var phone: String?,
-    var manager: Boolean = false,
+    var manager: Boolean? = false,
     var cardRegistred: Boolean = false
 )
 

@@ -2,8 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +19,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartLock"
         tools:targetApi="31">
+<<<<<<< HEAD
         <activity android:name=".ConsultarMapaActivity"
+=======
+        <activity
+            android:name=".LiberarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManagerMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConsultarMapaActivity"
+>>>>>>> Vinícius
             android:exported="false" />
         <activity
             android:name=".MainActivity"
