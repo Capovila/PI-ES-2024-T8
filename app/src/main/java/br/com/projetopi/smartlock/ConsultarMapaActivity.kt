@@ -56,6 +56,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
         binding = ActivityConsultarMapaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -166,6 +167,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                  */
                 googleMap.setOnMapLoadedCallback{
                     Handler().postDelayed({
+                        binding.loadView.visibility = View.GONE
                         mapFragment.view?.visibility = View.VISIBLE
                     }, 1000L)
                     if (ActivityCompat.checkSelfPermission(
@@ -183,7 +185,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                                 MarkerOptions()
                                     .position(userLocation)
                                     .title("Sua localização atual")
-                                    .icon(BitmapHelper.vectorToBitmap(this, R.drawable.user_map_icon, ContextCompat.getColor(this, R.color.red)))
+                                    .icon(BitmapHelper.vectorToBitmap(this, R.drawable.user_map_icon, ContextCompat.getColor(this, R.color.main_dark_blue)))
                             )
 
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 20f))
@@ -214,7 +216,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                     .snippet(establishment.address)
                     .position(establishment.latLng)
                     .icon(
-                        BitmapHelper.vectorToBitmap(this, R.drawable.marker_icon, ContextCompat.getColor(this, R.color.red))
+                        BitmapHelper.vectorToBitmap(this, R.drawable.marker_icon, ContextCompat.getColor(this, R.color.main_dark_blue))
                     )
                     .alpha(0.8f)
             )

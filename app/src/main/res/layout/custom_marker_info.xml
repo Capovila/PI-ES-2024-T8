@@ -12,7 +12,7 @@
         android:id="@+id/txt_tittle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/main_dark_blue"
         android:textSize="18sp"
         android:textStyle="bold"/>
 
@@ -20,7 +20,7 @@
         android:id="@+id/txt_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/main_dark_blue"
         android:textSize="16sp"
         android:textStyle="bold"/>
 
@@ -28,7 +28,7 @@
         android:id="@+id/txt_reference"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/main_dark_blue"
         android:textSize="16sp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

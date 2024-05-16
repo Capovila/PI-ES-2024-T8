@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.R
 import br.com.projetopi.smartlock.SimpleStorage
 import br.com.projetopi.smartlock.databinding.FragmentLocacoesBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,7 +27,7 @@ class Locacoes : Fragment() {
     private lateinit var rentalID: String
     private lateinit var establishmentID: String
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "ResourceAsColor")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,9 +40,6 @@ class Locacoes : Fragment() {
         val user: User = simpleStorage.getUserAccountData()
 
         db = Firebase.firestore
-
-        // Esconde o ImageView do QR Code
-        binding.qrcode.visibility = View.GONE
 
         /***
          * Busca locações que estejam relacinadas ao id do Usuario e se a locação está aberta,
@@ -65,13 +64,18 @@ class Locacoes : Fragment() {
                     )
                     val barcodeEncoder = BarcodeEncoder()
                     val bitmap = barcodeEncoder.createBitmap(bitMatrix)
-                    binding.qrcode.visibility = View.VISIBLE
                     binding.qrcode.setImageBitmap(bitmap)
                     db.collection("establishments")
                         .document(establishmentID)
                         .get()
                         .addOnSuccessListener { document ->
-                            binding.tvInfo.text = "Apresente esse QR Code ao gerente"
+                            val managerName = document.getString("managerName")
+                            binding.main.setBackgroundResource(R.color.main_dark_blue)
+                            binding.tvInfo2.text = "Locação aberta"
+                            val whiteColor = ContextCompat.getColor(requireContext(), R.color.white)
+                            binding.tvInfo2.setTextColor(whiteColor)
+                            binding.qrcode.visibility = View.VISIBLE
+                            binding.tvInfo.text = "Apresente esse QR Code para o gerente $managerName caso você deseje encerrar a locação ou re-abrir o armário"
                         }
                 }
             }

@@ -1,57 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     tools:context=".Fragments.Mapa"
     android:orientation="vertical"
-    android:gravity="bottom">
+    android:background="@color/main_white">
 
-    <fragment
-        android:id="@+id/map_fragmentMain"
-        class="com.google.android.gms.maps.SupportMapFragment"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:visibility="gone"/>
+        android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="25dp">
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <fragment
+                android:id="@+id/map_fragmentMain"
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/lnlaBtnMenuFragment"
-            android:background="@color/main_white"
+            android:id="@+id/loadView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:padding="15dp">
+            android:visibility="visible">
 
-            <Button
-                android:id="@+id/btnIrFragment"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginEnd="30dp"
-                style="?attr/materialButtonOutlinedStyle"
-                android:textColor="@color/main_dark_blue"
-                android:text="@string/ir_ate_la"/>
-
-            <Button
-                android:id="@+id/btnAlugarFragment"
-                android:textStyle="bold"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_white"
-                android:backgroundTint="@color/main_dark_blue"
-                android:text="@string/alugar_armario"/>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.cardview.widget.CardView>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom">
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/lnlaBtnMenuFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_llc_main_white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingVertical="30dp"
+                android:paddingHorizontal="20dp">
+
+                <Button
+                    android:id="@+id/btnIrFragment"
+                    android:layout_width="match_parent"
+                    android:backgroundTint="@color/main_dark_blue"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center"
+                    android:text="@string/ir_ate_la"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="17sp" />
+
+                <Button
+                    android:id="@+id/btnAlugarFragment"
+                    android:layout_width="match_parent"
+                    android:backgroundTint="@color/main_dark_blue"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="30dp"
+                    android:gravity="center"
+                    android:text="@string/alugar_armario"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="17sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </RelativeLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

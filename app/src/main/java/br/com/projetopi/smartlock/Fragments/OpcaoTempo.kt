@@ -60,8 +60,6 @@ class OpcaoTempo : Fragment() {
             establishmentID = establishment.uid.toString()
             establishmentManagerName = establishment.managerName.toString()
 
-            binding.tvHour.setText("Horário: ${getHour()}:${getMin()}")
-
             Toast.makeText(requireContext(), "O estabelecimento fecha as 18 horas", Toast.LENGTH_LONG).show()
 
             db.collection("establishments")
@@ -89,6 +87,7 @@ class OpcaoTempo : Fragment() {
                     }
                     if(getHour() >= 17 && getMin() > 0){
                         binding.op2.isEnabled = false
+
                         if(getMin() > 30 || getHour() >= 18){
                             binding.op1.isEnabled = false
                         }
