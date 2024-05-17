@@ -64,7 +64,7 @@ class RecuperarSenhaActivity : AppCompatActivity() {
                             "E-mail enviado",
                             Toast.LENGTH_LONG
                         ).show()
-                        startActivity(Intent(this, LoginActivity::class.java))
+
                         finish()
                     }else{
                         Snackbar.make(

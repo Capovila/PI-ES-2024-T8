@@ -164,7 +164,8 @@ class ConsultarMapaActivity : AppCompatActivity() {
                 /***
                  * Quando o mapa é carregado, verifica se o aplicativo tem acesso a localização do usuario, pega a
                  * latitude e longitude do usuario e adiciona um marcador com a localização do usuario, centralizando
-                 * a camera do mapa no usuario
+                 * a camera do mapa no usuario, se o aplicativo não tiver acesso a localização do usuario, não é
+                 * carregado o mapa
                  */
                 googleMap.setOnMapLoadedCallback{
                     if (ActivityCompat.checkSelfPermission(
