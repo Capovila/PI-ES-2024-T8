@@ -74,7 +74,6 @@ class CadastrarActivity : AppCompatActivity() {
 
         val c = Calendar.getInstance()
 
-
         /***
          * Faz com que para cada editText junto com seu textLayout
          * execute a função setOnFocusChangeListenerInputCheck
@@ -127,7 +126,6 @@ class CadastrarActivity : AppCompatActivity() {
                                                 Toast.LENGTH_LONG,
                                             ).show()
 
-                                            startActivity(Intent(this, LoginActivity::class.java))
                                             finish()
                                         }
                                 }
@@ -185,7 +183,7 @@ class CadastrarActivity : AppCompatActivity() {
         return if(binding.etYear.text.toString().toInt() > Calendar.getInstance().get(Calendar.YEAR)){
             false
         } else if(Calendar.getInstance().get(Calendar.YEAR) - binding.etYear.text.toString().toInt() < 18){
-            Toast.makeText(this, "Apenas maiores de 18 anos", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "É necessário ser maior de 18 anos", Toast.LENGTH_LONG).show()
             false
         }else if(binding.etDay.text.toString().toInt() > 31){
             false

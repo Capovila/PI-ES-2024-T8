@@ -9,6 +9,7 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -25,6 +26,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var simpleStorage: SimpleStorage
     private lateinit var db: FirebaseFirestore
+    private lateinit var user: User
 
 
     // Caso o app não abra no celular, zere os dados e o cache, vá em config -> aplicativos -> SmartLock -> Armazenamento
@@ -36,11 +38,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
         db = Firebase.firestore
 
-        // Executa a animação do icone
-        val animatedIcon = findViewById<ImageView>(R.id.lockerSplash)
-        val avd = animatedIcon.drawable as AnimatedVectorDrawable
-        avd.start()
-
         enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -51,23 +48,25 @@ class SplashScreenActivity : AppCompatActivity() {
         simpleStorage = SimpleStorage(this)
 
         // Atribui à variavel user os dados do usuario guardados no simpleStorage
-        val user:User = simpleStorage.getUserAccountData()
+        user = simpleStorage.getUserAccountData()
+
+        val permissionGranted = isPermissionGranted()
+
+        if(permissionGranted){
+            continueExecution(user)
+        } else {
+            requestPermission()
+        }
+    }
+
+    private fun continueExecution(user: User) {
+        // Executa a animação do icone
+        val animatedIcon = findViewById<ImageView>(R.id.lockerSplash)
+        val avd = animatedIcon.drawable as AnimatedVectorDrawable
+        avd.start()
 
         // Executa com um atraso de 1.5 segundos
         Handler().postDelayed({
-
-            //requestPermission()
-
-            //var allPermissionsIsGranted : Boolean
-
-            //allPermissionsIsGranted = checkPermission()
-
-            // Faz com que o aplicativo peça as permissoes necessarias até que todas sejam concedidas
-            //while (!allPermissionsIsGranted) {
-            //    requestPermission()
-            //    allPermissionsIsGranted = checkPermission()
-            //}
-
             /***
              * Verifica se possui um id de usuario no simpleStorage, caso tenha e
              * caso o usuario seja gerente, inicia direto a ManagerMainActivity e fecha
@@ -120,12 +119,33 @@ class SplashScreenActivity : AppCompatActivity() {
      * Faz com que quando executada, verifica se o usuario permitiu que o aplicativo
      * use sua localização e o estado de sua internet
      */
-    private fun checkPermission() : Boolean {
-        return !(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED &&
+    private fun isPermissionGranted() : Boolean {
+        return (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED &&
+                == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)
-                != PackageManager.PERMISSION_GRANTED)
+                == PackageManager.PERMISSION_GRANTED)
+                || shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+                || shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
+                || shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_NETWORK_STATE)
+    }
+
+    /***
+     * Faz com que quando o request permission volta um resultado, dependendo do resultado,
+     * executa o metodo continueExecution ou o mesmo com um toast bar avisando que algumas
+     * funções do app podem nao funcionar
+     */
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 100) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                continueExecution(user)
+            } else {
+                continueExecution(user)
+                Toast.makeText(this, "Algumas permissões necessárias não foram concedidas", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Algumas funções do aplicativo podem não funcionar", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

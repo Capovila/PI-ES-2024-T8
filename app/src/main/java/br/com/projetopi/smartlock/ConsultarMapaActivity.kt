@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
@@ -166,10 +167,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
                  * a camera do mapa no usuario
                  */
                 googleMap.setOnMapLoadedCallback{
-                    Handler().postDelayed({
-                        binding.loadView.visibility = View.GONE
-                        mapFragment.view?.visibility = View.VISIBLE
-                    }, 1000L)
                     if (ActivityCompat.checkSelfPermission(
                             this,
                             Manifest.permission.ACCESS_FINE_LOCATION
@@ -178,6 +175,12 @@ class ConsultarMapaActivity : AppCompatActivity() {
                             this,
                             Manifest.permission.ACCESS_COARSE_LOCATION
                         ) == PackageManager.PERMISSION_GRANTED) {
+
+                        Handler().postDelayed({
+                            binding.loadView.visibility = View.GONE
+                            mapFragment.view?.visibility = View.VISIBLE
+                        }, 1000L)
+
                         fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                             val userLocation = LatLng(location.latitude, location.longitude)
 
@@ -190,6 +193,8 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 20f))
                         }
+                    } else {
+                        Toast.makeText(this, "Para acessar é necessario permitir que tenhamos acesso à sua localização", Toast.LENGTH_LONG).show()
                     }
                 }
 

@@ -295,11 +295,6 @@ class Mapa() : Fragment() {
                      * a camera do mapa no usuario
                      */
                     googleMap.setOnMapLoadedCallback {
-                        binding.loadView.visibility = View.GONE
-
-                        Handler().postDelayed({
-                            mapFragment.view?.visibility = View.VISIBLE
-                        }, 1000L)
                         if (ActivityCompat.checkSelfPermission(
                                 requireContext(),
                                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -308,6 +303,12 @@ class Mapa() : Fragment() {
                                 requireContext(),
                                 Manifest.permission.ACCESS_COARSE_LOCATION
                             ) == PackageManager.PERMISSION_GRANTED) {
+
+                            Handler().postDelayed({
+                                binding.loadView.visibility = View.GONE
+                                mapFragment.view?.visibility = View.VISIBLE
+                            }, 1000L)
+
                             fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                                 val userLocation = LatLng(location.latitude, location.longitude)
 
@@ -320,6 +321,8 @@ class Mapa() : Fragment() {
 
                                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
                             }
+                        } else {
+                            Toast.makeText(requireContext(), "Para acessar é necessario permitir que tenhamos acesso à sua localização", Toast.LENGTH_LONG).show()
                         }
                     }
 
