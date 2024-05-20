@@ -1,56 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.appcompat.widget.LinearLayoutCompat
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.QRCode"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="@color/main_white">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="QR Code"
-        android:textColor="@color/main_dark_blue"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        tools:context=".Fragments.QRCode"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvApresenteGerente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Apresente esse QR Code para o gerente (...)
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="QR Code"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/main_dark_blue"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvApresenteGerente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="Apresente esse QR Code para o gerente (...)
 para que ele possa efetivar sua locação"
-        android:textAlignment="center"
-        android:textColor="@color/main_light_blue"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+            android:textAlignment="center"
+            android:textColor="@color/main_light_blue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/qrcode"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="50dp"
-        android:contentDescription="QR Code" />
+        <ImageView
+            android:id="@+id/qrcode"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="50dp"
+            android:contentDescription="QR Code" />
 
-    <Button
-        android:id="@+id/btnConcluir"
-        android:textStyle="bold"
-        android:textSize="17sp"
-        android:paddingHorizontal="30dp"
-        android:textColor="@color/white"
-        android:layout_marginVertical="50dp"
-        android:backgroundTint="@color/main_dark_blue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/concluir"
-        />
+        <Button
+            android:id="@+id/btnConcluir"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:paddingHorizontal="30dp"
+            android:textColor="@color/white"
+            android:layout_marginVertical="50dp"
+            android:backgroundTint="@color/main_dark_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/concluir"
+            />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</ScrollView>
+

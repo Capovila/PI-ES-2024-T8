@@ -42,12 +42,13 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginHorizontal="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="Insira o e-mail associado com sua
-conta e enviaremos um e-mail para você
-recuperar sua senha"
+                    conta e enviaremos um e-mail para você
+                    recuperar sua senha"
             android:textAlignment="center"
             android:textColor="@color/main_light_blue"
             android:textSize="20sp"

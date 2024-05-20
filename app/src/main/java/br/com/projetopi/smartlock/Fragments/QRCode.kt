@@ -58,7 +58,7 @@ class QRCode : Fragment() {
              * para o fragmento Mapa
              */
             binding.btnConcluir.setOnClickListener {
-                (activity as MainActivity).changeFragment(Mapa())
+                (activity as MainActivity).changeFragment(Locacoes())
             }
         }
         return binding.root

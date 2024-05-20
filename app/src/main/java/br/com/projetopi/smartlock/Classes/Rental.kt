@@ -11,5 +11,8 @@ data class Rental (
     val tempoSelected: String?,
     var rentalImplemented: Boolean = false,
     var rentalOpen: Boolean = true,
-    val establishmentManagerName: String?
+    val establishmentManagerName: String?,
+    var usersQuantity: Int = 0,
+    var user1Photo: String? = null,
+    var user2Photo: String? = null,
 )

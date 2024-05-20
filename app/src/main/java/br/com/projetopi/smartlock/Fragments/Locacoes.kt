@@ -1,13 +1,18 @@
 package br.com.projetopi.smartlock.Fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
+import androidx.core.view.updateLayoutParams
 import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.MainActivity
 import br.com.projetopi.smartlock.R
 import br.com.projetopi.smartlock.SimpleStorage
 import br.com.projetopi.smartlock.databinding.FragmentLocacoesBinding
@@ -70,15 +75,33 @@ class Locacoes : Fragment() {
                         .get()
                         .addOnSuccessListener { document ->
                             val managerName = document.getString("managerName")
+                            val layoutParams = binding.tvInfo2.layoutParams as ViewGroup.MarginLayoutParams
+                            layoutParams.topMargin = 50
                             binding.main.setBackgroundResource(R.color.main_dark_blue)
                             binding.tvInfo2.text = "Locação aberta"
+                            binding.tvInfo2.layoutParams = layoutParams
                             val whiteColor = ContextCompat.getColor(requireContext(), R.color.white)
                             binding.tvInfo2.setTextColor(whiteColor)
                             binding.qrcode.visibility = View.VISIBLE
-                            binding.tvInfo.text = "Apresente esse QR Code para o gerente $managerName caso você deseje encerrar a locação ou re-abrir o armário"
+                            binding.btnCancelar.visibility = View.VISIBLE
+                            binding.tvInfo.text = "Apresente esse QR Code para o gerente caso você deseje encerrar a locação ou re-abrir o armário"
                         }
                 }
             }
+
+        binding.btnCancelar.setOnClickListener {
+            db.collection("rentals")
+                .document(user.uid.toString())
+                .delete()
+                .addOnCompleteListener{
+                    Toast.makeText(requireContext(), "Locação cancelada com sucesso", Toast.LENGTH_LONG).show()
+                    startActivity(Intent(requireContext(), MainActivity::class.java))                }
+                .addOnFailureListener{
+                    Toast.makeText(requireContext(), "Erro ao cancelar locação", Toast.LENGTH_LONG).show()
+                }
+        }
         return binding.root
     }
+
+
 }

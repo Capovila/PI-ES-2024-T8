@@ -81,26 +81,10 @@ class OpcaoTempo : Fragment() {
                     val preco5 = document.getDouble("planPrice5") ?: 0.0
                     binding.op5.text = "${descList[4]} = R$ $preco5"
 
-
-                 /*   when{
-                        getHour() >= 8 && getMin() > 0 ->{
-                            binding.op5.isEnabled  = false}
-                        getHour() >= 17 && getMin() > 0 -> {
-                            binding.op2.isEnabled = false
-                            if(getMin() > 30 || getHour() >= 18){
-                                binding.op1.isEnabled = false
-                            }}
-                        getHour() >= 16 && getMin() > 0 ->{
-                            binding.op3.isEnabled = false}
-                        getHour() >= 14 && getMin() > 0 ->{
-                            binding.op4.isEnabled = false}
-                    }*/
-
-
                     if(getHour() >= 8 && getMin() > 0) {
                         binding.op5.isEnabled  = false
                     }
-                    if(getHour() >= 17 && getMin() > 0){
+                    if(getHour() >= 19 && getMin() > 0){
                         binding.op2.isEnabled = false
 
                         if(getMin() > 30 || getHour() >= 18){
@@ -141,7 +125,7 @@ class OpcaoTempo : Fragment() {
                                 .addOnSuccessListener {document ->
                                     locacaoAtual.uid = user.uid
                                     sharedViewModelRental.selectRental(locacaoAtual)
-                                    (activity as MainActivity).changeFragment(QRCode())
+                                    (activity as MainActivity).changeFragment(Mapa())
                                 }
                         } else {
                             Toast.makeText(

@@ -57,7 +57,9 @@ class ManagerMainActivity : AppCompatActivity() {
                                     if (isRentalImplemented != null && isRentalImplemented) {
                                         Toast.makeText(this, "Locação já efetivada", Toast.LENGTH_LONG).show()
                                     } else {
-                                        proximoPasso()
+                                        val intent: Intent = Intent(this, NumberUsersActivity::class.java)
+                                        intent.putExtra("UserID", qrCodeResult)
+                                        startActivity(intent)
                                     }
                                 }
                             }
@@ -110,7 +112,7 @@ class ManagerMainActivity : AppCompatActivity() {
         val options = ScanOptions()
         options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
         options.setPrompt("Escaneie o QR Code")
-        options.setCameraId(1)
+        options.setCameraId(0)
         options.setBeepEnabled(false)
         options.setBarcodeImageEnabled(true)
         options.setOrientationLocked(false)
@@ -122,8 +124,5 @@ class ManagerMainActivity : AppCompatActivity() {
         qrCodeResult = string
     }
 
-    private fun proximoPasso() {
-        startActivity(Intent(this, QuantasPessoasActivity::class.java))
-    }
 
 }
