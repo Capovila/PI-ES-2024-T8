@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
-            android:layout_marginVertical="35dp"
+            android:layout_marginVertical="50dp"
             android:orientation="horizontal">
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
@@ -42,7 +42,7 @@
                     android:layout_marginBottom="10dp"
                     android:text="@string/nome_do_usuario"
                     android:textColor="@color/main_light_blue"
-                    android:textSize="15sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/email_do_usuario"
                     android:textColor="@color/main_light_blue"
-                    android:textSize="15sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -60,7 +60,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+
             android:background="@drawable/rounded_llc"
             android:gravity="center"
             android:orientation="vertical">
@@ -72,7 +72,7 @@
                 android:text="Gerente"
                 android:textColor="@color/main_dark_blue"
                 android:textStyle="bold"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="35dp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"

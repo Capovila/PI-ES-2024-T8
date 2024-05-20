@@ -20,6 +20,9 @@
         android:theme="@style/Theme.SmartLock"
         tools:targetApi="31">
         <activity
+            android:name=".QuantasPessoasActivity"
+            android:exported="false" />
+        <activity
             android:name=".LiberarActivity"
             android:exported="false" />
         <activity
@@ -49,6 +52,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="android:screenOrientation" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
