@@ -57,7 +57,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
         binding = ActivityConsultarMapaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -192,7 +191,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                                     .icon(BitmapHelper.vectorToBitmap(this, R.drawable.user_map_icon, ContextCompat.getColor(this, R.color.main_dark_blue)))
                             )
 
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 20f))
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
                         }
                     } else {
                         Toast.makeText(this, "Para acessar é necessario permitir que tenhamos acesso à sua localização", Toast.LENGTH_LONG).show()

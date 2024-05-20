@@ -13,12 +13,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+<<<<<<< HEAD
         android:background="@color/main_dark_blue"
         tools:context=".Fragments.AddCard">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
+=======
+        tools:context=".Fragments.AddCard"
+        android:background="@color/main_dark_blue">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_dark_blue">
+>>>>>>> Vinícius
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btnBack"
@@ -27,6 +37,14 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/baseline_arrow_back_24_white" />
+<<<<<<< HEAD
+=======
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+>>>>>>> Vinícius
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -34,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+<<<<<<< HEAD
             android:layout_marginTop="30dp"
             android:text="Adicionar cartão"
             android:textColor="@color/white"
@@ -62,6 +81,28 @@ acordo com o período utilizado"
         android:gravity="center"
         android:orientation="vertical"
         android:layout_marginTop="50dp">
+=======
+            android:layout_marginTop="15dp"
+            android:text="@string/adicionar_cartao"
+            android:textColor="@color/main_white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:text="Todas as vezes que for realizada uma locação, será cobrada o caução de uma diária e estornada proporcionalmente
+de acordo com o período utilizado."
+            android:textColor="@color/main_light_blue"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:paddingHorizontal="10dp"
+            android:textStyle="bold" />
+>>>>>>> Vinícius
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -69,6 +110,13 @@ acordo com o período utilizado"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="50dp"
         android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_llc"
+        android:orientation="vertical"
+        android:layout_marginTop="40dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlNomeTitular"
@@ -193,13 +241,26 @@ acordo com o período utilizado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+<<<<<<< HEAD
             android:layout_marginVertical="50dp"
             android:paddingHorizontal="30dp"
             android:text="@string/adicionar"
             android:backgroundTint="@color/main_dark_blue"
             android:textColor="@color/main_white"
+=======
+            android:layout_marginVertical="75dp"
+            android:paddingHorizontal="30dp"
+            android:text="@string/adicionar"
+            android:textColor="@color/main_white"
+            android:backgroundTint="@color/main_dark_blue"
+>>>>>>> Vinícius
             android:textSize="17sp"
             android:textStyle="bold" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

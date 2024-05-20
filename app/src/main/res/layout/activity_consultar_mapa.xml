@@ -96,7 +96,7 @@
                     android:layout_weight="1"
                     android:paddingHorizontal="30dp"
                     android:gravity="center"
-                    android:text="@string/alugar_armario"
+                    android:text="Alugar"
                     android:textColor="@color/main_dark_blue"
                     android:textStyle="bold"
                     android:textSize="17sp" />

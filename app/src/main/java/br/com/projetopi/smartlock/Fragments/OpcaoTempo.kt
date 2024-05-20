@@ -82,6 +82,21 @@ class OpcaoTempo : Fragment() {
                     binding.op5.text = "${descList[4]} = R$ $preco5"
 
 
+                 /*   when{
+                        getHour() >= 8 && getMin() > 0 ->{
+                            binding.op5.isEnabled  = false}
+                        getHour() >= 17 && getMin() > 0 -> {
+                            binding.op2.isEnabled = false
+                            if(getMin() > 30 || getHour() >= 18){
+                                binding.op1.isEnabled = false
+                            }}
+                        getHour() >= 16 && getMin() > 0 ->{
+                            binding.op3.isEnabled = false}
+                        getHour() >= 14 && getMin() > 0 ->{
+                            binding.op4.isEnabled = false}
+                    }*/
+
+
                     if(getHour() >= 8 && getMin() > 0) {
                         binding.op5.isEnabled  = false
                     }
