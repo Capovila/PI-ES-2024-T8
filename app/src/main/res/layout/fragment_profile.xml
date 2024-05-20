@@ -20,12 +20,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
-            android:layout_marginVertical="45dp"
+            android:layout_marginVertical="35dp"
             android:orientation="horizontal">
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
                 android:src="@drawable/baseline_person_24"
                 />
 
@@ -42,7 +42,7 @@
                     android:layout_marginBottom="10dp"
                     android:text="@string/nome_do_usuario"
                     android:textColor="@color/main_light_blue"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
 
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/email_do_usuario"
                     android:textColor="@color/main_light_blue"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
 
@@ -67,7 +67,7 @@
             android:background="@drawable/rounded_llc"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="15dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -193,7 +193,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginVertical="200dp"
+                android:layout_marginVertical="150dp"
                 android:paddingHorizontal="30dp"
                 android:text="Sair"
                 android:textColor="@color/main_white"

@@ -31,7 +31,8 @@ class ManagerMainActivity : AppCompatActivity() {
 
         val user: User = simpleStorage.getUserAccountData()
 
-        binding.tvNomeGerente.setText(user.name)
+        binding.tvManagerName.setText(user.name)
+        binding.tvManagerEmail.setText(user.email)
 
         binding.btnLiberar.setOnClickListener{
             cameraPermission.launch(android.Manifest.permission.CAMERA)
