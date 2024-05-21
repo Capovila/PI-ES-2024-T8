@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/main_white">
+    android:layout_height="match_parent"
+    android:background="@color/main_white"
+    >
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:context=".WriteUserActivity"
         android:orientation="vertical"
-        tools:context=".RecuperarSenhaActivity"
-        >
+        android:gravity="center">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="@color/main_white">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btnBack"
@@ -34,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:text="Recuperar senha"
+            android:layout_marginTop="10dp"
+            android:text="Vincular NFC"
             android:textColor="@color/main_dark_blue"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -47,45 +48,54 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Insira o e-mail associado com sua
-                    conta e enviaremos um e-mail para você
-                    recuperar sua senha"
+            android:text="Escolha uma NFC para ser vinculado à essa locação, ao aproximar a NFC,
+                            será vinculada automaticamente"
             android:textAlignment="center"
             android:textColor="@color/main_light_blue"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tlEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="100dp"
-            android:hint="@string/email"
-            app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/baseline_email_black_18dp">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="25dp"
+            android:id="@+id/userPhoto"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/btnRecuperar"
-            android:backgroundTint="@color/main_dark_blue"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:paddingHorizontal="30dp"
-            android:text="@string/recuperar"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:layout_marginVertical="50dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnFim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/main_dark_blue"
+                android:paddingHorizontal="30dp"
+                android:text="Finalizar"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnMais"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:backgroundTint="@color/main_dark_blue"
+                android:text="Adicionar Usuário"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
 </ScrollView>

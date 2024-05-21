@@ -72,7 +72,7 @@
                 android:text="Gerente"
                 android:textColor="@color/main_dark_blue"
                 android:textStyle="bold"
-                android:layout_marginTop="35dp"/>
+                android:layout_marginTop="25dp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"

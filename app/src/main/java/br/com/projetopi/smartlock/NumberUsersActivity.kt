@@ -1,8 +1,10 @@
 package br.com.projetopi.smartlock
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -59,8 +61,21 @@ class NumberUsersActivity : AppCompatActivity() {
                             document.reference.update(numberUsers as Map<String, Any>)
                         }
                     }
-            }
 
+                cameraProviderResult.launch(android.Manifest.permission.CAMERA)
+            }
         }
     }
+
+    private val cameraProviderResult=
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){
+            if(it){
+                val intent = Intent(this, UserPhotoActivity::class.java)
+                intent.putExtra("nUser", "1")
+                startActivity(intent)
+            }
+            else{
+                Toast.makeText(this, "habilite a camera para tirar fotos", Toast.LENGTH_LONG).show()
+            }
+        }
 }
