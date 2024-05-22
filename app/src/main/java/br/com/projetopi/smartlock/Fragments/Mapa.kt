@@ -2,7 +2,6 @@ package br.com.projetopi.smartlock.Fragments
 
 import SharedViewModelEstablishment
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,7 +10,6 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,17 +17,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import br.com.projetopi.smartlock.BitmapHelper
 import br.com.projetopi.smartlock.Classes.Establishment
 import br.com.projetopi.smartlock.Classes.User
-import br.com.projetopi.smartlock.ConsultarMapaActivity
+import br.com.projetopi.smartlock.Classes.GpsChangeReceiver
 import br.com.projetopi.smartlock.MainActivity
 import br.com.projetopi.smartlock.MarkerInfoAdapter
 import br.com.projetopi.smartlock.R
 import br.com.projetopi.smartlock.SimpleStorage
-import br.com.projetopi.smartlock.databinding.ActivityConsultarMapaBinding
 import br.com.projetopi.smartlock.databinding.FragmentMapaBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -37,7 +33,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -47,7 +42,7 @@ import com.google.firebase.firestore.firestore
 import java.util.Timer
 import java.util.TimerTask
 
-class Mapa() : Fragment() {
+class Mapa() : Fragment(), GpsChangeReceiver.OnGpsStatusChangeListener {
 
     private val establishments: ArrayList<Establishment> = arrayListOf()
     private var _binding: FragmentMapaBinding? = null
@@ -77,24 +72,6 @@ class Mapa() : Fragment() {
         val sharedViewModelEstablishment: SharedViewModelEstablishment by activityViewModels()
 
         db = Firebase.firestore
-
-        /***
-         * Busca locações que nao foram efetivadas e que estejam relacionadas ao id do usuario, caso alguma
-         * seja encontrada, deixa visivel ao usuario assim que o fragment é criado com uma Toast
-         */
-        db.collection("rentals")
-            .whereEqualTo("rentalImplemented", false)
-            .whereEqualTo("idUser", user.uid)
-            .get()
-            .addOnSuccessListener {
-                for(documents in it){
-                    Toast.makeText(
-                        requireContext(),
-                        "Existe uma locação para ser efetivada",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
 
         /***
          * Busca todos os estabelecimentos cadastrados e caso seja encontrado algum, cria uma variavel
@@ -351,6 +328,24 @@ class Mapa() : Fragment() {
                                     mapFragment.view?.visibility = View.VISIBLE
                                 }, 1000L)
 
+                                /***
+                                 * Busca locações que nao foram efetivadas e que estejam relacionadas ao id do usuario, caso alguma
+                                 * seja encontrada, deixa visivel ao usuario assim que o fragment é criado com uma Toast
+                                 */
+                                db.collection("rentals")
+                                    .whereEqualTo("rentalImplemented", false)
+                                    .whereEqualTo("idUser", user.uid)
+                                    .get()
+                                    .addOnSuccessListener {
+                                        for(documents in it){
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Existe uma locação para ser efetivada",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+                                    }
+
                                 fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                                     val userLocation = LatLng(location.latitude, location.longitude)
 
@@ -364,10 +359,10 @@ class Mapa() : Fragment() {
                                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
                                 }
                             } else {
-                                Toast.makeText(requireContext(), "Para acessar é necessario que seu GPS esteja ligado", Toast.LENGTH_LONG).show()
+                                Toast.makeText(requireContext(), "Para acessar, é necessario que seu GPS esteja ligado", Toast.LENGTH_LONG).show()
                             }
                         } else {
-                            Toast.makeText(requireContext(), "Para acessar é necessario permitir que tenhamos acesso à sua localização", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), "Para acessar, é necessario permitir que tenhamos acesso à sua localização", Toast.LENGTH_LONG).show()
                         }
                     }
 
@@ -450,5 +445,18 @@ class Mapa() : Fragment() {
     private fun isGPSEnabled(): Boolean {
         val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    override fun onGpsStatusChanged(isGpsEnabled: Boolean) {
+        if (isGpsEnabled) {
+            (activity as MainActivity).changeFragment(
+                Mapa()
+            )
+        } else {
+            Toast.makeText(requireContext(), "GPS Desligado", Toast.LENGTH_LONG).show()
+            (activity as MainActivity).changeFragment(
+                Mapa()
+            )
+        }
     }
 }

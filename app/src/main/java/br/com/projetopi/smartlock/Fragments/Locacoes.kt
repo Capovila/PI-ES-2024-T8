@@ -84,12 +84,13 @@ class Locacoes : Fragment() {
                             binding.tvInfo2.setTextColor(whiteColor)
                             binding.qrcode.visibility = View.VISIBLE
                             binding.btnCancelar.visibility = View.VISIBLE
-                            binding.tvInfo.text = "Apresente esse QR Code para o gerente caso você deseje encerrar a locação ou re-abrir o armário"
+                            binding.tvInfo.text = "Apresente esse QR Code para o gerente $managerName caso você ainda não tenha efetivado sua locação"
                         }
                 }
             }
 
         binding.btnCancelar.setOnClickListener {
+
             db.collection("rentals")
                 .whereEqualTo("idUser", user.uid.toString())
                 .get()
@@ -102,6 +103,19 @@ class Locacoes : Fragment() {
                     if(implemented == true){
                         Toast.makeText(requireContext(), "Locação implementada não pode ser finalizada", Toast.LENGTH_LONG).show()
                     }else{
+                        db.collection("lockers")
+                            .whereEqualTo("idEstablishment", establishmentID)
+                            .get()
+                            .addOnSuccessListener {
+                                val newRentalState = hashMapOf(
+                                    "isRented" to false,
+                                    "currentIdRental" to ""
+                                )
+                                for (document in it.documents) {
+                                    document.reference.update(newRentalState as Map<String, Any>)
+                                }
+                            }
+
                         Toast.makeText(requireContext(), "Locação cancelada com sucesso", Toast.LENGTH_LONG).show()
                         for (document in it.documents) {
                             document.reference.delete()
@@ -109,9 +123,8 @@ class Locacoes : Fragment() {
                         startActivity(Intent(requireContext(), MainActivity::class.java))
                     }
                 }
-
-
         }
+
         return binding.root
     }
 
