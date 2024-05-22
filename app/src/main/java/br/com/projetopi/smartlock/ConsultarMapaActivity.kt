@@ -2,8 +2,10 @@ package br.com.projetopi.smartlock
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -163,8 +165,8 @@ class ConsultarMapaActivity : AppCompatActivity() {
                 /***
                  * Quando o mapa é carregado, verifica se o aplicativo tem acesso a localização do usuario, pega a
                  * latitude e longitude do usuario e adiciona um marcador com a localização do usuario, centralizando
-                 * a camera do mapa no usuario, se o aplicativo não tiver acesso a localização do usuario, não é
-                 * carregado o mapa
+                 * a camera do mapa no usuario, se o aplicativo não tiver acesso a localização do usuario e o GPS do
+                 * dispositivo nao estiver ligado, não é carregado o mapa
                  */
                 googleMap.setOnMapLoadedCallback{
                     if (ActivityCompat.checkSelfPermission(
@@ -176,22 +178,27 @@ class ConsultarMapaActivity : AppCompatActivity() {
                             Manifest.permission.ACCESS_COARSE_LOCATION
                         ) == PackageManager.PERMISSION_GRANTED) {
 
-                        Handler().postDelayed({
-                            binding.loadView.visibility = View.GONE
-                            mapFragment.view?.visibility = View.VISIBLE
-                        }, 1000L)
+                        if (isGPSEnabled()) {
 
-                        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
-                            val userLocation = LatLng(location.latitude, location.longitude)
+                            Handler().postDelayed({
+                                binding.loadView.visibility = View.GONE
+                                mapFragment.view?.visibility = View.VISIBLE
+                            }, 1000L)
 
-                            userMarker = googleMap.addMarker(
-                                MarkerOptions()
-                                    .position(userLocation)
-                                    .title("Sua localização atual")
-                                    .icon(BitmapHelper.vectorToBitmap(this, R.drawable.user_map_icon, ContextCompat.getColor(this, R.color.main_dark_blue)))
-                            )
+                            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                                val userLocation = LatLng(location.latitude, location.longitude)
 
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
+                                userMarker = googleMap.addMarker(
+                                    MarkerOptions()
+                                        .position(userLocation)
+                                        .title("Sua localização atual")
+                                        .icon(BitmapHelper.vectorToBitmap(this, R.drawable.user_map_icon, ContextCompat.getColor(this, R.color.main_dark_blue)))
+                                )
+
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
+                            }
+                        } else {
+                            Toast.makeText(this, "Para acessar é necessario que seu GPS esteja ligado", Toast.LENGTH_LONG).show()
                         }
                     } else {
                         Toast.makeText(this, "Para acessar é necessario permitir que tenhamos acesso à sua localização", Toast.LENGTH_LONG).show()
@@ -251,5 +258,10 @@ class ConsultarMapaActivity : AppCompatActivity() {
             }
         }
         timer.schedule(timerTask, 0, 1000L)
+    }
+
+    private fun isGPSEnabled(): Boolean {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 }

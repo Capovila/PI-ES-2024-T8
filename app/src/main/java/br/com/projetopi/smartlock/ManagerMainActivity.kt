@@ -16,6 +16,8 @@ import androidx.core.view.WindowInsetsCompat
 import br.com.projetopi.smartlock.Classes.User
 import br.com.projetopi.smartlock.databinding.ActivityManagerMainBinding
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.journeyapps.barcodescanner.ScanContract
@@ -28,6 +30,7 @@ class ManagerMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityManagerMainBinding
     private lateinit var simpleStorage: SimpleStorage
     private lateinit var qrCodeResult: String
+    private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -84,6 +87,7 @@ class ManagerMainActivity : AppCompatActivity() {
         }
 
         db = Firebase.firestore
+        auth = Firebase.auth
 
         simpleStorage = SimpleStorage(this)
 
@@ -94,6 +98,12 @@ class ManagerMainActivity : AppCompatActivity() {
 
         binding.btnLiberar.setOnClickListener{
             checkPermissionCamera(this)
+        }
+
+        binding.btnSair.setOnClickListener{
+            simpleStorage.clearUserAccount()
+            auth.signOut()
+            startActivity(Intent(this, SplashScreenActivity::class.java))
         }
     }
 

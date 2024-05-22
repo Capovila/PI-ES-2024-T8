@@ -114,6 +114,17 @@
                     android:backgroundTint="@color/main_light_blue"
                     android:textColor="@color/main_white"/>
 
+                <Button
+                    android:id="@+id/btnSair"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sair"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:paddingHorizontal="30dp"
+                    android:backgroundTint="@color/main_light_blue"
+                    android:textColor="@color/main_white"/>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
