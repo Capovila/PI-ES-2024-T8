@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature android:name="android.hardware.camera.any" />
-    <uses-feature android:name="android.hardware.nfc"/>
+    <uses-feature android:name="android.hardware.nfc" />
 
-    <uses-permission android:name="android.permission.NFC"/>
+    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -21,71 +21,73 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartLock"
         tools:targetApi="31">
-
+        <activity
+            android:name=".LockerDataActivity"
+            android:exported="false" />
         <activity
             android:name=".WriteUserActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi"
-            android:exported="false">
+            tools:ignore="DiscouragedApi">
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".UserPhotoActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi"
-            android:exported="false" />
+            tools:ignore="DiscouragedApi" />
         <activity
             android:name=".NumberUsersActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi"
-            android:exported="false" />
+            tools:ignore="DiscouragedApi" />
         <activity
             android:name=".ManagerMainActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi"
-            android:exported="false" />
+            tools:ignore="DiscouragedApi" />
         <activity
             android:name=".ConsultarMapaActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi"
-            android:exported="false" />
+            tools:ignore="DiscouragedApi" />
         <activity
             android:name=".MainActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi"
-            android:exported="false" />
-
+            tools:ignore="DiscouragedApi" />
         <activity
             android:name=".RecuperarSenhaActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi"
-            android:windowSoftInputMode="adjustPan"
             android:exported="false"
-            />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            tools:ignore="DiscouragedApi" />
         <activity
             android:name=".LoginActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
-            android:exported="false"
             tools:ignore="DiscouragedApi" />
         <activity
             android:name=".CadastrarActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi"
             android:windowSoftInputMode="adjustPan"
-            android:exported="false" />
+            tools:ignore="DiscouragedApi" />
         <activity
             android:name=".SplashScreenActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi"
-            android:exported="true">
+            tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -94,6 +96,7 @@
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi"
             tools:replace="android:screenOrientation" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCqCdxz022vyWqmNhgGXjBj2KrtFTuNVqU" />

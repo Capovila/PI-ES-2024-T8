@@ -101,21 +101,28 @@ class UserPhotoActivity : AppCompatActivity() {
                 imgCaptureExecutor,
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        db.collection("rentals")
-                            .whereEqualTo("idUser", user.uid.toString())
-                            .get()
-                            .addOnSuccessListener {
-                                val userPhoto = hashMapOf(
-                                    if(uNumber == 1){
-                                        "user1Photo" to file.absolutePath
-                                    }else{
-                                        "user2Photo" to file.absolutePath
+                        Log.i("CamerPreview", "A imagem foi salve no diretório: ${file.toURI()}")
+
+                        try{
+                            db.collection("rentals")
+                                .whereEqualTo("managerId", user.uid.toString())
+                                .get()
+                                .addOnSuccessListener {
+                                    val userPhoto = hashMapOf(
+                                        if(uNumber == 1){
+                                            "user1Photo" to file.absolutePath
+                                        }else{
+                                            "user2Photo" to file.absolutePath
+                                        }
+                                    )
+                                    for (document in it){
+                                        document.reference.update(userPhoto as Map<String, Any>)
                                     }
-                                )
-                                for (document in it){
-                                    document.reference.update(userPhoto as Map<String, Any>)
                                 }
-                            }
+                        }catch(e: Exception){
+                            Log.e("Firebase", "Erro ao salvar no firevase: $e")
+                        }
+
                         val intent = Intent(this@UserPhotoActivity, WriteUserActivity::class.java)
                         intent.putExtra("Image", file.absolutePath)
                         intent.putExtra("nUser", uNumber.toString())

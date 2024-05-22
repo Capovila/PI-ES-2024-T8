@@ -3,7 +3,6 @@ package br.com.projetopi.smartlock.Fragments
 import SharedViewModelEstablishment
 import SharedViewModelRental
 import android.annotation.SuppressLint
-import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -30,6 +29,7 @@ class OpcaoTempo : Fragment() {
     private lateinit var establishmentID: String
     private lateinit var establishmentManagerName: String
     private lateinit var simpleStorage: SimpleStorage
+    private lateinit var managerId: String
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -85,6 +85,8 @@ class OpcaoTempo : Fragment() {
                     val preco5 = document.getDouble("planPrice5") ?: 0.0
                     binding.op5.text = "${descList[4]} = R$ $preco5"
 
+                    managerId = document.getString("managerId").toString()
+
 
                     if(getHour() >= 8 && getMin() > 0) {
                         binding.op5.isEnabled  = false
@@ -122,13 +124,14 @@ class OpcaoTempo : Fragment() {
                             val opSelected: RadioButton =
                                 binding.root.findViewById(binding.radioGroup.checkedRadioButtonId)
                             val locacaoAtual = Rental(
+                                managerId,
                                 null,
                                 user.uid,
                                 establishmentID,
                                 opSelected.text as String,
                                 false,
                                 true,
-                                establishmentManagerName
+                                establishmentManagerName,
                             )
                             db.collection("rentals")
                                 .document(user.uid.toString())

@@ -52,9 +52,9 @@ class NumberUsersActivity : AppCompatActivity() {
                     .addOnSuccessListener {
                         val numberUsers = hashMapOf(
                             if(binding.op1.isChecked){
-                                "usersQuantity" to 1
+                                "usersQuantity" to "1"
                             }else{
-                                "usersQuantity" to 2
+                                "usersQuantity" to "2"
                             }
                         )
                         for (document in it){
@@ -73,6 +73,7 @@ class NumberUsersActivity : AppCompatActivity() {
                 val intent = Intent(this, UserPhotoActivity::class.java)
                 intent.putExtra("nUser", "1")
                 startActivity(intent)
+                finish()
             }
             else{
                 Toast.makeText(this, "habilite a camera para tirar fotos", Toast.LENGTH_LONG).show()

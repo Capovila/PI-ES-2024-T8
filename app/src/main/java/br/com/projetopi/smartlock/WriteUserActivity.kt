@@ -10,6 +10,7 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.Ndef
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -55,19 +56,20 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         }
 
 
+
         db.collection("rentals")
-            .whereEqualTo("idUser", user.uid.toString())
+            .whereEqualTo("managerId", user.uid.toString())
             .get()
             .addOnSuccessListener {documents ->
                 val rentalImplemented = hashMapOf(
                     "rentalImplemented" to true
                 )
-                var number: Double? = null
+                var number10: String? = null
                 for (document in documents){
-                    number = document.getDouble("usersQuantity")
+                    number10 = document.getString("usersQuantity")
                 }
                 binding.btnMais.setOnClickListener{
-                    if(number!!.toInt() == uNumber){
+                    if(number10!!.toString().toInt() == uNumber){
                         Toast.makeText(this, "Todos os usuários foram cadastrados", Toast.LENGTH_SHORT).show()
                     }else{
                         val intent = Intent(this, UserPhotoActivity::class.java)
@@ -76,13 +78,14 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                     }
                 }
                 binding.btnFim.setOnClickListener{
-                    if(number!!.toInt() != uNumber){
+                    if(number10!!.toString().toInt() != uNumber){
                         Toast.makeText(this, "Existem usuários a serem cadastrados", Toast.LENGTH_SHORT).show()
                     }else{
-                        Toast.makeText(this, "Locação efetivada", Toast.LENGTH_SHORT).show()
                         for(document in documents){
                             document.reference.update(rentalImplemented as Map<String, Any>)
                         }
+                        startActivity(Intent(this, LockerDataActivity::class.java))
+                        finish()
                     }
                 }
             }
@@ -139,6 +142,7 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                 if(ndef.isWritable){
                     ndef.writeNdefMessage(ndefMessage)
                 }
+
 
                 runOnUiThread {
                     Toast.makeText(this, "Usuário salvo", Toast.LENGTH_SHORT).show()

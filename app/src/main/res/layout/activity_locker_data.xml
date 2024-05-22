@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/main_white"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".LockerDataActivity"
+        android:gravity="center"
+        android:background="@color/main_dark_blue">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="15dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginVertical="20dp"
+                android:src="@drawable/group"
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLockerInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/main_light_blue"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_llc"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:text="Armário efetivado"
+                    android:textColor="@color/main_dark_blue"
+                    android:textStyle="bold"
+                    android:layout_marginTop="25dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_marginHorizontal="10dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Foi efetivada a locação do armário e
+está pronto para uso"
+                    android:textColor="@color/main_light_blue"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"/>
+
+            <Button
+            android:id="@+id/btnVoltar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Concluir"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:paddingHorizontal="30dp"
+            android:backgroundTint="@color/main_light_blue"
+            android:textColor="@color/main_white"
+            android:layout_marginVertical="200dp"    />
+
+
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</ScrollView>

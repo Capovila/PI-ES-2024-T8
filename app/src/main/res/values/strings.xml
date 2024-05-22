@@ -51,7 +51,7 @@
     <string name="cadastrar_usuario">Cadastrar usuário</string>
     <string name="nome">Nome</string>
     <string name="email">Email</string>
-    <string name="senha">Senha</string>
+    <string name="senha">Senha (min. 7 caracteres)</string>
     <string name="idade">Data de Nascimento</string>
     <string name="cpf">CPF</string>
     <string name="telefone">Telefone</string>
