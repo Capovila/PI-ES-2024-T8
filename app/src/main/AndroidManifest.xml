@@ -21,9 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartLock"
         tools:targetApi="31">
-
         <activity
             android:name=".WriteUserActivity"
+            android:screenOrientation="portrait"
+
+            tools:ignore="DiscouragedApi"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
@@ -33,42 +35,62 @@
         </activity>
         <activity
             android:name=".UserPhotoActivity"
+            android:screenOrientation="portrait"
+
+            tools:ignore="DiscouragedApi"
             android:exported="false" />
         <activity
             android:name=".NumberUsersActivity"
             android:screenOrientation="portrait"
+
+            tools:ignore="DiscouragedApi"
             android:exported="false" />
         <activity
             android:name=".ManagerMainActivity"
             android:screenOrientation="portrait"
+
+            tools:ignore="DiscouragedApi"
             android:exported="false" />
         <activity
             android:name=".ConsultarMapaActivity"
             android:screenOrientation="portrait"
+
+            tools:ignore="DiscouragedApi"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
+
+            tools:ignore="DiscouragedApi"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".RecuperarSenhaActivity"
             android:screenOrientation="portrait"
+
+            tools:ignore="DiscouragedApi"
             android:windowSoftInputMode="adjustPan"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
+
             android:windowSoftInputMode="adjustPan"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="DiscouragedApi" />
         <activity
             android:name=".CadastrarActivity"
             android:screenOrientation="portrait"
+
+            tools:ignore="DiscouragedApi"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".SplashScreenActivity"
             android:screenOrientation="portrait"
+
+            tools:ignore="DiscouragedApi"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -78,6 +100,7 @@
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi"
             tools:replace="android:screenOrientation" />
 
         <meta-data

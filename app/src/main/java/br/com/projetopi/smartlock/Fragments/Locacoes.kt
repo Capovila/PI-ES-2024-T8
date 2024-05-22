@@ -91,14 +91,26 @@ class Locacoes : Fragment() {
 
         binding.btnCancelar.setOnClickListener {
             db.collection("rentals")
-                .document(user.uid.toString())
-                .delete()
-                .addOnCompleteListener{
-                    Toast.makeText(requireContext(), "Locação cancelada com sucesso", Toast.LENGTH_LONG).show()
-                    startActivity(Intent(requireContext(), MainActivity::class.java))                }
-                .addOnFailureListener{
-                    Toast.makeText(requireContext(), "Erro ao cancelar locação", Toast.LENGTH_LONG).show()
+                .whereEqualTo("idUser", user.uid.toString())
+                .get()
+                .addOnSuccessListener{
+                    var implemented: Boolean = false
+                    for(documents in it){
+                        implemented = documents!!.getBoolean("rentalImplemented") == true
+                    }
+
+                    if(implemented == true){
+                        Toast.makeText(requireContext(), "Locação implementada não pode ser finalizada", Toast.LENGTH_LONG).show()
+                    }else{
+                        Toast.makeText(requireContext(), "Locação cancelada com sucesso", Toast.LENGTH_LONG).show()
+                        for (document in it.documents) {
+                            document.reference.delete()
+                        }
+                        startActivity(Intent(requireContext(), MainActivity::class.java))
+                    }
                 }
+
+
         }
         return binding.root
     }

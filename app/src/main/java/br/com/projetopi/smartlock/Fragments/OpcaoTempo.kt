@@ -95,7 +95,8 @@ class OpcaoTempo : Fragment() {
                         if(getMin() > 30 || getHour() >= 18){
                             binding.op1.isEnabled = false
                             binding.btnConfirmarLocacao.setText("Estabelecimento Fechado")
-                            binding.btnConfirmarLocacao.isClickable = false
+                            binding.btnConfirmarLocacao.isEnabled = false
+
                         }
                     }
                     if(getHour() >= 16 && getMin() > 0){
