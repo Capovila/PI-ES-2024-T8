@@ -135,7 +135,7 @@ class OpcaoTempo : Fragment() {
                                 .addOnSuccessListener { document ->
                                     locacaoAtual.uid = user.uid
                                     sharedViewModelRental.selectRental(locacaoAtual)
-                                    (activity as MainActivity).changeFragment(Mapa())
+                                    (activity as MainActivity).changeFragment(QRCode())
                                 }
                             val newRentalState = hashMapOf(
                                 "isRented" to true,

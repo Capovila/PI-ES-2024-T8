@@ -84,20 +84,47 @@ class Locacoes : Fragment() {
                             binding.tvInfo2.setTextColor(whiteColor)
                             binding.qrcode.visibility = View.VISIBLE
                             binding.btnCancelar.visibility = View.VISIBLE
-                            binding.tvInfo.text = "Apresente esse QR Code para o gerente caso você deseje encerrar a locação ou re-abrir o armário"
+                            binding.tvInfo.text = "Apresente esse QR Code para o gerente $managerName caso você ainda não tenha efetivado sua locação"
                         }
                 }
             }
 
         binding.btnCancelar.setOnClickListener {
+
             db.collection("rentals")
                 .document(user.uid.toString())
-                .delete()
-                .addOnCompleteListener{
-                    Toast.makeText(requireContext(), "Locação cancelada com sucesso", Toast.LENGTH_LONG).show()
-                    startActivity(Intent(requireContext(), MainActivity::class.java))                }
-                .addOnFailureListener{
-                    Toast.makeText(requireContext(), "Erro ao cancelar locação", Toast.LENGTH_LONG).show()
+                .get()
+                .addOnSuccessListener{ document ->
+                    val isImplemented = document.getBoolean("rentalImplemented")!!
+                    if (!isImplemented){
+
+                        db.collection("rentals")
+                            .document(user.uid.toString())
+                            .delete()
+                            .addOnCompleteListener{
+
+                                val newRentalState = hashMapOf(
+                                    "isRented" to false,
+                                    "currentIdRental" to ""
+                                )
+                                db.collection("lockers")
+                                    .whereEqualTo("idEstablishment", establishmentID)
+                                    .get()
+                                    .addOnSuccessListener {
+                                        for (document in it.documents) {
+                                            document.reference.update(newRentalState as Map<String, Any>)
+                                        }
+                                    }
+
+                                Toast.makeText(requireContext(), "Locação cancelada com sucesso", Toast.LENGTH_LONG).show()
+                                startActivity(Intent(requireContext(), MainActivity::class.java))
+                            }
+                            .addOnFailureListener{
+                                Toast.makeText(requireContext(), "Erro ao cancelar locação", Toast.LENGTH_LONG).show()
+                            }
+                    } else {
+                        Toast.makeText(requireContext(), "A locação foi efetivada, não é possivel cancelar", Toast.LENGTH_LONG).show()
+                    }
                 }
         }
         return binding.root

@@ -22,6 +22,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.com.projetopi.smartlock.Classes.Establishment
 import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.Fragments.Mapa
 import br.com.projetopi.smartlock.databinding.ActivityConsultarMapaBinding
 import br.com.projetopi.smartlock.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -41,7 +42,7 @@ import com.google.firebase.firestore.firestore
 import java.util.Timer
 import java.util.TimerTask
 
-class ConsultarMapaActivity : AppCompatActivity() {
+class ConsultarMapaActivity : AppCompatActivity(), GpsChangeReceiver.OnGpsStatusChangeListener {
 
     private val establishments: ArrayList<Establishment>? = arrayListOf()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -263,5 +264,14 @@ class ConsultarMapaActivity : AppCompatActivity() {
     private fun isGPSEnabled(): Boolean {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    override fun onGpsStatusChanged(isGpsEnabled: Boolean) {
+        if (isGpsEnabled) {
+            recreate()
+        } else {
+            Toast.makeText(this, "GPS Desligado", Toast.LENGTH_LONG).show()
+            finish()
+        }
     }
 }
