@@ -60,7 +60,11 @@ class OpcaoTempo : Fragment() {
             establishmentID = establishment.uid.toString()
             establishmentManagerName = establishment.managerName.toString()
 
-            Toast.makeText(requireContext(), "O estabelecimento fecha as 18 horas", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(),
+                "O estabelecimento fecha as 18 horas",
+                Toast.LENGTH_LONG
+            ).show()
 
             db.collection("establishments")
                 .document(establishmentID)
@@ -82,7 +86,7 @@ class OpcaoTempo : Fragment() {
                     binding.op5.text = "${descList[4]} = R$ $preco5"
 
 
-                 /*   when{
+                    /*   when{
                         getHour() >= 8 && getMin() > 0 ->{
                             binding.op5.isEnabled  = false}
                         getHour() >= 17 && getMin() > 0 -> {
@@ -97,6 +101,7 @@ class OpcaoTempo : Fragment() {
                     }*/
 
 
+                    /*
                     if(getHour() >= 8 && getMin() > 0) {
                         binding.op5.isEnabled  = false
                     }
@@ -114,6 +119,8 @@ class OpcaoTempo : Fragment() {
                         binding.op4.isEnabled = false
                     }
 
+                     */
+
 
                     /***
                      * Quando o btnConfirmarLocacao é clicado, verifica se algum RadioButton foi selecionado,
@@ -124,8 +131,9 @@ class OpcaoTempo : Fragment() {
                      * exibido na main activity para o fragmento QRCode
                      */
                     binding.btnConfirmarLocacao.setOnClickListener {
-                        if(isSelected()){
-                            val opSelected: RadioButton = binding.root.findViewById(binding.radioGroup.checkedRadioButtonId)
+                        if (isSelected()) {
+                            val opSelected: RadioButton =
+                                binding.root.findViewById(binding.radioGroup.checkedRadioButtonId)
                             val locacaoAtual = Rental(
                                 null,
                                 user.uid,
@@ -138,10 +146,22 @@ class OpcaoTempo : Fragment() {
                             db.collection("rentals")
                                 .document(user.uid.toString())
                                 .set(locacaoAtual)
-                                .addOnSuccessListener {document ->
+                                .addOnSuccessListener { document ->
                                     locacaoAtual.uid = user.uid
                                     sharedViewModelRental.selectRental(locacaoAtual)
                                     (activity as MainActivity).changeFragment(QRCode())
+                                }
+                            val newRentalState = hashMapOf(
+                                "isRented" to true,
+                                "currentIdRental" to "${user.uid}"
+                            )
+                            db.collection("lockers")
+                                .whereEqualTo("idEstablishment", establishmentID)
+                                .get()
+                                .addOnSuccessListener {
+                                    for (document in it.documents) {
+                                        document.reference.update(newRentalState as Map<String, Any>)
+                                    }
                                 }
                         } else {
                             Toast.makeText(
@@ -156,7 +176,7 @@ class OpcaoTempo : Fragment() {
                      * Quando o btnBack é clicado muda o fragmento exibido na main activity
                      * para o fragmento Mapa
                      */
-                    binding.btnBack.setOnClickListener{
+                    binding.btnBack.setOnClickListener {
                         (activity as MainActivity).changeFragment(Mapa())
                     }
                 }

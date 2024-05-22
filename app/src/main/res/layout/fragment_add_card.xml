@@ -169,7 +169,7 @@ acordo com o período utilizado"
                     android:id="@+id/etDataAno"
                     android:layout_width="match_parent"
                     android:inputType="number"
-                    android:maxLength="2"
+                    android:maxLength="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black" />
 
