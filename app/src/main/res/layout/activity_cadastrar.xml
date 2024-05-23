@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:text="Cadastre-se"
             android:textColor="@color/white"
             android:textSize="30sp"
@@ -60,7 +60,7 @@
             android:background="@drawable/rounded_llc"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="70dp">
+            android:layout_marginTop="50dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"

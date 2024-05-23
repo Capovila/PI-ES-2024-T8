@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="QR Code"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="40dp"
             android:textColor="@color/main_dark_blue"
             android:textSize="30sp"
             android:textStyle="bold" />

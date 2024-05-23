@@ -20,18 +20,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="15dp"
+            android:layout_marginTop="40dp"
             android:orientation="vertical"
-            android:gravity="center">
-
+            android:gravity="center"
+            >
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                android:layout_marginVertical="20dp"
                 android:src="@drawable/group"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvLockerInfo"
+                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/main_light_blue"
@@ -46,7 +46,7 @@
             android:background="@drawable/rounded_llc"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="50dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
