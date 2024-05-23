@@ -99,6 +99,9 @@ class ManagerMainActivity : AppCompatActivity() {
         binding.btnLiberar.setOnClickListener{
             checkPermissionCamera(this)
         }
+        binding.btnAcessar.setOnClickListener{
+            startActivity(Intent(this, AccessLockerActivity::class.java))
+        }
 
         binding.btnSair.setOnClickListener{
             simpleStorage.clearUserAccount()

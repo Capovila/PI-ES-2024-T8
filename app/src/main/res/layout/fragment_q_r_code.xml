@@ -9,6 +9,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
+        android:id="@+id/main"
         android:layout_height="wrap_content"
         tools:context=".Fragments.QRCode"
         android:orientation="vertical"

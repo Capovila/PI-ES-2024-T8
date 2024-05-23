@@ -55,8 +55,6 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
             finish()
         }
 
-
-
         db.collection("rentals")
             .whereEqualTo("managerId", user.uid.toString())
             .get()
