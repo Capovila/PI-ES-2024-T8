@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:id="@+id/main"
         android:layout_height="wrap_content"
-        tools:context=".ClearNfcActivity"
+        tools:context=".ManagerActivities.ClearNfcActivity"
         android:orientation="vertical"
         android:gravity="center">
 
@@ -61,6 +61,21 @@ ser limpa, removendo os dados salvos"
             android:src="@drawable/baseline_adjust_24"
             />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/main_light_blue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
         <Button
             android:id="@+id/btnFinalizar"
             android:layout_width="wrap_content"
@@ -73,6 +88,8 @@ ser limpa, removendo os dados salvos"
             android:paddingHorizontal="30dp"
             android:backgroundTint="@color/main_dark_blue"
             android:textColor="@color/main_white"/>
+
+
 
 
 

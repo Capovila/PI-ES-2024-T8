@@ -1,4 +1,4 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.ManagerActivities
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import br.com.projetopi.smartlock.R
 import br.com.projetopi.smartlock.databinding.ActivityConfirmUserBinding
 import java.io.File
 
@@ -28,14 +29,20 @@ class ConfirmUserActivity : AppCompatActivity() {
         }
 
         val imagePath = intent.getStringExtra("Image")
+        val qrCode = intent.getStringExtra("qrCodeId")
 
         binding.btnBack.setOnClickListener{
             finish()
         }
 
         binding.btnNext.setOnClickListener{
-            startActivity(Intent(this, LockerOptionsActivity::class.java))
+            val intent = Intent(this, LockerOptionsActivity::class.java)
+            intent.putExtra("qrCodeId", qrCode)
+            startActivity(intent)
+            finish()
         }
+
+
 
         imagePath?.let { path ->
             // Verificar se o arquivo existe
@@ -52,6 +59,7 @@ class ConfirmUserActivity : AppCompatActivity() {
                 binding.userPhoto.setImageBitmap(bitmap)
             }else{
                 Toast.makeText(this, "NFC sem usuário gravado", Toast.LENGTH_LONG).show()
+                finish()
             }
         }
 

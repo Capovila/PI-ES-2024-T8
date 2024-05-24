@@ -119,11 +119,16 @@ class OpcaoTempo : Fragment() {
                      * passa as informações do estabelecimento pelo SharedViewModelRental e muda o fragmento
                      * exibido na main activity para o fragmento QRCode
                      */
+
+
                     binding.btnConfirmarLocacao.setOnClickListener {
                         if (isSelected()) {
                             val opSelected: RadioButton =
                                 binding.root.findViewById(binding.radioGroup.checkedRadioButtonId)
                             val locacaoAtual = Rental(
+                                preco2.toInt(),
+                                getHour(),
+                                preco5.toInt(),
                                 managerId,
                                 null,
                                 user.uid,
@@ -134,8 +139,7 @@ class OpcaoTempo : Fragment() {
                                 establishmentManagerName,
                             )
                             db.collection("rentals")
-                                .document(user.uid.toString())
-                                .set(locacaoAtual)
+                                .add(locacaoAtual)
                                 .addOnSuccessListener { document ->
                                     locacaoAtual.uid = user.uid
                                     sharedViewModelRental.selectRental(locacaoAtual)

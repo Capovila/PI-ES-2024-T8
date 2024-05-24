@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".UserPhotoActivity"
+        tools:context=".ManagerActivities.UserPhotoActivity"
         android:id="@+id/main"
         android:orientation="vertical"
         android:gravity="center">

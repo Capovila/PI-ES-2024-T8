@@ -185,7 +185,7 @@ class Mapa() : Fragment() {
                                             ).show()
                                         } else {
                                             db.collection("rentals")
-                                                .whereEqualTo("idUser", user.uid)
+                                                .whereEqualTo("idUser", user.uid.toString())
                                                 .whereEqualTo("rentalImplemented", false)
                                                 .get()
                                                 .addOnSuccessListener {

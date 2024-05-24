@@ -13,7 +13,7 @@
       android:layout_height="wrap_content"
       android:orientation="vertical"
       android:background="@color/main_dark_blue"
-      tools:context=".ConfirmUserActivity"
+      tools:context=".ManagerActivities.ConfirmUserActivity"
       android:gravity="center">
 
     <androidx.appcompat.widget.LinearLayoutCompat

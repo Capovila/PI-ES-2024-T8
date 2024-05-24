@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/main"
-        tools:context=".WriteUserActivity"
+        tools:context=".ManagerActivities.WriteUserActivity"
         android:orientation="vertical"
         android:gravity="center">
 

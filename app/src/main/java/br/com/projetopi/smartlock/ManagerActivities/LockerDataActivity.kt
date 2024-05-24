@@ -1,15 +1,14 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.ManagerActivities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.R
+import br.com.projetopi.smartlock.SimpleStorage
 import br.com.projetopi.smartlock.databinding.ActivityLockerDataBinding
-import br.com.projetopi.smartlock.databinding.ActivityUserPhotoBinding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
@@ -33,15 +32,14 @@ class LockerDataActivity : AppCompatActivity() {
         db = Firebase.firestore
         simpleStorage = SimpleStorage(this)
         val user: User = simpleStorage.getUserAccountData()
+        val qrCode = intent.getStringExtra("qrCode")
 
         var placeId: String = ""
         db.collection("rentals")
-            .whereEqualTo("managerId", user.uid.toString())
+            .document(qrCode!!)
             .get()
-            .addOnSuccessListener {
-                for(document in it){
-                    placeId = document.getString("idPlace").toString()
-                }
+            .addOnSuccessListener { document->
+                    val placeId = document.getString("idPlace").toString()
 
                 db.collection("lockers")
                     .whereEqualTo("idEstablishment", placeId)

@@ -22,32 +22,32 @@
         android:theme="@style/Theme.SmartLock"
         tools:targetApi="31">
         <activity
-            android:name=".ClearNfcActivity"
+            android:name=".ManagerActivities.ClearNfcActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi" />
         <activity
-            android:name=".LockerOptionsActivity"
+            android:name=".ManagerActivities.LockerOptionsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi"/>
         <activity
-            android:name=".ConfirmUserActivity"
+            android:name=".ManagerActivities.ConfirmUserActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi"/>
         <activity
-            android:name=".AccessLockerActivity"
+            android:name=".ManagerActivities.AccessLockerActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi"/>
         <activity
-            android:name=".LockerDataActivity"
+            android:name=".ManagerActivities.LockerDataActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi"/>
         <activity
-            android:name=".WriteUserActivity"
+            android:name=".ManagerActivities.WriteUserActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi">
@@ -60,17 +60,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UserPhotoActivity"
+            android:name=".ManagerActivities.UserPhotoActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi" />
         <activity
-            android:name=".NumberUsersActivity"
+            android:name=".ManagerActivities.NumberUsersActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi" />
         <activity
-            android:name=".ManagerMainActivity"
+            android:name=".ManagerActivities.ManagerMainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi" />

@@ -1,19 +1,19 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.ManagerActivities
 
 import android.content.Intent
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.Ndef
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import br.com.projetopi.smartlock.R
 import br.com.projetopi.smartlock.databinding.ActivityAccessLockerBinding
-import br.com.projetopi.smartlock.databinding.ActivityLockerDataBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
 class AccessLockerActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
 
@@ -21,6 +21,8 @@ class AccessLockerActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
     private lateinit var nfcAdapter: NfcAdapter
     private lateinit var imageRecordByte: ByteArray
     private lateinit var imagePath: String
+    private  var qrCode: String? = null
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,8 @@ class AccessLockerActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         }
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        db = Firebase.firestore
+
 
         binding.btnBack.setOnClickListener{
             finish()
@@ -41,6 +45,7 @@ class AccessLockerActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         binding.btnAcessar.setOnClickListener{
             val intent = Intent(this, ConfirmUserActivity::class.java)
             intent.putExtra("Image", imagePath)
+            intent.putExtra("qrCodeId", qrCode)
             startActivity(intent)
             finish()
         }
@@ -76,6 +81,24 @@ class AccessLockerActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                 ndef.connect()
                 imageRecordByte = ndef.ndefMessage.records[0].payload
                 imagePath = String(imageRecordByte, Charsets.UTF_8)
+
+                db.collection("rentals")
+                    .whereEqualTo("user1Photo", imagePath)
+                    .get()
+                    .addOnSuccessListener {
+                        for(documents in it){
+                            qrCode = documents.id
+                        }
+                    }
+
+                db.collection("rentals")
+                    .whereEqualTo("user2Photo", imagePath)
+                    .get()
+                    .addOnSuccessListener {
+                        for(documents in it){
+                            qrCode = documents.id
+                        }
+                    }
 
                 runOnUiThread{
                     binding.btnAcessar.visibility = View.VISIBLE

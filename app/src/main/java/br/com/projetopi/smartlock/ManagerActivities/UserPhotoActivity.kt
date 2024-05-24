@@ -1,13 +1,11 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.ManagerActivities
 
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -17,8 +15,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import br.com.projetopi.smartlock.Classes.User
-import br.com.projetopi.smartlock.databinding.ActivityNumberUsersBinding
+import br.com.projetopi.smartlock.R
 import br.com.projetopi.smartlock.databinding.ActivityUserPhotoBinding
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.firebase.Firebase
@@ -36,7 +33,6 @@ class UserPhotoActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private lateinit var imgCaptureExecutor: ExecutorService
     private lateinit var db: FirebaseFirestore
-    private lateinit var simpleStorage: SimpleStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,16 +50,15 @@ class UserPhotoActivity : AppCompatActivity() {
         imgCaptureExecutor = Executors.newSingleThreadExecutor()
 
         db = Firebase.firestore
-        simpleStorage = SimpleStorage(this)
-        val user = simpleStorage.getUserAccountData()
         val uNumber = intent.getStringExtra("nUser")
+        val qrCode = intent.getStringExtra("qrCode")
 
 
         startCamera()
 
         binding.btnFoto.setOnClickListener{
             blinkPreview()
-            takePicture(user, uNumber.toString().toInt())
+            takePicture(uNumber.toString().toInt(), qrCode.toString())
         }
 
         binding.btnBack.setOnClickListener{
@@ -89,7 +84,7 @@ class UserPhotoActivity : AppCompatActivity() {
         )
     }
 
-    private fun takePicture(user: User, uNumber: Int) {
+    private fun takePicture(uNumber: Int, qrCode: String) {
         imageCapture?.let {
             val fileName = "FOTO_JPEG_${System.currentTimeMillis()}.jpeg"
             val file = File(externalMediaDirs[0], fileName)
@@ -105,7 +100,7 @@ class UserPhotoActivity : AppCompatActivity() {
 
                         try{
                             db.collection("rentals")
-                                .whereEqualTo("managerId", user.uid.toString())
+                                .document(qrCode)
                                 .get()
                                 .addOnSuccessListener {
                                     val userPhoto = hashMapOf(
@@ -115,9 +110,9 @@ class UserPhotoActivity : AppCompatActivity() {
                                             "user2Photo" to file.absolutePath
                                         }
                                     )
-                                    for (document in it){
-                                        document.reference.update(userPhoto as Map<String, Any>)
-                                    }
+
+                                        it.reference.update(userPhoto as Map<String, Any>)
+
                                 }
                         }catch(e: Exception){
                             Log.e("Firebase", "Erro ao salvar no firevase: $e")
@@ -125,6 +120,7 @@ class UserPhotoActivity : AppCompatActivity() {
 
                         val intent = Intent(this@UserPhotoActivity, WriteUserActivity::class.java)
                         intent.putExtra("Image", file.absolutePath)
+                        intent.putExtra("qrCode", qrCode)
                         intent.putExtra("nUser", uNumber.toString())
                         startActivity(intent)
                         finish()

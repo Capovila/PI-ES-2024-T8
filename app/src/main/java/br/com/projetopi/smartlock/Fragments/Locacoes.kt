@@ -52,18 +52,20 @@ class Locacoes : Fragment() {
          * define o textView com o nome do gerente buscado
          */
         db.collection("rentals")
-            .document(user.uid.toString())
+            .whereEqualTo("idUser", user.uid.toString())
             .get()
-            .addOnSuccessListener { document ->
-                val isImplemented = document.getBoolean("rentalImplemented")
-                if(isImplemented == false) {
-
-                    val rentalID = document.id
+            .addOnSuccessListener {
+                var isImplemented: Boolean? = null
+                var rentalId: String? = null
+                for(document in it){
+                    isImplemented = document.getBoolean("rentalImplemented")
+                    rentalId = document.id
                     establishmentID = document.getString("idPlace").toString()
-
+                }
+                if(isImplemented == false) {
                     val multiFormatWriter = MultiFormatWriter()
                     val bitMatrix = multiFormatWriter.encode(
-                        rentalID,
+                        rentalId,
                         BarcodeFormat.QR_CODE,
                         300,
                         300
@@ -99,15 +101,10 @@ class Locacoes : Fragment() {
                         }
                 }
             }
-
-
-
-
-
         binding.btnCancelar.setOnClickListener {
 
             db.collection("rentals")
-                .document(user.uid.toString())
+                .whereEqualTo("idUser", user.uid.toString())
                 .get()
                 .addOnSuccessListener{ document ->
                     db.collection("lockers")
@@ -123,7 +120,10 @@ class Locacoes : Fragment() {
                             }
                         }
 
-                    document.reference.delete()
+                    for(documents in document){
+                        documents.reference.delete()
+
+                    }
                     Toast.makeText(requireContext(), "Locação cancelada com sucesso", Toast.LENGTH_LONG).show()
                     (activity as MainActivity).changeFragment(
                         Mapa()

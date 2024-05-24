@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".LockerDataActivity"
+        tools:context=".ManagerActivities.LockerDataActivity"
         android:gravity="center"
         android:background="@color/main_dark_blue">
 

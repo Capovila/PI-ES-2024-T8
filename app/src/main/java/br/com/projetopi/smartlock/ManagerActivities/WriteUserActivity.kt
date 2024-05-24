@@ -1,4 +1,4 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.ManagerActivities
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -10,14 +10,13 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.Ndef
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.R
+import br.com.projetopi.smartlock.SimpleStorage
 import br.com.projetopi.smartlock.databinding.ActivityWriteUserBinding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,7 +31,6 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
     private var imagePath: String? = null
     private lateinit var simpleStorage: SimpleStorage
     private lateinit var db: FirebaseFirestore
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWriteUserBinding.inflate(layoutInflater)
@@ -45,6 +43,8 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         }
 
         val uNumber = intent.getStringExtra("nUser").toString().toInt()
+        val qrCode = intent.getStringExtra("qrCode")
+
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
         imagePath = intent.getStringExtra("Image").toString()
         db = Firebase.firestore
@@ -56,22 +56,21 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         }
 
         db.collection("rentals")
-            .whereEqualTo("managerId", user.uid.toString())
+            .document(qrCode!!)
             .get()
             .addOnSuccessListener {documents ->
                 val rentalImplemented = hashMapOf(
                     "rentalImplemented" to true
                 )
-                var number10: String? = null
-                for (document in documents){
-                    number10 = document.getString("usersQuantity")
-                }
+               val number10 = documents.getString("usersQuantity")
+
                 binding.btnMais.setOnClickListener{
                     if(number10!!.toString().toInt() == uNumber){
                         Toast.makeText(this, "Todos os usuários foram cadastrados", Toast.LENGTH_SHORT).show()
                     }else{
                         val intent = Intent(this, UserPhotoActivity::class.java)
                         intent.putExtra("nUser", "${uNumber+1}")
+                        intent.putExtra("qrCode", qrCode)
                         startActivity(intent)
                     }
                 }
@@ -79,10 +78,10 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                     if(number10!!.toString().toInt() != uNumber){
                         Toast.makeText(this, "Existem usuários a serem cadastrados", Toast.LENGTH_SHORT).show()
                     }else{
-                        for(document in documents){
-                            document.reference.update(rentalImplemented as Map<String, Any>)
-                        }
-                        startActivity(Intent(this, LockerDataActivity::class.java))
+                        documents.reference.update(rentalImplemented as Map<String, Any>)
+                        val intent2 = Intent(this, LockerDataActivity::class.java)
+                        intent2.putExtra("qrCode", qrCode)
+                        startActivity(intent2)
                         finish()
                     }
                 }
@@ -134,7 +133,6 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                 ndef.connect()
                 val message = NdefRecord.createMime("text/plain", imagePath?.toByteArray() )
                 val arr = NdefRecord.createApplicationRecord(this.packageName)
-
                 val ndefMessage = NdefMessage(arrayOf(message, arr))
 
                 if(ndef.isWritable){

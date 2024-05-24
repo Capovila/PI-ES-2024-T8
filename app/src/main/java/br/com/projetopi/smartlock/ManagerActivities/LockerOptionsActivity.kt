@@ -1,9 +1,8 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.ManagerActivities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -24,8 +23,12 @@ class LockerOptionsActivity : AppCompatActivity() {
             insets
         }
 
+        val qrCodeId = intent.getStringExtra("qrCodeId")
+
         binding.btnEnd.setOnClickListener{
-            startActivity(Intent(this, ClearNfcActivity::class.java))
+            val intent = Intent(this, ClearNfcActivity::class.java)
+            intent.putExtra("qrCodeId", qrCodeId)
+            startActivity(intent)
             finish()
         }
 
@@ -35,6 +38,7 @@ class LockerOptionsActivity : AppCompatActivity() {
 
         binding.btnOpen.setOnClickListener{
             Toast.makeText(this, "Armário liberado", Toast.LENGTH_LONG).show()
+            finish()
         }
     }
 }

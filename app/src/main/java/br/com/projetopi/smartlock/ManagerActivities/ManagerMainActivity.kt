@@ -1,19 +1,19 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.ManagerActivities
 
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.R
+import br.com.projetopi.smartlock.SimpleStorage
+import br.com.projetopi.smartlock.SplashScreenActivity
 import br.com.projetopi.smartlock.databinding.ActivityManagerMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -39,7 +39,6 @@ class ManagerMainActivity : AppCompatActivity() {
             showCamera()
         }
     }
-
     private val scanLauncher = registerForActivityResult(ScanContract()) {
         result: ScanIntentResult ->
         run {
@@ -49,22 +48,20 @@ class ManagerMainActivity : AppCompatActivity() {
                 setResult(result.contents)
                 if (qrCodeResult != null) {
                     db.collection("rentals")
-                        .whereEqualTo("idUser" , qrCodeResult)
+                        .document(qrCodeResult)
                         .get()
                         .addOnSuccessListener { querySnapshot ->
-                            if (querySnapshot.isEmpty) {
+                            if (querySnapshot == null) {
                                 Toast.makeText(this, "Locação não encontrada", Toast.LENGTH_LONG).show()
                             } else {
-                                for (document in querySnapshot.documents) {
-                                    val isRentalImplemented = document.getBoolean("rentalImplemented")
+                                    val isRentalImplemented = querySnapshot.getBoolean("rentalImplemented")
                                     if (isRentalImplemented != null && isRentalImplemented) {
                                         Toast.makeText(this, "Locação já efetivada", Toast.LENGTH_LONG).show()
                                     } else {
                                         val intent: Intent = Intent(this, NumberUsersActivity::class.java)
-                                        intent.putExtra("UserID", qrCodeResult)
+                                        intent.putExtra("qrCode", qrCodeResult)
                                         startActivity(intent)
                                     }
-                                }
                             }
                         }
                         .addOnFailureListener { e ->
@@ -100,13 +97,15 @@ class ManagerMainActivity : AppCompatActivity() {
             checkPermissionCamera(this)
         }
         binding.btnAcessar.setOnClickListener{
-            startActivity(Intent(this, AccessLockerActivity::class.java))
+            val intent = Intent(this, AccessLockerActivity::class.java)
+            startActivity(intent)
         }
 
         binding.btnSair.setOnClickListener{
             simpleStorage.clearUserAccount()
             auth.signOut()
             startActivity(Intent(this, SplashScreenActivity::class.java))
+            finish()
         }
     }
 
@@ -121,7 +120,7 @@ class ManagerMainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showCamera() {
+    private fun  showCamera() {
         val options = ScanOptions()
         options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
         options.setPrompt("Escaneie o QR Code")

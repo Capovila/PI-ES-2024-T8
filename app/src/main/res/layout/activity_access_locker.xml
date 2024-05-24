@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:id="@+id/main"
         android:layout_height="wrap_content"
-        tools:context=".AccessLockerActivity"
+        tools:context=".ManagerActivities.AccessLockerActivity"
         android:orientation="vertical"
         android:gravity="center">
 

@@ -1,14 +1,15 @@
-package br.com.projetopi.smartlock
+package br.com.projetopi.smartlock.ManagerActivities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.com.projetopi.smartlock.Classes.User
+import br.com.projetopi.smartlock.R
+import br.com.projetopi.smartlock.SimpleStorage
 import br.com.projetopi.smartlock.databinding.ActivityNumberUsersBinding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,6 +20,7 @@ class NumberUsersActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNumberUsersBinding
     private lateinit var simpleStorage: SimpleStorage
     private lateinit var db: FirebaseFirestore
+    private lateinit var qrCodeResult: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNumberUsersBinding.inflate(layoutInflater)
@@ -36,7 +38,7 @@ class NumberUsersActivity : AppCompatActivity() {
         binding.tvManagerName.setText(user.name.toString())
         binding.tvManagerEmail.setText(user.email.toString())
 
-        val userId = intent.getStringExtra("UserID")
+        qrCodeResult = intent.getStringExtra("qrCode").toString()
 
         binding.btnBack.setOnClickListener{
             finish()
@@ -47,7 +49,7 @@ class NumberUsersActivity : AppCompatActivity() {
                 Toast.makeText(this, "Escolha uma opção", Toast.LENGTH_LONG).show()
             }else{
                 db.collection("rentals")
-                    .whereEqualTo("idUser", userId)
+                    .document(qrCodeResult!!)
                     .get()
                     .addOnSuccessListener {
                         val numberUsers = hashMapOf(
@@ -57,9 +59,8 @@ class NumberUsersActivity : AppCompatActivity() {
                                 "usersQuantity" to "2"
                             }
                         )
-                        for (document in it){
-                            document.reference.update(numberUsers as Map<String, Any>)
-                        }
+                            it.reference.update(numberUsers as Map<String, Any>)
+
                     }
 
                 cameraProviderResult.launch(android.Manifest.permission.CAMERA)
@@ -71,6 +72,7 @@ class NumberUsersActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()){
             if(it){
                 val intent = Intent(this, UserPhotoActivity::class.java)
+                intent.putExtra("qrCode", qrCodeResult)
                 intent.putExtra("nUser", "1")
                 startActivity(intent)
                 finish()

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/main"
         android:gravity="center"
-        tools:context=".ManagerMainActivity"
+        tools:context=".ManagerActivities.ManagerMainActivity"
         android:orientation="vertical"
         android:background="@color/main_dark_blue">
 
