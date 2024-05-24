@@ -87,7 +87,6 @@ class OpcaoTempo : Fragment() {
 
                     managerId = document.getString("managerId").toString()
 
-                    Toast.makeText(requireContext(), "${closeTime()}",Toast.LENGTH_LONG).show()
 
 
 
@@ -202,8 +201,6 @@ class OpcaoTempo : Fragment() {
         return Calendar.getInstance().get(Calendar.MINUTE)
     }
 
-    private fun closeTime():Boolean{
-        return getHour() >= 18 && getMin() >= 30
-    }
+
 
 }
