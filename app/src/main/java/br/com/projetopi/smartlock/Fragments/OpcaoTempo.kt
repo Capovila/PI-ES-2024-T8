@@ -87,20 +87,23 @@ class OpcaoTempo : Fragment() {
 
                     managerId = document.getString("managerId").toString()
 
+                    Toast.makeText(requireContext(), "${closeTime()}",Toast.LENGTH_LONG).show()
+
+
 
                     if(getHour() >= 8 && getMin() > 0) {
                         binding.op5.isEnabled  = false
                     }
                     if(getHour() >= 17 && getMin() > 0){
                         binding.op2.isEnabled = false
+                        if((getHour() >= 17 && getMin() > 30 )|| getHour() >= 18){
+                            binding.op1.isEnabled = false
+                            binding.btnConfirmarLocacao.setText("Estabelecimento Fechado")
+                            binding.btnConfirmarLocacao.isEnabled = false
+                        }
 
                     }
-                    if(getMin() > 30 && getHour() >= 17){
-                        binding.op1.isEnabled = false
-                        binding.btnConfirmarLocacao.setText("Estabelecimento Fechado")
-                        binding.btnConfirmarLocacao.isEnabled = false
 
-                    }
                     if(getHour() >= 16 && getMin() > 0){
                         binding.op3.isEnabled = false
                     }
@@ -197,6 +200,10 @@ class OpcaoTempo : Fragment() {
     }
     private fun getMin():Int{
         return Calendar.getInstance().get(Calendar.MINUTE)
+    }
+
+    private fun closeTime():Boolean{
+        return getHour() >= 18 && getMin() >= 30
     }
 
 }
