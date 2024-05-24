@@ -21,8 +21,6 @@ class QRCode : Fragment() {
 
     private var _binding: FragmentQRCodeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var rentalID: String
-    private lateinit var establishmentManagerName: String
     private lateinit var db: FirebaseFirestore
 
     @SuppressLint("SetTextI18n")
@@ -37,21 +35,38 @@ class QRCode : Fragment() {
 
         /***
          * Pega as informações vindas do sharedViewModelRental, define o textView com a mensagem instruindo
-         * o usuario a apresentar o qr code ao gerente do estabelecimento (nome do gerente do estabelecimento
-         * vem do sharedViewModelRental), cria um bitmap com o QR Code do id da locação com o tamanho de 300x300px
+         * o usuario a apresentar o qr code ao gerente do estabelecimento, cria um bitmap com o QR Code do id da locação com o tamanho de 300x300px
          * e define esse bitmap no imageView qrcode
          */
         val sharedViewModelRental: SharedViewModelRental by activityViewModels()
         sharedViewModelRental.selectedRental.observe(viewLifecycleOwner) { rental ->
-            rentalID = rental.uid.toString()
-            establishmentManagerName = rental.establishmentManagerName.toString()
-            binding.tvApresenteGerente.text = "Apresente esse QR Code para o gerente $establishmentManagerName para que ele possa efetivar sua locação"
-            val multiFormatWriter = MultiFormatWriter()
-            val bitMatrix = multiFormatWriter.encode(rentalID, BarcodeFormat.QR_CODE, 300, 300)
-            val barcodeEncoder = BarcodeEncoder()
-            val bitmap = barcodeEncoder.createBitmap(bitMatrix)
+            val rentalID = rental.uid.toString()
 
-            binding.qrcode.setImageBitmap(bitmap)
+            db.collection("rentals")
+                .document(rentalID)
+                .get()
+                .addOnSuccessListener { document ->
+                    val establishmentID = document.getString("idPlace").toString()
+                    db.collection("establishments")
+                        .document(establishmentID)
+                        .get()
+                        .addOnSuccessListener { document ->
+                            val managerId = document.getString("managerId").toString()
+                            db.collection("users")
+                                .document(managerId)
+                                .get()
+                                .addOnSuccessListener { document ->
+                                    val establishmentManagerName = document.getString("name").toString()
+                                    binding.tvApresenteGerente.text = "Apresente esse QR Code para o(a) gerente $establishmentManagerName para que ele possa efetivar sua locação"
+                                    val multiFormatWriter = MultiFormatWriter()
+                                    val bitMatrix = multiFormatWriter.encode(rentalID, BarcodeFormat.QR_CODE, 300, 300)
+                                    val barcodeEncoder = BarcodeEncoder()
+                                    val bitmap = barcodeEncoder.createBitmap(bitMatrix)
+
+                                    binding.qrcode.setImageBitmap(bitmap)
+                                }
+                        }
+                }
 
             /***
              * Quando o btnConcluir é clicado, muda o fragmento exibido na main activity

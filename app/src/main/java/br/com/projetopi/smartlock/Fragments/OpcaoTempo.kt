@@ -148,9 +148,10 @@ class OpcaoTempo : Fragment() {
                             db.collection("lockers")
                                 .whereEqualTo("idEstablishment", establishmentID)
                                 .get()
-                                .addOnSuccessListener {
-                                    for (document in it.documents) {
-                                        document.reference.update(newRentalState as Map<String, Any>)
+                                .addOnSuccessListener { querySnapshot ->
+                                    if (!querySnapshot.isEmpty) {
+                                        val firstDocument = querySnapshot.documents[0]
+                                        firstDocument.reference.update(newRentalState as Map<String, Any>)
                                     }
                                 }
                         } else {

@@ -21,7 +21,6 @@ import androidx.fragment.app.activityViewModels
 import br.com.projetopi.smartlock.BitmapHelper
 import br.com.projetopi.smartlock.Classes.Establishment
 import br.com.projetopi.smartlock.Classes.User
-import br.com.projetopi.smartlock.Classes.GpsChangeReceiver
 import br.com.projetopi.smartlock.MainActivity
 import br.com.projetopi.smartlock.MarkerInfoAdapter
 import br.com.projetopi.smartlock.R
@@ -42,7 +41,7 @@ import com.google.firebase.firestore.firestore
 import java.util.Timer
 import java.util.TimerTask
 
-class Mapa() : Fragment(), GpsChangeReceiver.OnGpsStatusChangeListener {
+class Mapa() : Fragment() {
 
     private val establishments: ArrayList<Establishment> = arrayListOf()
     private var _binding: FragmentMapaBinding? = null
@@ -321,8 +320,6 @@ class Mapa() : Fragment(), GpsChangeReceiver.OnGpsStatusChangeListener {
                                 Manifest.permission.ACCESS_COARSE_LOCATION
                             ) == PackageManager.PERMISSION_GRANTED) {
 
-                            if (isGPSEnabled()) {
-
                                 Handler().postDelayed({
                                     binding.loadView.visibility = View.GONE
                                     mapFragment.view?.visibility = View.VISIBLE
@@ -358,9 +355,6 @@ class Mapa() : Fragment(), GpsChangeReceiver.OnGpsStatusChangeListener {
 
                                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
                                 }
-                            } else {
-                                Toast.makeText(requireContext(), "Para acessar, é necessario que seu GPS esteja ligado", Toast.LENGTH_LONG).show()
-                            }
                         } else {
                             Toast.makeText(requireContext(), "Para acessar, é necessario permitir que tenhamos acesso à sua localização", Toast.LENGTH_LONG).show()
                         }
@@ -442,21 +436,6 @@ class Mapa() : Fragment(), GpsChangeReceiver.OnGpsStatusChangeListener {
         timer.cancel()
     }
 
-    private fun isGPSEnabled(): Boolean {
-        val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-    }
-
-    override fun onGpsStatusChanged(isGpsEnabled: Boolean) {
-        if (isGpsEnabled) {
-            (activity as MainActivity).changeFragment(
-                Mapa()
-            )
-        } else {
-            Toast.makeText(requireContext(), "GPS Desligado", Toast.LENGTH_LONG).show()
-            (activity as MainActivity).changeFragment(
-                Mapa()
-            )
-        }
-    }
+    private fun isLocationEnable() = requireContext().getSystemService(LocationManager::class.java)
+        .isProviderEnabled(LocationManager.GPS_PROVIDER)
 }

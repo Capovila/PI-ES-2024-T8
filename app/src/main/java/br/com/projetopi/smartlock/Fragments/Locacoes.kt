@@ -74,17 +74,25 @@ class Locacoes : Fragment() {
                         .document(establishmentID)
                         .get()
                         .addOnSuccessListener { document ->
-                            val managerName = document.getString("managerName")
-                            val layoutParams = binding.tvInfo2.layoutParams as ViewGroup.MarginLayoutParams
-                            layoutParams.topMargin = 50
-                            binding.main.setBackgroundResource(R.color.main_dark_blue)
-                            binding.tvInfo2.text = "Locação aberta"
-                            binding.tvInfo2.layoutParams = layoutParams
-                            val whiteColor = ContextCompat.getColor(requireContext(), R.color.white)
-                            binding.tvInfo2.setTextColor(whiteColor)
-                            binding.qrcode.visibility = View.VISIBLE
-                            binding.btnCancelar.visibility = View.VISIBLE
-                            binding.tvInfo.text = "Apresente esse QR Code para o gerente $managerName caso você ainda não tenha efetivado sua locação"
+                            val managerId = document.getString("managerId")
+                            if (managerId != null) {
+                                db.collection("users")
+                                    .document(managerId)
+                                    .get()
+                                    .addOnSuccessListener { document ->
+                                        val managerName = document.getString("name")
+                                        val layoutParams = binding.tvInfo2.layoutParams as ViewGroup.MarginLayoutParams
+                                        layoutParams.topMargin = 50
+                                        binding.main.setBackgroundResource(R.color.main_dark_blue)
+                                        binding.tvInfo2.text = "Locação aberta"
+                                        binding.tvInfo2.layoutParams = layoutParams
+                                        val whiteColor = ContextCompat.getColor(requireContext(), R.color.white)
+                                        binding.tvInfo2.setTextColor(whiteColor)
+                                        binding.qrcode.visibility = View.VISIBLE
+                                        binding.btnCancelar.visibility = View.VISIBLE
+                                        binding.tvInfo.text = "Apresente esse QR Code para o(a) gerente $managerName caso você ainda não tenha efetivado sua locação"
+                                    }
+                            }
                         }
                 }
             }
@@ -127,6 +135,4 @@ class Locacoes : Fragment() {
 
         return binding.root
     }
-
-
 }
