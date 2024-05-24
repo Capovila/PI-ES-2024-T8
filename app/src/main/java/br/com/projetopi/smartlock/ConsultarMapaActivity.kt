@@ -40,19 +40,15 @@ class ConsultarMapaActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private val timer = Timer()
     private var userMarker: Marker? = null
-    private var isTimerRunning = false
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.cancel()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
-        if(!isLocationEnable()) {
-            Toast.makeText(baseContext, "Você precisa estar com o GPS ligado", Toast.LENGTH_LONG).show()
-            finish()
-            isTimerRunning = false
-        } else {
-            isTimerRunning = true
-        }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -152,7 +148,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
                             binding.btnAlugar.setOnClickListener {
                                 Toast.makeText(baseContext, "Você precisa entrar com sua conta para alugar um armário", Toast.LENGTH_LONG).show()
                                 finish()
-                                isTimerRunning = false
                             }
                         }
                         false
@@ -170,6 +165,28 @@ class ConsultarMapaActivity : AppCompatActivity() {
                      * dispositivo nao estiver ligado, não é carregado o mapa
                      */
                     googleMap.setOnMapLoadedCallback{
+
+                        Handler().postDelayed({
+                            binding.loadView.visibility = View.GONE
+                            mapFragment.view?.visibility = View.VISIBLE
+                        }, 1000L)
+
+                        val bounds = LatLngBounds.builder()
+                        establishments?.forEach {
+                            bounds.include(it.latLng)
+                        }
+
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+
+                        val defaultPosition = LatLng(0.0, 0.0)
+
+                        userMarker = googleMap.addMarker(
+                            MarkerOptions()
+                                .position(defaultPosition)
+                                .title("Sua localização atual")
+                                .icon(BitmapHelper.vectorToBitmap(this, R.drawable.user_map_icon, ContextCompat.getColor(this, R.color.blank)))
+                        )
+
                         if (ActivityCompat.checkSelfPermission(
                                 this,
                                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -177,38 +194,29 @@ class ConsultarMapaActivity : AppCompatActivity() {
                             ActivityCompat.checkSelfPermission(
                                 this,
                                 Manifest.permission.ACCESS_COARSE_LOCATION
-                            ) == PackageManager.PERMISSION_GRANTED && isLocationEnable()) {
+                            ) == PackageManager.PERMISSION_GRANTED ) {
 
-                                Handler().postDelayed({
-                                    binding.loadView.visibility = View.GONE
-                                    mapFragment.view?.visibility = View.VISIBLE
-                                }, 1000L)
+                            if(isLocationEnable()){
 
                                 fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
 
-                                    val userLocation = LatLng(location.latitude, location.longitude)
+                                    if(location == null) {
+                                        Toast.makeText(this, "Não foi possivel acessar sua localização", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        val userLocation = LatLng(location.latitude, location.longitude)
 
-                                    userMarker = googleMap.addMarker(
-                                        MarkerOptions()
-                                            .position(userLocation)
-                                            .title("Sua localização atual")
-                                            .icon(BitmapHelper.vectorToBitmap(this, R.drawable.user_map_icon, ContextCompat.getColor(this, R.color.main_dark_blue)))
-                                    )
-
-                                    val bounds = LatLngBounds.builder()
-                                    establishments?.forEach {
-                                        bounds.include(it.latLng)
+                                        userMarker?.position = userLocation
                                     }
 
-                                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
                                 }
-                            } else {
-                                Toast.makeText(this, "Para acessar é necessario permitir que tenhamos acesso à sua localização", Toast.LENGTH_LONG).show()
-                                finish()
-                                isTimerRunning = false
-                            }
-                    }
 
+                            } else {
+                                Toast.makeText(this, "Sua localização está inacessivel (GPS desligado)", Toast.LENGTH_LONG).show()
+                            }
+                        } else {
+                            Toast.makeText(this, "Sua localização está inacessivel (Permissão negada)", Toast.LENGTH_LONG).show()
+                        }
+                    }
                     // Inicia um loop para que atualize a localização do usuario
                     startPeriodicUpdate(this)
                 }
@@ -216,7 +224,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener{
             finish()
-            isTimerRunning = false
         }
     }
 
@@ -248,49 +255,18 @@ class ConsultarMapaActivity : AppCompatActivity() {
      * puxa novamente a localização do usuario e atualiza a latitude e longitude do marcador que representa o usuario
      */
     private fun startPeriodicUpdate(context: ConsultarMapaActivity) {
-        var cameraState: Int = 1
         val timerTask = object : TimerTask() {
             override fun run() {
-                if (!isTimerRunning) {
-                    cancel()
-                    return
-                }
-
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                     ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && isLocationEnable()) {
 
                     fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                         if (userMarker != null) {
-                            if (location == null) {
-                                if(cameraState != 2) {
-                                    Toast.makeText(context, "Gps desligado", Toast.LENGTH_LONG).show()
-                                    cameraState = 2
-                                }
-                            } else {
+                            if (location != null) {
+
                                 val userLocation = LatLng(location.latitude, location.longitude)
                                 userMarker?.position = userLocation
-
-                                if(cameraState != 1) {
-                                    cameraState = 1
-                                }
-                            }
-                        }
-                    }
-                } else if (!isLocationEnable()) {
-                    fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
-                        if (userMarker != null) {
-                            if (location == null) {
-                                if(cameraState != 2) {
-                                    Toast.makeText(context, "Gps desligado", Toast.LENGTH_LONG).show()
-                                    cameraState = 2
-                                }
-                            } else {
-                                val userLocation = LatLng(location.latitude, location.longitude)
-                                userMarker?.position = userLocation
-
-                                if(cameraState != 1) {
-                                    cameraState = 1
-                                }
+                                userMarker?.setIcon(BitmapHelper.vectorToBitmap(context, R.drawable.user_map_icon, ContextCompat.getColor(context, R.color.main_dark_blue)))
                             }
                         }
                     }
@@ -302,4 +278,5 @@ class ConsultarMapaActivity : AppCompatActivity() {
 
     private fun isLocationEnable() = this.getSystemService(LocationManager::class.java)
         .isProviderEnabled(LocationManager.GPS_PROVIDER)
+
 }

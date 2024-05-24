@@ -151,6 +151,7 @@ class OpcaoTempo : Fragment() {
                             )
                             db.collection("lockers")
                                 .whereEqualTo("idEstablishment", establishmentID)
+                                .whereEqualTo("isRented", false)
                                 .get()
                                 .addOnSuccessListener { querySnapshot ->
                                     if (!querySnapshot.isEmpty) {

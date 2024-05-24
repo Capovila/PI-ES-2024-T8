@@ -32,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -185,7 +186,7 @@ class Mapa() : Fragment() {
                                             ).show()
                                         } else {
                                             db.collection("rentals")
-                                                .whereEqualTo("idUser", user.uid.toString())
+                                                .whereEqualTo("idUser", user.uid)
                                                 .whereEqualTo("rentalImplemented", false)
                                                 .get()
                                                 .addOnSuccessListener {
@@ -235,56 +236,54 @@ class Mapa() : Fragment() {
                                                                                         Manifest.permission.ACCESS_COARSE_LOCATION
                                                                                     ) == PackageManager.PERMISSION_GRANTED
                                                                                 ) {
-                                                                                    fusedLocationProviderClient.lastLocation
-                                                                                        .addOnCompleteListener { task ->
-                                                                                            if (task.isSuccessful) {
-                                                                                                val location: Location? =
-                                                                                                    task.result
-                                                                                                if (location != null) {
-                                                                                                    val userLatLng =
-                                                                                                        LatLng(
-                                                                                                            location.latitude,
-                                                                                                            location.longitude
-                                                                                                        )
-                                                                                                    val distanciaDoUsuario =
-                                                                                                        calcularDistanciaEmMetros(
-                                                                                                            userLatLng,
-                                                                                                            markerLatLng
-                                                                                                        )
-                                                                                                    if (distanciaDoUsuario < 150.0) {
-                                                                                                        val markerEstablishment: Establishment =
-                                                                                                            marker.tag as Establishment
-                                                                                                        sharedViewModelEstablishment.selectEstablishment(
-                                                                                                            markerEstablishment
-                                                                                                        )
-                                                                                                        (activity as MainActivity).changeFragment(
-                                                                                                            OpcaoTempo()
-                                                                                                        )
-                                                                                                    } else {
-                                                                                                        Toast.makeText(
-                                                                                                            requireContext(),
-                                                                                                            "Você está distante do armário",
-                                                                                                            Toast.LENGTH_LONG
-                                                                                                        )
-                                                                                                            .show()
-                                                                                                    }
+
+                                                                                    if(isLocationEnable()) {
+                                                                                        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+
+                                                                                            if(location == null) {
+                                                                                                Toast.makeText(requireContext(), "Não foi possivel acessar sua localização", Toast.LENGTH_LONG).show()
+                                                                                            } else {
+                                                                                                val userLocation =
+                                                                                                    LatLng(
+                                                                                                        location.latitude,
+                                                                                                        location.longitude
+                                                                                                    )
+                                                                                                val distanciaDoUsuario =
+                                                                                                    calcularDistanciaEmMetros(
+                                                                                                        userLocation,
+                                                                                                        markerLatLng
+                                                                                                    )
+                                                                                                if (distanciaDoUsuario < 150.0) {
+                                                                                                    val markerEstablishment: Establishment =
+                                                                                                        marker.tag as Establishment
+                                                                                                    sharedViewModelEstablishment.selectEstablishment(
+                                                                                                        markerEstablishment
+                                                                                                    )
+                                                                                                    (activity as MainActivity).changeFragment(
+                                                                                                        OpcaoTempo()
+                                                                                                    )
                                                                                                 } else {
                                                                                                     Toast.makeText(
                                                                                                         requireContext(),
-                                                                                                        "Habilite sua localização",
+                                                                                                        "Você está distante do armário",
                                                                                                         Toast.LENGTH_LONG
-                                                                                                    )
-                                                                                                        .show()
+                                                                                                    ).show()
                                                                                                 }
-                                                                                            } else {
-                                                                                                Toast.makeText(
-                                                                                                    requireContext(),
-                                                                                                    "Erro ao obter a localização",
-                                                                                                    Toast.LENGTH_LONG
-                                                                                                )
-                                                                                                    .show()
                                                                                             }
                                                                                         }
+                                                                                    } else {
+                                                                                        Toast.makeText(
+                                                                                            requireContext(),
+                                                                                            "Sua localização está inacessivel (GPS desligado)",
+                                                                                            Toast.LENGTH_LONG
+                                                                                        ).show()
+                                                                                    }
+                                                                                } else {
+                                                                                    Toast.makeText(
+                                                                                        requireContext(),
+                                                                                        "Sua localização está inacessivel (Permissão negada)",
+                                                                                        Toast.LENGTH_LONG
+                                                                                    ).show()
                                                                                 }
                                                                             }
                                                                         }
@@ -311,6 +310,46 @@ class Mapa() : Fragment() {
                      * carregado o mapa
                      */
                     googleMap.setOnMapLoadedCallback{
+
+                        Handler().postDelayed({
+                            binding.loadView.visibility = View.GONE
+                            mapFragment.view?.visibility = View.VISIBLE
+                        }, 1000L)
+
+                        val bounds = LatLngBounds.builder()
+                        establishments?.forEach {
+                            bounds.include(it.latLng)
+                        }
+
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+
+                        /***
+                         * Busca locações que nao foram efetivadas e que estejam relacionadas ao id do usuario, caso alguma
+                         * seja encontrada, deixa visivel ao usuario assim que o fragment é criado com uma Toast
+                         */
+                        db.collection("rentals")
+                            .whereEqualTo("rentalImplemented", false)
+                            .whereEqualTo("idUser", user.uid)
+                            .get()
+                            .addOnSuccessListener {
+                                for (documents in it) {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Existe uma locação para ser efetivada",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+
+                        val defaultPosition = LatLng(0.0, 0.0)
+
+                        userMarker = googleMap.addMarker(
+                            MarkerOptions()
+                                .position(defaultPosition)
+                                .title("Sua localização atual")
+                                .icon(BitmapHelper.vectorToBitmap(requireContext(), R.drawable.user_map_icon, ContextCompat.getColor(requireContext(), R.color.blank)))
+                        )
+
                         if (ActivityCompat.checkSelfPermission(
                                 requireContext(),
                                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -320,50 +359,31 @@ class Mapa() : Fragment() {
                                 Manifest.permission.ACCESS_COARSE_LOCATION
                             ) == PackageManager.PERMISSION_GRANTED) {
 
-                                Handler().postDelayed({
-                                    binding.loadView.visibility = View.GONE
-                                    mapFragment.view?.visibility = View.VISIBLE
-                                }, 1000L)
-
-                                /***
-                                 * Busca locações que nao foram efetivadas e que estejam relacionadas ao id do usuario, caso alguma
-                                 * seja encontrada, deixa visivel ao usuario assim que o fragment é criado com uma Toast
-                                 */
-                                db.collection("rentals")
-                                    .whereEqualTo("rentalImplemented", false)
-                                    .whereEqualTo("idUser", user.uid)
-                                    .get()
-                                    .addOnSuccessListener {
-                                        for(documents in it){
-                                            Toast.makeText(
-                                                requireContext(),
-                                                "Existe uma locação para ser efetivada",
-                                                Toast.LENGTH_LONG
-                                            ).show()
-                                        }
-                                    }
+                            if(isLocationEnable()) {
 
                                 fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
-                                    val userLocation = LatLng(location.latitude, location.longitude)
 
-                                    userMarker = googleMap.addMarker(
-                                        MarkerOptions()
-                                            .position(userLocation)
-                                            .title("Sua localização atual")
-                                            .icon(BitmapHelper.vectorToBitmap(requireContext(), R.drawable.user_map_icon, ContextCompat.getColor(requireContext(), R.color.main_dark_blue)))
-                                    )
+                                    if(location == null) {
+                                        Toast.makeText(requireContext(), "Não foi possivel acessar sua localização", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        val userLocation = LatLng(location.latitude, location.longitude)
 
-                                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
+                                        userMarker?.position = userLocation
+                                    }
+
                                 }
+                            }  else {
+                                Toast.makeText(requireContext(), "Sua localização está inacessivel (GPS desligado)", Toast.LENGTH_LONG).show()
+                            }
                         } else {
-                            Toast.makeText(requireContext(), "Para acessar, é necessario permitir que tenhamos acesso à sua localização", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), "Sua localização está inacessivel (Permissão negada)", Toast.LENGTH_LONG).show()
                         }
                     }
 
                     // Inicia um loop para que atualize a localização do usuario
-                    startPeriodicUpdate(this, binding)
+                    startPeriodicUpdate(this)
                 }
-        }
+            }
         return binding.root
     }
 
@@ -412,16 +432,20 @@ class Mapa() : Fragment() {
      * Faz com que quando executada, a cada 1 segundo, verifica se o aplicativo tem acesso a localização do usuario,
      * puxa novamente a localização do usuario e atualiza a latitude e longitude do marcador que representa o usuario
      */
-    private fun startPeriodicUpdate(context: Mapa, binding: FragmentMapaBinding) {
+    private fun startPeriodicUpdate(context: Mapa) {
         val timerTask = object : TimerTask() {
             override fun run() {
                 if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && isLocationEnable()) {
 
                     fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                         if (userMarker != null) {
-                            val userLocation = LatLng(location.latitude, location.longitude)
-                            userMarker?.position = userLocation
+                            if (location != null) {
+
+                                val userLocation = LatLng(location.latitude, location.longitude)
+                                userMarker?.position = userLocation
+                                userMarker?.setIcon(BitmapHelper.vectorToBitmap(requireContext(), R.drawable.user_map_icon, ContextCompat.getColor(requireContext(), R.color.main_dark_blue)))
+                            }
                         }
                     }
                 }

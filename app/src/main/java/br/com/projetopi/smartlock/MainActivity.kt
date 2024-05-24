@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+
         replaceFragment(Mapa())
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
