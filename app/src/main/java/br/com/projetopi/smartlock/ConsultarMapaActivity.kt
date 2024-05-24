@@ -195,7 +195,12 @@ class ConsultarMapaActivity : AppCompatActivity() {
                                             .icon(BitmapHelper.vectorToBitmap(this, R.drawable.user_map_icon, ContextCompat.getColor(this, R.color.main_dark_blue)))
                                     )
 
-                                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
+                                    val bounds = LatLngBounds.builder()
+                                    establishments?.forEach {
+                                        bounds.include(it.latLng)
+                                    }
+
+                                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
                                 }
                             } else {
                                 Toast.makeText(this, "Para acessar é necessario permitir que tenhamos acesso à sua localização", Toast.LENGTH_LONG).show()
@@ -205,7 +210,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                     }
 
                     // Inicia um loop para que atualize a localização do usuario
-                    startPeriodicUpdate(this, binding, googleMap)
+                    startPeriodicUpdate(this)
                 }
             }
 
@@ -242,7 +247,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
      * Faz com que quando executada, a cada 1 segundo, verifica se o aplicativo tem acesso a localização do usuario,
      * puxa novamente a localização do usuario e atualiza a latitude e longitude do marcador que representa o usuario
      */
-    private fun startPeriodicUpdate(context: ConsultarMapaActivity, binding: ActivityConsultarMapaBinding, googleMap: GoogleMap) {
+    private fun startPeriodicUpdate(context: ConsultarMapaActivity) {
         var cameraState: Int = 1
         val timerTask = object : TimerTask() {
             override fun run() {
@@ -258,12 +263,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                         if (userMarker != null) {
                             if (location == null) {
                                 if(cameraState != 2) {
-                                    val bounds = LatLngBounds.builder()
-                                    establishments?.forEach {
-                                        bounds.include(it.latLng)
-                                    }
-
-                                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+                                    Toast.makeText(context, "Gps desligado", Toast.LENGTH_LONG).show()
                                     cameraState = 2
                                 }
                             } else {
@@ -271,7 +271,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
                                 userMarker?.position = userLocation
 
                                 if(cameraState != 1) {
-                                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
                                     cameraState = 1
                                 }
                             }
@@ -282,12 +281,7 @@ class ConsultarMapaActivity : AppCompatActivity() {
                         if (userMarker != null) {
                             if (location == null) {
                                 if(cameraState != 2) {
-                                    val bounds = LatLngBounds.builder()
-                                    establishments?.forEach {
-                                        bounds.include(it.latLng)
-                                    }
-
-                                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 300))
+                                    Toast.makeText(context, "Gps desligado", Toast.LENGTH_LONG).show()
                                     cameraState = 2
                                 }
                             } else {
@@ -295,7 +289,6 @@ class ConsultarMapaActivity : AppCompatActivity() {
                                 userMarker?.position = userLocation
 
                                 if(cameraState != 1) {
-                                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18f))
                                     cameraState = 1
                                 }
                             }

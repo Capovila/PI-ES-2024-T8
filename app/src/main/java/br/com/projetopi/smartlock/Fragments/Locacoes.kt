@@ -29,7 +29,6 @@ class Locacoes : Fragment() {
     private val binding get() = _binding!!
     private lateinit var simpleStorage: SimpleStorage
     private lateinit var db: FirebaseFirestore
-    private lateinit var rentalID: String
     private lateinit var establishmentID: String
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
@@ -53,13 +52,15 @@ class Locacoes : Fragment() {
          * define o textView com o nome do gerente buscado
          */
         db.collection("rentals")
-            .whereEqualTo("idUser", user.uid)
-            .whereEqualTo("rentalOpen", true)
+            .document(user.uid.toString())
             .get()
-            .addOnSuccessListener {
-                for (documents in it) {
-                    rentalID = documents.id
-                    establishmentID = documents.getString("idPlace").toString()
+            .addOnSuccessListener { document ->
+                val isImplemented = document.getBoolean("rentalImplemented")
+                if(isImplemented == false) {
+
+                    val rentalID = document.id
+                    establishmentID = document.getString("idPlace").toString()
+
                     val multiFormatWriter = MultiFormatWriter()
                     val bitMatrix = multiFormatWriter.encode(
                         rentalID,
@@ -70,68 +71,66 @@ class Locacoes : Fragment() {
                     val barcodeEncoder = BarcodeEncoder()
                     val bitmap = barcodeEncoder.createBitmap(bitMatrix)
                     binding.qrcode.setImageBitmap(bitmap)
+
                     db.collection("establishments")
                         .document(establishmentID)
                         .get()
                         .addOnSuccessListener { document ->
-                            val managerId = document.getString("managerId")
-                            if (managerId != null) {
-                                db.collection("users")
-                                    .document(managerId)
-                                    .get()
-                                    .addOnSuccessListener { document ->
-                                        val managerName = document.getString("name")
-                                        val layoutParams = binding.tvInfo2.layoutParams as ViewGroup.MarginLayoutParams
-                                        layoutParams.topMargin = 50
-                                        binding.main.setBackgroundResource(R.color.main_dark_blue)
-                                        binding.tvInfo2.text = "Locação aberta"
-                                        binding.tvInfo2.layoutParams = layoutParams
-                                        val whiteColor = ContextCompat.getColor(requireContext(), R.color.white)
-                                        binding.tvInfo2.setTextColor(whiteColor)
-                                        binding.qrcode.visibility = View.VISIBLE
-                                        binding.btnCancelar.visibility = View.VISIBLE
-                                        binding.tvInfo.text = "Apresente esse QR Code para o(a) gerente $managerName caso você ainda não tenha efetivado sua locação"
-                                    }
-                            }
+                            val managerId = document.getString("managerId").toString()
+                            db.collection("users")
+                                .document(managerId)
+                                .get()
+                                .addOnSuccessListener { document ->
+                                    val managerName = document.getString("name")
+
+                                    val layoutParams = binding.tvInfo2.layoutParams as ViewGroup.MarginLayoutParams
+                                    layoutParams.topMargin = 50
+                                    binding.main.setBackgroundResource(R.color.main_dark_blue)
+                                    binding.tvInfo2.text = "Locação aberta"
+                                    binding.tvInfo2.layoutParams = layoutParams
+                                    val whiteColor =
+                                        ContextCompat.getColor(requireContext(), R.color.white)
+                                    binding.tvInfo2.setTextColor(whiteColor)
+                                    binding.qrcode.visibility = View.VISIBLE
+                                    binding.btnCancelar.visibility = View.VISIBLE
+                                    binding.tvInfo.text =
+                                        "Apresente esse QR Code para o(a) gerente $managerName para que você possa efetivar sua locação"
+                                }
                         }
                 }
             }
 
+
+
+
+
         binding.btnCancelar.setOnClickListener {
 
             db.collection("rentals")
-                .whereEqualTo("idUser", user.uid.toString())
+                .document(user.uid.toString())
                 .get()
-                .addOnSuccessListener{
-                    var implemented: Boolean = false
-                    for(documents in it){
-                        implemented = documents!!.getBoolean("rentalImplemented") == true
-                    }
-
-                    if(implemented == true){
-                        Toast.makeText(requireContext(), "Locação implementada não pode ser finalizada", Toast.LENGTH_LONG).show()
-                    }else{
-                        db.collection("lockers")
-                            .whereEqualTo("idEstablishment", establishmentID)
-                            .get()
-                            .addOnSuccessListener {
-                                val newRentalState = hashMapOf(
-                                    "isRented" to false,
-                                    "currentIdRental" to ""
-                                )
-                                for (document in it.documents) {
-                                    document.reference.update(newRentalState as Map<String, Any>)
-                                }
+                .addOnSuccessListener{ document ->
+                    db.collection("lockers")
+                        .whereEqualTo("currentIdRental", user.uid)
+                        .get()
+                        .addOnSuccessListener {
+                            val newRentalState = hashMapOf(
+                                "isRented" to false,
+                                "currentIdRental" to ""
+                            )
+                            for (document in it.documents) {
+                                document.reference.update(newRentalState as Map<String, Any>)
                             }
-
-                        Toast.makeText(requireContext(), "Locação cancelada com sucesso", Toast.LENGTH_LONG).show()
-                        for (document in it.documents) {
-                            document.reference.delete()
                         }
-                        startActivity(Intent(requireContext(), MainActivity::class.java))
-                    }
+
+                    document.reference.delete()
+                    Toast.makeText(requireContext(), "Locação cancelada com sucesso", Toast.LENGTH_LONG).show()
+                    (activity as MainActivity).changeFragment(
+                        Mapa()
+                    )
                 }
         }
+
 
         return binding.root
     }

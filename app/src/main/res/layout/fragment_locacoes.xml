@@ -26,8 +26,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Nenhuma locação aberta"
+                android:text="Nenhuma locação não efetivada"
                 android:textColor="@color/main_dark_blue"
+                android:textAlignment="center"
                 android:textSize="30sp"
                 android:layout_marginTop="150dp"
                 android:textStyle="bold" />
@@ -40,7 +41,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="Caso você tiver uma locação aberta, aqui
+                android:text="Caso você tiver uma locação que ainda não foi efetivada, aqui
 você terá acesso ao QR Code respectivo"
                 android:textAlignment="center"
                 android:textColor="@color/main_light_blue"
