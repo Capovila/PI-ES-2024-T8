@@ -1,6 +1,7 @@
 package br.com.projetopi.smartlock
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -49,9 +50,12 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.page_1 -> replaceFragment(Profile())
-                R.id.page_2 -> replaceFragment(Mapa())
-                R.id.page_3 -> replaceFragment(Locacoes())
+                R.id.page_1 ->
+                    Handler().postDelayed({ replaceFragment(Profile()) }, 100L)
+                R.id.page_2 ->
+                    Handler().postDelayed({ replaceFragment(Mapa()) }, 100L)
+                R.id.page_3 ->
+                    Handler().postDelayed({ replaceFragment(Locacoes()) }, 100L)
             }
             true
         }

@@ -88,7 +88,7 @@ class Mapa() : Fragment() {
                     val latitude = document.getDouble("latitude") ?: 0.0
                     val longitude = document.getDouble("longitude") ?: 0.0
                     val address = document.getString("address") ?: ""
-                    val reference = document.getString("description") ?: ""
+                    val reference = document.getString("reference") ?: ""
                     val managerName = document.getString("managerName") ?: ""
 
                     val establishment = Establishment(
@@ -223,7 +223,7 @@ class Mapa() : Fragment() {
                                                                             if (!it.isEmpty) {
                                                                                 Toast.makeText(
                                                                                     requireContext(),
-                                                                                    "Você precisa ter um cartão cadastrado",
+                                                                                    "Você precisa ter um cartão cadastrado, cadastre no menu Perfil",
                                                                                     Toast.LENGTH_LONG
                                                                                 ).show()
                                                                             } else {
