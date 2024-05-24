@@ -110,6 +110,7 @@ class ClearNfcActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         nfcAdapter.disableReaderMode(this)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onTagDiscovered(tag: Tag?) {
         val ndef = Ndef.get(tag)
         if (ndef != null) {
@@ -137,15 +138,31 @@ class ClearNfcActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                     .document(qrCodeId)
                     .get()
                     .addOnSuccessListener {
+                        val fullPrice = it.getDouble("fullPrice")?.toInt()
                         val time = it.getDouble("hourCurrent")?.toInt()
                         val price = it.getDouble("hourPrice")?.toInt()
-                        var result = (getHour() - time!!) + 1
+                        val result = (getHour() - time!!) + 1
 
+                        val finalPrice = (result * price!!) - fullPrice!!
+
+
+                        if(finalPrice < 0){
+                            runOnUiThread{
+                                binding.tvTotal.setText("Valor a ser devolvido: R$${finalPrice * -1}")
+                            }
+                        } else if (finalPrice > 0){
+                            runOnUiThread{
+                                binding.tvTotal.setText("Valor a ser cobrado: R$${finalPrice}")
+                            }
+                        } else{
+                            runOnUiThread{
+                                binding.tvTotal.setText("Valor da locação: R$${fullPrice}")
+                            }
+                        }
 
                         runOnUiThread {
                             Toast.makeText(this, "NFC Limpa", Toast.LENGTH_SHORT).show()
                             binding.btnFinalizar.visibility = View.VISIBLE
-                            binding.tvTotal.setText("Valor da locação: R$${result * price!!}")
                         }
                     }
             } finally {
@@ -157,4 +174,5 @@ class ClearNfcActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
     private fun getHour():Int{
         return Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
     }
+
 }

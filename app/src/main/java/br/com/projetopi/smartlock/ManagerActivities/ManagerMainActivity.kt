@@ -32,6 +32,7 @@ class ManagerMainActivity : AppCompatActivity() {
     private lateinit var qrCodeResult: String
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+    private var isRentalImplemented: Boolean? = null
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         isGranted: Boolean ->
@@ -51,18 +52,17 @@ class ManagerMainActivity : AppCompatActivity() {
                         .document(qrCodeResult)
                         .get()
                         .addOnSuccessListener { querySnapshot ->
-                            if (querySnapshot == null) {
-                                Toast.makeText(this, "Locação não encontrada", Toast.LENGTH_LONG).show()
-                            } else {
-                                    val isRentalImplemented = querySnapshot.getBoolean("rentalImplemented")
-                                    if (isRentalImplemented != null && isRentalImplemented) {
-                                        Toast.makeText(this, "Locação já efetivada", Toast.LENGTH_LONG).show()
-                                    } else {
-                                        val intent: Intent = Intent(this, NumberUsersActivity::class.java)
-                                        intent.putExtra("qrCode", qrCodeResult)
-                                        startActivity(intent)
-                                    }
+                            isRentalImplemented = querySnapshot.getBoolean("rentalImplemented")
+                            if (isRentalImplemented != null && isRentalImplemented == true) {
+                                Toast.makeText(this, "Locação já efetivada", Toast.LENGTH_LONG).show()
+                            } else if(isRentalImplemented == null){
+                                Toast.makeText(this, "Locação inexistente", Toast.LENGTH_LONG).show()
+                            }else{
+                                val intent: Intent = Intent(this, NumberUsersActivity::class.java)
+                                intent.putExtra("qrCode", qrCodeResult)
+                                startActivity(intent)
                             }
+
                         }
                         .addOnFailureListener { e ->
                             Toast.makeText(this, "Erro ao buscar locação", Toast.LENGTH_LONG).show()

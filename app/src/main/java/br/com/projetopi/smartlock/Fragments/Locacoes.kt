@@ -126,7 +126,7 @@ class Locacoes : Fragment() {
                     }
                     Toast.makeText(requireContext(), "Locação cancelada com sucesso", Toast.LENGTH_LONG).show()
                     (activity as MainActivity).changeFragment(
-                        Mapa()
+                        Locacoes()
                     )
                 }
         }

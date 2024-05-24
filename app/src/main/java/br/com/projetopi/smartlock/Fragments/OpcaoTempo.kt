@@ -91,15 +91,15 @@ class OpcaoTempo : Fragment() {
                     if(getHour() >= 8 && getMin() > 0) {
                         binding.op5.isEnabled  = false
                     }
-                    if(getHour() >= 18 && getMin() > 0){
+                    if(getHour() >= 17 && getMin() > 0){
                         binding.op2.isEnabled = false
 
-                        if(getMin() > 30 || getHour() >= 18){
-                            binding.op1.isEnabled = false
-                            binding.btnConfirmarLocacao.setText("Estabelecimento Fechado")
-                            binding.btnConfirmarLocacao.isEnabled = false
+                    }
+                    if(getMin() > 30 && getHour() >= 18){
+                        binding.op1.isEnabled = false
+                        binding.btnConfirmarLocacao.setText("Estabelecimento Fechado")
+                        binding.btnConfirmarLocacao.isEnabled = false
 
-                        }
                     }
                     if(getHour() >= 16 && getMin() > 0){
                         binding.op3.isEnabled = false

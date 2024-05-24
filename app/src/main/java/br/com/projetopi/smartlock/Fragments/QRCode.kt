@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import br.com.projetopi.smartlock.MainActivity
 import br.com.projetopi.smartlock.databinding.FragmentQRCodeBinding
@@ -42,18 +43,23 @@ class QRCode : Fragment() {
         sharedViewModelRental.selectedRental.observe(viewLifecycleOwner) { rental ->
             val rentalID = rental.uid.toString()
 
+            Toast.makeText(
+                requireContext(),
+                rentalID,
+                Toast.LENGTH_LONG
+            ).show()
+
             db.collection("rentals")
-                .document(rentalID)
+                .whereEqualTo("idUser", rentalID)
                 .get()
                 .addOnSuccessListener { document ->
-                    val establishmentID = document.getString("idPlace").toString()
-                    db.collection("establishments")
-                        .document(establishmentID)
-                        .get()
-                        .addOnSuccessListener { document ->
-                            val managerId = document.getString("managerId").toString()
+                    var managerId: String? = null
+                    for (documents in document){
+                        managerId = documents.getString("managerId")
+                    }
+
                             db.collection("users")
-                                .document(managerId)
+                                .document(managerId!!)
                                 .get()
                                 .addOnSuccessListener { document ->
                                     val establishmentManagerName = document.getString("name").toString()
@@ -65,7 +71,7 @@ class QRCode : Fragment() {
 
                                     binding.qrcode.setImageBitmap(bitmap)
                                 }
-                        }
+
                 }
 
             /***
