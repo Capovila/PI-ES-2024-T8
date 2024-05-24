@@ -42,6 +42,14 @@ import com.google.firebase.firestore.firestore
 import java.util.Timer
 import java.util.TimerTask
 
+/***
+ * Observação: Esta fragment quando rodada no emulador, a localização do usuario não aparece
+ * no mapa como icone, ja no celular, é mostrada a localização do usuario em formato de icone,
+ * e a cada 1 segundo é atualizada sua localização, dentro do possivel (permissoes e gps ligado)
+ *
+ * O App pode crashar se navegar entre os fragments com muita velocidade devido o startPeriodicUpdate
+ * rodar uma ultima vez ja com a fragment fechada
+ */
 class Mapa() : Fragment() {
 
     private val establishments: ArrayList<Establishment> = arrayListOf()

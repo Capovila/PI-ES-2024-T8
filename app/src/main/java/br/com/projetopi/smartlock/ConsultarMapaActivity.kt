@@ -32,6 +32,11 @@ import com.google.firebase.firestore.firestore
 import java.util.Timer
 import java.util.TimerTask
 
+/***
+ * Observação: Esta activity quando rodada no emulador, a localização do usuario não aparece
+ * no mapa como icone, ja no celular, é mostrada a localização do usuario em formato de icone,
+ * e a cada 1 segundo é atualizada sua localização, dentro do possivel (permissoes e gps ligado)
+ */
 class ConsultarMapaActivity : AppCompatActivity() {
 
     private val establishments: ArrayList<Establishment>? = arrayListOf()

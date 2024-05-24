@@ -27,7 +27,7 @@
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                android:src="@drawable/group"
+                android:src="@drawable/locker_icon"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvLockerInfo"

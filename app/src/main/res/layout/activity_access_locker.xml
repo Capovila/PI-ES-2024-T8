@@ -58,7 +58,7 @@ abrir o armário novamente"
             android:layout_width="350dp"
             android:layout_height="350dp"
             android:layout_marginTop="25dp"
-            android:src="@drawable/baseline_adjust_24"
+            android:src="@drawable/nfc_icon"
             />
 
         <Button
