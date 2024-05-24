@@ -43,7 +43,8 @@ class ConfirmUserActivity : AppCompatActivity() {
         }
 
 
-
+        /*pega a imagem recebida da intent anterior, caso a imagem exista, mostra e permite que o usuário continue,
+        * caso não exista, finaliza a activity*/
         imagePath?.let { path ->
             // Verificar se o arquivo existe
             if (File(path).exists()) {

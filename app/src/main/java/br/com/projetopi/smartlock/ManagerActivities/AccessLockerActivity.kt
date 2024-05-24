@@ -51,6 +51,7 @@ class AccessLockerActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         }
     }
 
+    /*Função on resume para, ao ler uma tag nfc, manter o foco no aplicativo e não abrir o app do android*/
     override fun onResume() {
         super.onResume()
 
@@ -69,11 +70,15 @@ class AccessLockerActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         )
     }
 
+    /*onPause para parar a leitura da nfc quando a Activity perde o foco*/
     override fun onPause() {
         super.onPause()
         nfcAdapter.disableReaderMode(this);
     }
 
+
+    /*onDiscover da tag nfc mas para leitura da nfc, le a nfc e verifica se existe algum registro no banco com aquele usuário,
+    * caso consiga ler, habilita para o usuário continuar e manda o resultado das requisições para a próxima activity*/
     override fun onTagDiscovered(tag: Tag?) {
         val ndef = Ndef.get(tag)
         if(ndef != null){

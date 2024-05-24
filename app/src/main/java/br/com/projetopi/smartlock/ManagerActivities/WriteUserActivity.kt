@@ -55,6 +55,8 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
             finish()
         }
 
+        /*requisição no banco para verificar se todos os usuários tiveram suas fotos tiradas e também verificar caso o gerente
+        * tente adicionar mais usuários do que o necessário*/
         db.collection("rentals")
             .document(qrCode!!)
             .get()
@@ -87,6 +89,7 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                 }
             }
 
+        /*Pega a imágem tirada pelo manager na activity anterior e mostra ela para ver se esta boa*/
         imagePath?.let { path ->
             // Verificar se o arquivo existe
             if (File(path).exists()) {
@@ -105,6 +108,7 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
 
     }
 
+    /*Função on resume para, ao ler uma tag nfc, manter o foco no aplicativo e não abrir o app do android*/
     override fun onResume() {
         super.onResume()
 
@@ -125,6 +129,9 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         )
     }
 
+
+    /*função da descoberta de tag, quando ler a tag irá escrever o caminho da imagem dentro dela, e deixará visível os botões
+    * de finalizar e add outro usuário*/
     override fun onTagDiscovered(tag: Tag?) {
         val ndef = Ndef.get(tag)
 

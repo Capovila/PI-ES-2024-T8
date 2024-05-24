@@ -68,6 +68,7 @@ class NumberUsersActivity : AppCompatActivity() {
         }
     }
 
+    /*Novamente verifica as permissões de camera para poder tirar a foto do usuário*/
     private val cameraProviderResult=
         registerForActivityResult(ActivityResultContracts.RequestPermission()){
             if(it){

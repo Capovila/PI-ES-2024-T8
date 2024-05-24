@@ -13,6 +13,8 @@ class LockerOptionsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLockerOptionsBinding
 
+
+    /*activity para mostrar as opções que o gerente tem, abrir o armário ou encerrar a locação*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLockerOptionsBinding.inflate(layoutInflater)

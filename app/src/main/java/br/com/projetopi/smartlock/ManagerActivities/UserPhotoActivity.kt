@@ -66,6 +66,7 @@ class UserPhotoActivity : AppCompatActivity() {
         }
     }
 
+    /*Função de iniccialização da camera, inicializando o preview no layout e iniciando o ciclo de vida do cameraX*/
     private fun startCamera(){
         cameraProviderFeature.addListener({
 
@@ -84,6 +85,9 @@ class UserPhotoActivity : AppCompatActivity() {
         )
     }
 
+
+    /*Função de tirar a foto e salvar tanto localmente qunato no firebase, caso tudo ocorre como deve ocorrer
+    * a imagem é salva localmente e no firebase e já é redirecionado para a activity seguinte*/
     private fun takePicture(uNumber: Int, qrCode: String) {
         imageCapture?.let {
             val fileName = "FOTO_JPEG_${System.currentTimeMillis()}.jpeg"
@@ -140,6 +144,7 @@ class UserPhotoActivity : AppCompatActivity() {
         }
     }
 
+    /*Função apenas para feedback de que a foto foi tirada*/
     private fun blinkPreview(){
         binding.root.postDelayed({
             binding.root.foreground = ColorDrawable(Color.WHITE)

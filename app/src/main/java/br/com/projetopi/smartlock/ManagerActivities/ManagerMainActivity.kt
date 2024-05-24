@@ -40,6 +40,9 @@ class ManagerMainActivity : AppCompatActivity() {
             showCamera()
         }
     }
+
+    /*val do resultado do scan do qrCode. Nesse qrCode é passado o id da locação, valida se a locação existe
+    * e se a locação já não esta implementada*/
     private val scanLauncher = registerForActivityResult(ScanContract()) {
         result: ScanIntentResult ->
         run {
@@ -59,6 +62,7 @@ class ManagerMainActivity : AppCompatActivity() {
                                 Toast.makeText(this, "Locação inexistente", Toast.LENGTH_LONG).show()
                             }else{
                                 val intent: Intent = Intent(this, NumberUsersActivity::class.java)
+                                //método para passar informação entre activities
                                 intent.putExtra("qrCode", qrCodeResult)
                                 startActivity(intent)
                             }
@@ -109,6 +113,8 @@ class ManagerMainActivity : AppCompatActivity() {
         }
     }
 
+    /*função de permissão para acesso de câmera, caso não tenha pedido permissão, será pedida, caso permissão negada
+    * indica que é necessário habilitar a câmera, e caso tudo esteja certo, inicializa a camera de scanner*/
     private fun checkPermissionCamera(context: Context) {
         if(ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             showCamera()
@@ -120,6 +126,8 @@ class ManagerMainActivity : AppCompatActivity() {
         }
     }
 
+
+    /*Inicializa a câmera de scan, escolhendo a camera, sentido da camera, etc.*/
     private fun  showCamera() {
         val options = ScanOptions()
         options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)

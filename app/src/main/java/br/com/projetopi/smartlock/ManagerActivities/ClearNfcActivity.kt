@@ -55,6 +55,7 @@ class ClearNfcActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
             finish()
         }
 
+        /*requisição para excluir a locação do banco quando o usuário decidir encerrar o uso dos armários*/
         binding.btnFinalizar.setOnClickListener{
             db.collection("rentals")
                 .document(qrCodeId!!)
@@ -85,6 +86,8 @@ class ClearNfcActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
 
     }
 
+
+    /*on resume para ler a tag no app*/
     override fun onResume() {
         super.onResume()
 
@@ -105,11 +108,14 @@ class ClearNfcActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         )
     }
 
+    /*onPause para parar de ler a tag quando a activity perde o foco*/
     override fun onPause() {
         super.onPause()
         nfcAdapter.disableReaderMode(this)
     }
 
+    /*onTagDiscover para quando encontrar uma tag, deixar a tag vazia para próximos usos, e para não poder ser utilizada novamente em caso de furto
+    * ao mesmo tempo que lê a tag para pegar o path da foto no celular do gerente, e deletá-la*/
     @SuppressLint("SetTextI18n")
     override fun onTagDiscovered(tag: Tag?) {
         val ndef = Ndef.get(tag)
@@ -134,6 +140,7 @@ class ClearNfcActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                     ndef.writeNdefMessage(ndefMessage)
                 }
 
+                /*requisição para calcular, com base em quantas horas o usuário deixou o armário locado, quanto será devolvido ou quanto será necessário cobrar a mais do usuário*/
                 db.collection("rentals")
                     .document(qrCodeId)
                     .get()

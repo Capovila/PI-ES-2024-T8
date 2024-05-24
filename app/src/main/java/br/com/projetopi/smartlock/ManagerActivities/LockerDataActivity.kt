@@ -39,8 +39,9 @@ class LockerDataActivity : AppCompatActivity() {
             .document(qrCode!!)
             .get()
             .addOnSuccessListener { document->
-                    val placeId = document.getString("idPlace").toString()
+                val placeId = document.getString("idPlace").toString()
 
+                /*requisição para pegar os dados do armário alugado pelo usuário para mostrar na activity*/
                 db.collection("lockers")
                     .whereEqualTo("idEstablishment", placeId)
                     .get()
@@ -53,12 +54,6 @@ class LockerDataActivity : AppCompatActivity() {
                         binding.tvLockerInfo.setText("Armário ${nLocker.toString()}")
                     }
             }
-
-
-
-
-
-
 
         binding.btnVoltar.setOnClickListener{
             startActivity(Intent(this, ManagerMainActivity::class.java))
