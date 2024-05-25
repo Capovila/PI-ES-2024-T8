@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Escolha o tempo"
+            android:text="@string/escolha_o_tempo"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -46,8 +46,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Aqui você precisa escolher o plano que
-melhor te atenda"
+            android:text="@string/aqui_voc_precisa_escolher_o_plano_que_melhor_te_atenda"
             android:textAlignment="center"
             android:textColor="@color/main_light_blue"
             android:textSize="20sp"
@@ -123,5 +122,5 @@ melhor te atenda"
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-    >
+
 </ScrollView>

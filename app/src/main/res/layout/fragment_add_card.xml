@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Adicionar cartão"
+            android:text="@string/adicionar_cart_o"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -47,10 +47,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Todas as vezes que for realizada uma
-locação, será cobrado um caução de uma
- diária e estornada proporcionalmente de
-acordo com o período utilizado"
+            android:text="@string/todas_as_vezes_que_for_realizada_uma_loca_o_ser_cobrado_um_cau_o_de_uma_di_ria_e_estornada_proporcionalmente_de_acordo_com_o_per_odo_utilizado"
             android:textAlignment="center"
             android:textColor="@color/main_light_blue"
             android:textSize="20sp"
@@ -117,7 +114,7 @@ acordo com o período utilizado"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Validade do cartão"
+            android:text="@string/validade_do_cart_o"
             android:layout_marginTop="10dp"
             android:textColor="@color/main_dark_blue"
             android:textSize="15sp"
@@ -134,7 +131,7 @@ acordo com o período utilizado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Mês"
+                android:hint="@string/m_s"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/baseline_calendar_month_24">
 
@@ -151,7 +148,7 @@ acordo com o período utilizado"
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="/"
+                android:text="@string/barra"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginHorizontal="10dp"
@@ -162,7 +159,7 @@ acordo com o período utilizado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Ano"
+                android:hint="@string/ano"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/baseline_calendar_month_24">
 

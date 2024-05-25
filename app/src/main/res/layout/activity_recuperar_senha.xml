@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
-            android:text="Recuperar senha"
+            android:text="@string/recuperar_senha"
             android:textColor="@color/main_dark_blue"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -48,9 +48,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Insira o e-mail associado com sua
-                    conta e enviaremos um e-mail para você
-                    recuperar sua senha"
+            android:text="@string/insira_o_e_mail_associado_com_sua_conta_e_enviaremos_um_e_mail_para_voc_recuperar_sua_senha"
             android:textAlignment="center"
             android:textColor="@color/main_light_blue"
             android:textSize="20sp"

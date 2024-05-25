@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -35,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Limpar NFC"
+            android:text="@string/limpar_nfc"
             android:textColor="@color/main_dark_blue"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -47,8 +46,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Leia a NFC do cliente para que ela possa
-ser limpa, removendo os dados salvos"
+            android:text="@string/leia_a_nfc_do_cliente_para_que_ela_possa_ser_limpa_removendo_os_dados_salvos"
             android:textAlignment="center"
             android:textColor="@color/main_light_blue"
             android:textSize="20sp"
@@ -80,7 +78,7 @@ ser limpa, removendo os dados salvos"
             android:id="@+id/btnFinalizar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Finalizar Locação"
+            android:text="@string/finalizar_loca_o"
             android:visibility="gone"
             android:textStyle="bold"
             android:textSize="17sp"

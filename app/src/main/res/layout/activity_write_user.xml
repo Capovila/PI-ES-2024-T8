@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -36,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Vincular NFC"
+            android:text="@string/vincular_nfc"
             android:textColor="@color/main_dark_blue"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -48,8 +47,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Escolha uma NFC para ser vinculado à essa locação, ao aproximar a NFC,
-                            será vinculada automaticamente"
+            android:text="@string/escolha_uma_nfc_para_ser_vinculado_essa_loca_o_ao_aproximar_a_nfc_ser_vinculada_automaticamente"
             android:textAlignment="center"
             android:textColor="@color/main_light_blue"
             android:textSize="20sp"
@@ -74,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/main_dark_blue"
                 android:paddingHorizontal="30dp"
-                android:text="Finalizar"
+                android:text="@string/finalizar"
                 android:textColor="@color/white"
                 android:visibility="gone"
                 android:textSize="17sp"
@@ -86,15 +84,11 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:backgroundTint="@color/main_dark_blue"
-                android:text="Adicionar Usuário"
+                android:text="@string/adicionar_usu_rio"
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-
-
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Nenhuma locação não efetivada"
+                android:text="@string/nenhuma_loca_o_n_o_efetivada"
                 android:textColor="@color/main_dark_blue"
                 android:textAlignment="center"
                 android:textSize="30sp"
@@ -41,8 +41,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="Caso você tiver uma locação que ainda não foi efetivada, aqui
-você terá acesso ao QR Code respectivo"
+                android:text="@string/caso_voc_tiver_uma_loca_o_que_ainda_n_o_foi_efetivada_aqui_voc_ter_acesso_ao_qr_code_respectivo"
                 android:textAlignment="center"
                 android:textColor="@color/main_light_blue"
                 android:textSize="20sp"
@@ -53,13 +52,14 @@ você terá acesso ao QR Code respectivo"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_marginTop="50dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:contentDescription="@string/qr_code"/>
 
             <Button
                 android:id="@+id/btnCancelar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancelar Locação"
+                android:text="@string/cancelar_loca_o"
                 android:visibility="gone"
                 android:textStyle="bold"
                 android:layout_marginVertical="50dp"

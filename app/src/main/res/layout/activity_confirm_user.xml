@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Confirme o cliente"
+        android:text="@string/confirme_o_cliente"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -47,8 +47,7 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Verifique se a pessoa na foto é o cliente
-que deseja abrir o armário"
+        android:text="@string/verifique_se_a_pessoa_na_foto_o_cliente_que_deseja_abrir_o_arm_rio"
         android:textAlignment="center"
         android:textColor="@color/main_light_blue"
         android:textSize="20sp"
@@ -83,7 +82,7 @@ que deseja abrir o armário"
             android:layout_gravity="center"
             android:layout_marginVertical="50dp"
             android:paddingHorizontal="30dp"
-            android:text="Proseguir"
+            android:text="@string/proseguir"
             android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -93,5 +92,5 @@ que deseja abrir o armário"
     </androidx.appcompat.widget.LinearLayoutCompat>
 
   </androidx.appcompat.widget.LinearLayoutCompat>
-  >
+
 </ScrollView>
