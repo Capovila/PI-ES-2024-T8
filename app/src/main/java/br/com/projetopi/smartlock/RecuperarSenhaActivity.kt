@@ -1,6 +1,7 @@
 package br.com.projetopi.smartlock
 
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -39,6 +40,7 @@ class RecuperarSenhaActivity : AppCompatActivity() {
         }
 
         auth = Firebase.auth
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
 
         /***
          * Faz com que para cada editText junto com seu textLayout
@@ -56,8 +58,11 @@ class RecuperarSenhaActivity : AppCompatActivity() {
          */
         binding.btnRecuperar.setOnClickListener{
             if(isFilled()) {
-                auth.sendPasswordResetEmail(binding.etEmail.text.toString()).addOnCompleteListener{
-                    if(it.isSuccessful){
+                if(connectivityManager.activeNetwork == null){
+                    Toast.makeText(this, "Internet necessária para recuperar a senha do app", Toast.LENGTH_LONG).show()
+                }else{
+                auth.sendPasswordResetEmail(binding.etEmail.text.toString()).addOnCompleteListener {
+                    if (it.isSuccessful) {
                         Toast.makeText(
                             baseContext,
                             "E-mail enviado",
@@ -65,21 +70,22 @@ class RecuperarSenhaActivity : AppCompatActivity() {
                         ).show()
 
                         finish()
-                    }else{
-                        Snackbar.make(
-                            binding.btnRecuperar,
+                    } else {
+                        Toast.makeText(
+                            this,
                             "E-mail inválido",
-                            Snackbar.LENGTH_LONG
+                            Toast.LENGTH_LONG
                         ).show()
                     }
                 }
                 hideKeyboard(it)
+                }
             } else {
                 showFieldErrors()
-                Snackbar.make(
-                    binding.btnRecuperar,
+                Toast.makeText(
+                    this,
                     "Preencha o campo corretamente",
-                    Snackbar.LENGTH_LONG
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }

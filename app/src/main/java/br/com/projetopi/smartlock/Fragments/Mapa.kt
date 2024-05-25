@@ -7,9 +7,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -71,6 +73,7 @@ class Mapa() : Fragment() {
         simpleStorage = SimpleStorage(requireContext())
 
         val user: User = simpleStorage.getUserAccountData()
+        val connectivityManager = requireContext().getSystemService(ConnectivityManager::class.java)
 
         // Esconde o btnMenuFragment
         binding.lnlaBtnMenuFragment.visibility = View.GONE
@@ -179,6 +182,9 @@ class Mapa() : Fragment() {
                              * o fragmento OpcaoTempo
                              */
                             binding.btnAlugarFragment.setOnClickListener{
+                                if(connectivityManager.activeNetwork == null){
+                                    Toast.makeText(requireContext(), "Internet necessária para alugar armários no app", Toast.LENGTH_LONG).show()
+                                }else{
                                 val establishment = marker.tag as Establishment
                                 val idEstablishment = establishment.uid.toString()
                                 db.collection("lockers")
@@ -301,6 +307,7 @@ class Mapa() : Fragment() {
                                                 }
                                         }
                                     }
+                                }
                             }
                         }
                         false
@@ -319,7 +326,7 @@ class Mapa() : Fragment() {
                      */
                     googleMap.setOnMapLoadedCallback{
 
-                        Handler().postDelayed({
+                        Handler(Looper.myLooper()!!).postDelayed({
                             binding.loadView.visibility = View.GONE
                             mapFragment.view?.visibility = View.VISIBLE
                         }, 1000L)

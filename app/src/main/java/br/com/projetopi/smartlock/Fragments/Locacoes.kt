@@ -2,6 +2,7 @@ package br.com.projetopi.smartlock.Fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,6 +43,8 @@ class Locacoes : Fragment() {
         simpleStorage = SimpleStorage(requireContext())
 
         val user: User = simpleStorage.getUserAccountData()
+        val connectivityManager = requireContext().getSystemService(ConnectivityManager::class.java)
+
 
         db = Firebase.firestore
 
@@ -102,7 +105,9 @@ class Locacoes : Fragment() {
                 }
             }
         binding.btnCancelar.setOnClickListener {
-
+            if(connectivityManager.activeNetwork == null){
+                Toast.makeText(requireContext(), "Internet necessária para cancelar uma locação no app", Toast.LENGTH_LONG).show()
+            }else{
             db.collection("rentals")
                 .whereEqualTo("idUser", user.uid.toString())
                 .get()
@@ -129,6 +134,7 @@ class Locacoes : Fragment() {
                         Locacoes()
                     )
                 }
+            }
         }
 
 

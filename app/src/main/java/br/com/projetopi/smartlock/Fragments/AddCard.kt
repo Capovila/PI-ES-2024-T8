@@ -1,12 +1,13 @@
 package br.com.projetopi.smartlock.Fragments
 
-import android.app.DatePickerDialog
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import br.com.projetopi.smartlock.Classes.CreditCard
 import br.com.projetopi.smartlock.Classes.User
 import br.com.projetopi.smartlock.MainActivity
@@ -36,6 +37,9 @@ class AddCard : Fragment() {
         _binding = FragmentAddCardBinding.inflate(inflater, container, false)
 
         simpleStorage = SimpleStorage(requireContext())
+
+        val connectivityManager = requireContext().getSystemService(ConnectivityManager::class.java)
+
 
         val user: User = simpleStorage.getUserAccountData()
 
@@ -91,6 +95,9 @@ class AddCard : Fragment() {
          */
         binding.btnAdicionar.setOnClickListener {
             if (isFilled() && currentDate()) {
+                if(connectivityManager.activeNetwork == null){
+                    Toast.makeText(requireContext(), "Internet necessária para adicioanr cartão no app", Toast.LENGTH_LONG).show()
+                }else{
 
                 val data:String = "${binding.etDataMes.text.toString()} / ${binding.etDataAno.text.toString()}"
 
@@ -123,12 +130,13 @@ class AddCard : Fragment() {
                         ).show()
                         (activity as MainActivity).changeFragment(Profile())
                     }
+                }
             } else {
                 showFieldErrors()
-                Snackbar.make(
-                    binding.btnAdicionar,
+                Toast.makeText(
+                    requireContext(),
                     "Preencha todos os campos corretamente",
-                    Snackbar.LENGTH_LONG
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }

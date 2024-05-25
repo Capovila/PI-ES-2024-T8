@@ -3,6 +3,7 @@ package br.com.projetopi.smartlock.ManagerActivities
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -89,6 +90,8 @@ class ManagerMainActivity : AppCompatActivity() {
 
         db = Firebase.firestore
         auth = Firebase.auth
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
+
 
         simpleStorage = SimpleStorage(this)
 
@@ -98,11 +101,16 @@ class ManagerMainActivity : AppCompatActivity() {
         binding.tvManagerEmail.setText(user.email)
 
         binding.btnLiberar.setOnClickListener{
-            checkPermissionCamera(this)
+            if(connectivityManager.activeNetwork == null){
+                Toast.makeText(this, "Ative a internet para escanear o QrCode", Toast.LENGTH_LONG).show()
+            }else{
+                checkPermissionCamera(this)
+            }
         }
         binding.btnAcessar.setOnClickListener{
-            val intent = Intent(this, AccessLockerActivity::class.java)
-            startActivity(intent)
+           val intent = Intent(this, AccessLockerActivity::class.java)
+           startActivity(intent)
+
         }
 
         binding.btnSair.setOnClickListener{

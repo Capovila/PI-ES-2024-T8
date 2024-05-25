@@ -2,6 +2,7 @@ package br.com.projetopi.smartlock
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -46,6 +47,7 @@ class CadastrarActivity : AppCompatActivity() {
 
         db = Firebase.firestore
         auth = Firebase.auth
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
 
 
         val editTexts = listOf(
@@ -93,50 +95,55 @@ class CadastrarActivity : AppCompatActivity() {
          * atual escondendo o teclado
          */
         binding.btnCadastrar.setOnClickListener{ it ->
+
             if(isFilled() && dateValid()) {
+                if(connectivityManager.activeNetwork != null ){
+                    val birth: String = "${binding.etDay.text.toString()} / ${binding.etMonth.text.toString()} / ${binding.etYear.text.toString()}"
 
-                val birth: String = "${binding.etDay.text.toString()} / ${binding.etMonth.text.toString()} / ${binding.etYear.text.toString()}"
+                    val user = User(
+                        null,
+                        binding.etName.text.toString(),
+                        binding.etEmail.text.toString(),
+                        binding.etPassword.text.toString(),
+                        birth,
+                        binding.etCPF.text.toString(),
+                        binding.etPhone.text.toString()
+                    )
 
-                val user = User(
-                    null,
-                    binding.etName.text.toString(),
-                    binding.etEmail.text.toString(),
-                    binding.etPassword.text.toString(),
-                    birth,
-                    binding.etCPF.text.toString(),
-                    binding.etPhone.text.toString()
-                )
+                    auth.createUserWithEmailAndPassword(user.email!!, user.password!!)
+                        .addOnCompleteListener { authResult ->
+                            if(authResult.isSuccessful) {
+                                user.uid = authResult.result.user!!.uid
+                                user.password = ""
 
-                auth.createUserWithEmailAndPassword(user.email!!, user.password!!)
-                    .addOnCompleteListener { authResult ->
-                        if(authResult.isSuccessful) {
-                            user.uid = authResult.result.user!!.uid
-                            user.password = ""
+                                db.collection("users")
+                                    .document(user.uid.toString())
+                                    .set(user)
+                                    .addOnSuccessListener {
+                                        auth.currentUser?.sendEmailVerification()
+                                            ?.addOnCompleteListener {
+                                                Toast.makeText(
+                                                    baseContext,
+                                                    "Confirmação de e-mail enviada",
+                                                    Toast.LENGTH_LONG,
+                                                ).show()
 
-                            db.collection("users")
-                                .document(user.uid.toString())
-                                .set(user)
-                                .addOnSuccessListener {
-                                    auth.currentUser?.sendEmailVerification()
-                                        ?.addOnCompleteListener {
-                                            Toast.makeText(
-                                                baseContext,
-                                                "Confirmação de e-mail enviada",
-                                                Toast.LENGTH_LONG,
-                                            ).show()
-
-                                            finish()
-                                        }
-                                }
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "E-mail já cadastrado",
-                                Toast.LENGTH_LONG
-                            ).show()
+                                                finish()
+                                            }
+                                    }
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "E-mail já cadastrado",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
-                    }
-                hideKeybard(it)
+                    hideKeybard(it)
+                }else{
+                    Toast.makeText(this, "Internet necessária para cadastrar no app", Toast.LENGTH_LONG).show()
+                }
+
             } else {
                 showFieldErrors()
                 Toast.makeText(

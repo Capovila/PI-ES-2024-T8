@@ -3,6 +3,7 @@ package br.com.projetopi.smartlock.ManagerActivities
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -52,13 +53,18 @@ class UserPhotoActivity : AppCompatActivity() {
         db = Firebase.firestore
         val uNumber = intent.getStringExtra("nUser")
         val qrCode = intent.getStringExtra("qrCode")
-
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
 
         startCamera()
 
         binding.btnFoto.setOnClickListener{
-            blinkPreview()
-            takePicture(uNumber.toString().toInt(), qrCode.toString())
+            if(connectivityManager.activeNetwork == null){
+                Toast.makeText(this, "Internet necessária para esta ação", Toast.LENGTH_LONG).show()
+            }else{
+                blinkPreview()
+                takePicture(uNumber.toString().toInt(), qrCode.toString())
+            }
+
         }
 
         binding.btnBack.setOnClickListener{

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -67,6 +68,8 @@ class ConsultarMapaActivity : AppCompatActivity() {
         }
 
         db = Firebase.firestore
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
+
 
         // Esconde o lnlaBtnMenu
         binding.lnlaBtnMenu.visibility = View.GONE

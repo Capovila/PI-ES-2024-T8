@@ -43,12 +43,6 @@ class QRCode : Fragment() {
         sharedViewModelRental.selectedRental.observe(viewLifecycleOwner) { rental ->
             val rentalID = rental.uid.toString()
 
-            Toast.makeText(
-                requireContext(),
-                rentalID,
-                Toast.LENGTH_LONG
-            ).show()
-
             db.collection("rentals")
                 .whereEqualTo("idUser", rentalID)
                 .get()

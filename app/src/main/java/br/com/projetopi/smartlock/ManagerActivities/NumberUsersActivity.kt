@@ -1,6 +1,7 @@
 package br.com.projetopi.smartlock.ManagerActivities
 
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,6 +35,7 @@ class NumberUsersActivity : AppCompatActivity() {
         simpleStorage = SimpleStorage(this)
         db = Firebase.firestore
         val user: User = simpleStorage.getUserAccountData()
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
 
         binding.tvManagerName.setText(user.name.toString())
         binding.tvManagerEmail.setText(user.email.toString())
@@ -48,6 +50,9 @@ class NumberUsersActivity : AppCompatActivity() {
             if(!binding.op1.isChecked && !binding.op2.isChecked){
                 Toast.makeText(this, "Escolha uma opção", Toast.LENGTH_LONG).show()
             }else{
+                if(connectivityManager.activeNetwork == null){
+                    Toast.makeText(this, "Internet necessária para esta ação", Toast.LENGTH_LONG).show()
+                }else{
                 db.collection("rentals")
                     .document(qrCodeResult!!)
                     .get()
@@ -64,6 +69,7 @@ class NumberUsersActivity : AppCompatActivity() {
                     }
 
                 cameraProviderResult.launch(android.Manifest.permission.CAMERA)
+                }
             }
         }
     }

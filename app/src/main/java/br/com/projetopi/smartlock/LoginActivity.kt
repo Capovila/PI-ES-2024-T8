@@ -1,6 +1,7 @@
 package br.com.projetopi.smartlock
 
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -43,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
 
         db = Firebase.firestore
         auth = Firebase.auth
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
 
         val editTexts = listOf(
             binding.etEmail,
@@ -76,8 +78,12 @@ class LoginActivity : AppCompatActivity() {
          * realiza o mesmo processo mas inicia a activity
          * ManagerMainActivity
          */
+
         binding.btnEntrar.setOnClickListener { it ->
             if (isFilled()) {
+                if(connectivityManager.activeNetwork == null){
+                    Toast.makeText(this, "Internet necessária para logar no app", Toast.LENGTH_LONG).show()
+                }else{
                 val email = binding.etEmail.text.toString()
                 val password = binding.etPassword.text.toString()
                 auth.signInWithEmailAndPassword(email, password)
@@ -142,6 +148,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 hideKeyboard(it)
+                }
             } else {
                 showFieldErrors()
                 Toast.makeText(
@@ -173,7 +180,10 @@ class LoginActivity : AppCompatActivity() {
          * ConsultarMapaActivity
          */
         binding.btnConferir.setOnClickListener{
-            startActivity(Intent(this, ConsultarMapaActivity::class.java))
+            if(connectivityManager.activeNetwork == null){
+                Toast.makeText(this, "Internet necessária para visualizar os estabelecimentos pelo app", Toast.LENGTH_LONG).show()
+            }else{
+            startActivity(Intent(this, ConsultarMapaActivity::class.java))}
         }
     }
 

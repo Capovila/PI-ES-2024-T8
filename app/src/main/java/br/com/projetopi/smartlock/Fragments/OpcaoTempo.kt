@@ -4,6 +4,7 @@ import SharedViewModelEstablishment
 import SharedViewModelRental
 import android.annotation.SuppressLint
 import android.icu.util.Calendar
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,6 +43,7 @@ class OpcaoTempo : Fragment() {
         simpleStorage = SimpleStorage(requireContext())
 
         val user: User = simpleStorage.getUserAccountData()
+        val connectivityManager = requireContext().getSystemService(ConnectivityManager::class.java)
 
         db = Firebase.firestore
 
@@ -125,6 +127,9 @@ class OpcaoTempo : Fragment() {
 
                     binding.btnConfirmarLocacao.setOnClickListener {
                         if (isSelected()) {
+                            if(connectivityManager.activeNetwork == null){
+                                Toast.makeText(requireContext(), "Internet necessária para fazer uma locação no app", Toast.LENGTH_LONG).show()
+                            }else{
                             val opSelected: RadioButton =
                                 binding.root.findViewById(binding.radioGroup.checkedRadioButtonId)
                             val locacaoAtual = Rental(
@@ -161,6 +166,7 @@ class OpcaoTempo : Fragment() {
                                         firstDocument.reference.update(newRentalState as Map<String, Any>)
                                     }
                                 }
+                            }
                         } else {
                             Toast.makeText(
                                 requireContext(),

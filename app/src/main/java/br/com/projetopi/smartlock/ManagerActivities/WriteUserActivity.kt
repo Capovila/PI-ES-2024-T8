@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.net.ConnectivityManager
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
@@ -44,6 +45,7 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
 
         val uNumber = intent.getStringExtra("nUser").toString().toInt()
         val qrCode = intent.getStringExtra("qrCode")
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
         imagePath = intent.getStringExtra("Image").toString()
@@ -77,14 +79,18 @@ class WriteUserActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
                     }
                 }
                 binding.btnFim.setOnClickListener{
-                    if(number10!!.toString().toInt() != uNumber){
-                        Toast.makeText(this, "Existem usuários a serem cadastrados", Toast.LENGTH_SHORT).show()
+                    if(connectivityManager.activeNetwork == null){
+                        Toast.makeText(this, "Internet necessária para implementar uma locação", Toast.LENGTH_LONG).show()
                     }else{
-                        documents.reference.update(rentalImplemented as Map<String, Any>)
-                        val intent2 = Intent(this, LockerDataActivity::class.java)
-                        intent2.putExtra("qrCode", qrCode)
-                        startActivity(intent2)
-                        finish()
+                        if(number10!!.toString().toInt() != uNumber){
+                            Toast.makeText(this, "Existem usuários a serem cadastrados", Toast.LENGTH_SHORT).show()
+                        }else{
+                            documents.reference.update(rentalImplemented as Map<String, Any>)
+                            val intent2 = Intent(this, LockerDataActivity::class.java)
+                            intent2.putExtra("qrCode", qrCode)
+                            startActivity(intent2)
+                            finish()
+                        }
                     }
                 }
             }

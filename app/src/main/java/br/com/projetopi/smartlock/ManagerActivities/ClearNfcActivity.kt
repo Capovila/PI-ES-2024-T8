@@ -2,6 +2,7 @@ package br.com.projetopi.smartlock.ManagerActivities
 
 import android.annotation.SuppressLint
 import android.icu.util.Calendar
+import android.net.ConnectivityManager
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
@@ -50,40 +51,48 @@ class ClearNfcActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
         simpleStorage = SimpleStorage(this)
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
         user = simpleStorage.getUserAccountData()
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
 
         binding.btnBack.setOnClickListener{
             finish()
         }
 
         /*requisição para excluir a locação do banco quando o usuário decidir encerrar o uso dos armários*/
-        binding.btnFinalizar.setOnClickListener{
-            db.collection("rentals")
-                .document(qrCodeId!!)
-                .get()
-                .addOnSuccessListener {document->
-                    var localId = ""
+        binding.btnFinalizar.setOnClickListener {
+            if (connectivityManager.activeNetwork == null) {
+                Toast.makeText(
+                    this,
+                    "Internet necessária para finalizar uma locação no app",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                db.collection("rentals")
+                    .document(qrCodeId!!)
+                    .get()
+                    .addOnSuccessListener { document ->
+                        var localId = ""
                         localId = document.getString("idPlace").toString()
                         document.reference.delete()
 
-                    db.collection("lockers")
-                        .whereEqualTo("idEstablishment", localId)
-                        .get()
-                        .addOnSuccessListener {
-                            val lockerUpdate = hashMapOf(
-                                "currentIdRental" to "",
-                                "isRented" to false,
-                            )
+                        db.collection("lockers")
+                            .whereEqualTo("idEstablishment", localId)
+                            .get()
+                            .addOnSuccessListener {
+                                val lockerUpdate = hashMapOf(
+                                    "currentIdRental" to "",
+                                    "isRented" to false,
+                                )
 
-                            for(documents in it){
-                                documents.reference.update(lockerUpdate as Map<String, Any>)
+                                for (documents in it) {
+                                    documents.reference.update(lockerUpdate as Map<String, Any>)
+                                }
                             }
-                        }
-                }
+                    }
 
                 Toast.makeText(this, "Locação encerrada", Toast.LENGTH_LONG).show()
-            finish()
+                finish()
+            }
         }
-
     }
 
 

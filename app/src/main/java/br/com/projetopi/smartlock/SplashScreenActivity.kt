@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -64,7 +65,7 @@ class SplashScreenActivity : AppCompatActivity() {
         avd.start()
 
         // Executa com um atraso de 1.5 segundos
-        Handler().postDelayed({
+        Handler(Looper.myLooper()!!).postDelayed({
             /***
              * Verifica se possui um id de usuario no simpleStorage, caso tenha e
              * caso o usuario seja gerente, inicia direto a ManagerMainActivity e fecha
