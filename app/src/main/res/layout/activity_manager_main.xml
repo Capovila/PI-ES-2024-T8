@@ -17,9 +17,23 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnSair"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/logout_svgrepo_com__1_" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
@@ -113,16 +127,7 @@
                     android:backgroundTint="@color/main_light_blue"
                     android:textColor="@color/main_white"/>
 
-                <Button
-                    android:id="@+id/btnSair"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sair"
-                    android:textStyle="bold"
-                    android:textSize="17sp"
-                    android:paddingHorizontal="30dp"
-                    android:backgroundTint="@color/main_light_blue"
-                    android:textColor="@color/main_white"/>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
