@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/main_white"
@@ -10,7 +9,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".ManagerActivities.LockerDataActivity"
         android:gravity="center"
@@ -52,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="30sp"
-                    android:text="Armário efetivado"
+                    android:text="@string/arm_rio_efetivado"
                     android:textColor="@color/main_dark_blue"
                     android:textStyle="bold"
                     android:layout_marginTop="25dp"/>
@@ -64,8 +63,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:text="Foi efetivada a locação do armário e
-                                    está pronto para uso"
+                    android:text="@string/foi_efetivada_a_loca_o_do_arm_rio_e_est_pronto_para_uso"
                     android:textColor="@color/main_light_blue"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"/>
@@ -74,7 +72,7 @@
             android:id="@+id/btnVoltar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Concluir"
+            android:text="@string/concluir"
             android:textStyle="bold"
             android:textSize="17sp"
             android:paddingHorizontal="30dp"

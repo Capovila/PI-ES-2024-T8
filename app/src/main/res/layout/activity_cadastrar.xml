@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Cadastre-se"
+            android:text="@string/cadastre_se"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -48,7 +48,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Crie sua conta para continuar"
+            android:text="@string/crie_sua_conta_para_continuar"
             android:textAlignment="center"
             android:textColor="@color/main_light_blue"
             android:textSize="20sp"
@@ -131,7 +131,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Data de Nascimento"
+                        android:text="@string/data_de_nascimento"
                         android:textStyle="bold"
                         android:textSize="12sp"
                         android:textColor="@color/main_dark_blue"/>
@@ -154,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Dia"
+                        android:hint="@string/dia"
                         app:endIconMode="clear_text" >
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -170,7 +170,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="/"
+                        android:text="@string/barra"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/main_dark_blue"/>
@@ -180,7 +180,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Mês"
+                        android:hint="@string/m_s"
                         app:endIconMode="clear_text" >
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -196,7 +196,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="/"
+                        android:text="@string/barra"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/main_dark_blue"/>
@@ -206,7 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint= "Ano"
+                        android:hint= "@string/ano"
                         app:endIconMode="clear_text" >
 
                         <com.google.android.material.textfield.TextInputEditText

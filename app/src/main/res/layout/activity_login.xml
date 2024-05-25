@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="25dp"
-                android:text="Bem-vindo!"
+                android:text="@string/bem_vindo"
                 android:textColor="@color/main_dark_blue"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -54,8 +54,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="Você pode consultar os armários
-disponíveis ou entrar e começar a alugar "
+                android:text="@string/voc_pode_consultar_os_arm_rios_dispon_veis_ou_entrar_e_come_ar_a_alugar"
                 android:textAlignment="center"
                 android:textColor="@color/main_light_blue"
                 android:textSize="20sp"

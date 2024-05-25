@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -35,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Foto do cliente"
+            android:text="@string/foto_do_cliente"
             android:textColor="@color/main_dark_blue"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -47,7 +46,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Fotografe o cliente em um ambiente iluminado"
+            android:text="@string/fotografe_o_cliente_em_um_ambiente_iluminado"
             android:textAlignment="center"
             android:textColor="@color/main_light_blue"
             android:textSize="20sp"
@@ -66,7 +65,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/main_dark_blue"
             android:paddingHorizontal="30dp"
-            android:text="Tirar Foto"
+            android:text="@string/tirar_foto"
             android:layout_marginVertical="75dp"
             android:textColor="@color/white"
             android:textSize="17sp"

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -69,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
-                android:text="Gerente"
+                android:text="@string/gerente"
                 android:textColor="@color/main_dark_blue"
                 android:textStyle="bold"
                 android:layout_marginTop="25dp"/>
@@ -81,7 +80,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:text="Libere locações ou o acesso do armário"
+                android:text="@string/libere_loca_es_ou_o_acesso_do_arm_rio"
                 android:textColor="@color/main_light_blue"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"/>
@@ -97,7 +96,7 @@
                     android:id="@+id/btnLiberar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Liberar Locação"
+                    android:text="@string/liberar_loca_o"
                     android:textStyle="bold"
                     android:textSize="17sp"
                     android:backgroundTint="@color/main_light_blue"
@@ -107,7 +106,7 @@
                     android:id="@+id/btnAcessar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Acessar Armário"
+                    android:text="@string/acessar_arm_rio"
                     android:textStyle="bold"
                     android:textSize="17sp"
                     android:paddingHorizontal="30dp"
@@ -118,7 +117,7 @@
                     android:id="@+id/btnSair"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sair"
+                    android:text="@string/sair"
                     android:textStyle="bold"
                     android:textSize="17sp"
                     android:paddingHorizontal="30dp"
