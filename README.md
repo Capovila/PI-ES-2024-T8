@@ -9,3 +9,6 @@ Para acessar a parte do gerente pode-se usar a seguinte conta:
 "Conta manager"
 E-mail: viniciusbuzaneli@outlook.com
 senha: 1234567
+
+OBS: Por conta de mudanças na mandeira de login do app, se você tiver usado a primeira versão do app, ao instalar a versão 2, vá em: Configurações -> Aplicativos -> Smart Lock -> Armazenamento -> Limpar Dados.
+Assim, dados de login da primeira versão, não irão conflitar com dados de login da versão mais recente, caso não fizer esse procedimento o aplicativo provavelmente irá crashar na hora de fazer login
